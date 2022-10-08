@@ -12,6 +12,7 @@ import {
   TableHead,
   TablePagination,
   TableRow,
+  Avatar,
 } from "@mui/material";
 
 import axios from "axios";
@@ -66,6 +67,7 @@ const User = () => {
           <TableHead>
             <TableRow>
               <TableCell align="center">No</TableCell>
+              <TableCell align="center">Avatar</TableCell>
               {/* <TableCell align="center">Id</TableCell> */}
               <TableCell align="center">Name</TableCell>
               <TableCell align="center">Email</TableCell>
@@ -75,7 +77,7 @@ const User = () => {
               <TableCell align="center">No. NPWP</TableCell>
               <TableCell align="center">Bank</TableCell>
               <TableCell align="center">No.Rekening</TableCell>
-              <TableCell align="center">Action</TableCell>
+              <TableCell align="center">Alamat</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -87,23 +89,40 @@ const User = () => {
                   <TableRow key={row.user._id}>
                     <TableCell align="center">{idx + 1}</TableCell>
                     {/* <TableCell align="center">{row.user._id}</TableCell> */}
-                    <TableCell align="center">{row.user.name}</TableCell>
-                    <TableCell align="center">{row.user.email}</TableCell>
+                    <TableCell
+                      align="center"
+                      style={{ textTransform: "capitalize" }}
+                    >
+                      <Avatar alt={row.user.name} src={row.user.avatar} />
+                    </TableCell>
+                    <TableCell
+                      align="center"
+                      style={{ textTransform: "capitalize" }}
+                    >
+                      {row.user.name}
+                    </TableCell>
+                    <TableCell
+                      align="center"
+                      style={{ textTransform: "lowercase" }}
+                    >
+                      {row.user.email}
+                    </TableCell>
                     <TableCell align="center">{row.gender}</TableCell>
-                    <TableCell align="center">{row.phone}</TableCell>
+                    <TableCell align="center">+62{row.phone}</TableCell>
                     <TableCell align="center">{row.no_ktp}</TableCell>
                     <TableCell align="center">{row.no_npwp}</TableCell>
                     <TableCell align="center">{row.bank}</TableCell>
                     <TableCell align="center">{row.no_rekening}</TableCell>
                     <TableCell align="center">
-                      <div>
+                      {/* <div>
                         <Button
                           variant="contained"
                           style={{ backgroundColor: "#d84315", width: 100 }}
                         >
                           Delete
                         </Button>
-                      </div>
+                      </div> */}
+                      {row.address}
                     </TableCell>
                   </TableRow>
                 );
@@ -112,7 +131,7 @@ const User = () => {
         </Table>
       </TableContainer>
       <TablePagination
-        rowsPerPageOptions={[10, 25, 100]}
+        rowsPerPageOptions={[10, 30, 50]}
         component="div"
         count={data.length}
         rowsPerPage={rowsPerPage}
