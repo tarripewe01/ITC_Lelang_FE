@@ -8,8 +8,9 @@ import Loadable from 'ui-component/Loadable';
 // dashboard routing
 const DashboardDefault = Loadable(lazy(() => import('views/dashboard/Default')));
 const Users = Loadable(lazy(() => import('views/pages/user/User.js')));
-const Products = Loadable(lazy(() => import('views/pages/product/Product.js')));
 const HistoryBid = Loadable(lazy(() => import('views/pages/historyBid/HistoryBid.js')));
+const Products = Loadable(lazy(() => import('views/pages/product/Product.js')));
+const AddProducts = Loadable(lazy(() => import('views/pages/product/AddProduct')));
 
 // ==============================|| MAIN ROUTING ||============================== //
 
@@ -32,6 +33,10 @@ const MainRoutes = {
         {
             path: 'products',
             element: <Products />
+        },
+        {
+            path: 'add_product',
+            element: <AddProducts />
         },
         {
             path: 'history',

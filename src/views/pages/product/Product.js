@@ -2,6 +2,7 @@
 /* eslint-disable no-unused-vars */
 import * as React from "react";
 import axios from "axios";
+import { useNavigate } from 'react-router-dom';
 import {
   Box,
   Button,
@@ -19,8 +20,11 @@ import {
   MenuItem,
   InputLabel,
 } from "@mui/material";
+var currencyFormatter = require('currency-formatter');
 
 const Product = () => {
+    const navigate = useNavigate();
+
   const [data, setData] = React.useState([]);
   // filter
   const [query, setQuery] = React.useState("");
@@ -92,7 +96,7 @@ const Product = () => {
         <Button
           variant="contained"
           style={{
-            backgroundColor: "orange",
+            backgroundColor: "#ffc107",
             width: 100,
             marginLeft: 20,
           }}
@@ -108,6 +112,7 @@ const Product = () => {
             width: 100,
             marginLeft: 20,
           }}
+          onClick={() => navigate("/add_product")}
         >
           Add
         </Button>
@@ -146,11 +151,11 @@ const Product = () => {
                     >
                       {row.nama_produk}
                     </TableCell>
-                    <TableCell align="center">{row.harga}</TableCell>
+                    <TableCell align="center">{currencyFormatter.format( row.harga, { code: 'IDR' })}</TableCell>
                     <TableCell
                       align="center"
                       style={{
-                        color: "green",
+                        color: "#00c853",
                         fontWeight: "600",
                       }}
                     >
