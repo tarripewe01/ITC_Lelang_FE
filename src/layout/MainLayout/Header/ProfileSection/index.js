@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useState, useRef, useEffect } from 'react';
 
 import { useNavigate } from 'react-router-dom';
@@ -43,12 +44,11 @@ import { IconLogout, IconSearch, IconSettings, IconUser } from '@tabler/icons';
 
 const ProfileSection = () => {
     const theme = useTheme();
-    const customization = useSelector((state) => state.customization);
     const navigate = useNavigate();
 
-    const [sdm, setSdm] = useState(true);
-    const [value, setValue] = useState('');
-    const [notification, setNotification] = useState(false);
+    const customization = useSelector((state) => state.customization);
+    const auth = useSelector((state) => state.auth);
+
     const [selectedIndex, setSelectedIndex] = useState(-1);
     const [open, setOpen] = useState(false);
     /**
@@ -90,7 +90,7 @@ const ProfileSection = () => {
     return (
         <>
             <Typography style={{ marginRight: 10 }} component="span" variant="h4" sx={{ fontWeight: 400 }}>
-                Tarri Pewe, Super Admin
+                {auth.user?.name}
             </Typography>
             <Chip
                 sx={{
@@ -114,7 +114,7 @@ const ProfileSection = () => {
                 }}
                 icon={
                     <Avatar
-                        src={User1}
+                        src={auth.user?.avatar}
                         sx={{
                             ...theme.typography.mediumAvatar,
                             margin: '8px 0 8px 8px !important',
@@ -134,7 +134,7 @@ const ProfileSection = () => {
                 // onClick={handleToggle}
                 color="primary"
             />
-            <Popper
+            {/* <Popper
                 placement="bottom-end"
                 open={open}
                 anchorEl={anchorRef.current}
@@ -199,34 +199,6 @@ const ProfileSection = () => {
                                                 </ListItemButton>
                                                 <ListItemButton
                                                     sx={{ borderRadius: `${customization.borderRadius}px` }}
-                                                    selected={selectedIndex === 1}
-                                                    onClick={(event) => handleListItemClick(event, 1, '/user/social-profile/posts')}
-                                                >
-                                                    <ListItemIcon>
-                                                        <IconUser stroke={1.5} size="1.3rem" />
-                                                    </ListItemIcon>
-                                                    <ListItemText
-                                                        primary={
-                                                            <Grid container spacing={1} justifyContent="space-between">
-                                                                <Grid item>
-                                                                    <Typography variant="body2">Social Profile</Typography>
-                                                                </Grid>
-                                                                <Grid item>
-                                                                    <Chip
-                                                                        label="02"
-                                                                        size="small"
-                                                                        sx={{
-                                                                            bgcolor: theme.palette.warning.dark,
-                                                                            color: theme.palette.background.default
-                                                                        }}
-                                                                    />
-                                                                </Grid>
-                                                            </Grid>
-                                                        }
-                                                    />
-                                                </ListItemButton>
-                                                <ListItemButton
-                                                    sx={{ borderRadius: `${customization.borderRadius}px` }}
                                                     selected={selectedIndex === 4}
                                                     onClick={handleLogout}
                                                 >
@@ -243,7 +215,7 @@ const ProfileSection = () => {
                         </Paper>
                     </Transitions>
                 )}
-            </Popper>
+            </Popper> */}
         </>
     );
 };

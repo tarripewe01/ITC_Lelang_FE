@@ -1,10 +1,9 @@
-import { lazy } from "react";import Loadable from "ui-component/Loadable";
-import { useRoutes } from 'react-router-dom';
-import MainRoutes from './MainRoutes';
-import AuthenticationRoutes from './AuthenticationRoutes'
-import  MinimalLayout  from 'layout/MinimalLayout';
-import Login3 from 'views/pages/authentication/authentication3/Login3';
 import MainLayout from 'layout/MainLayout';
+import MinimalLayout from 'layout/MinimalLayout';
+import { lazy } from "react";
+import { useRoutes } from 'react-router-dom';
+import Loadable from "ui-component/Loadable";
+import Login3 from 'views/pages/authentication/authentication3/Login3';
 const DashboardDefault = Loadable(
     lazy(() => import("views/dashboard/Default"))
   );

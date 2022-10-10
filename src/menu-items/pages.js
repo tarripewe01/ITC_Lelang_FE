@@ -15,7 +15,7 @@ const pages = {
       id: "Logout",
       title: "Logout",
       type: "item",
-      url: "/pages/login",
+      url: "/",
       icon: icons.IconLogout,
       target: true,
     },

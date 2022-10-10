@@ -13,20 +13,20 @@ import {
   OutlinedInput,
   Stack,
   Typography,
-  useMediaQuery,
+  useMediaQuery
 } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 
 // project imports
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { PropTypes } from "prop-types";
 import { useState } from "react";
-import { useDispatch, connect } from "react-redux";
+import { connect, useDispatch } from "react-redux";
+import { login } from "store/action/authAction";
 import AnimateButton from "ui-component/extended/AnimateButton";
 import Logo from "ui-component/Logo";
 import AuthCardWrapper from "../AuthCardWrapper";
 import AuthWrapper1 from "../AuthWrapper1";
-import { PropTypes } from "prop-types";
-import { login } from "store/action/authAction";
 
 // assets
 
@@ -36,7 +36,6 @@ const Login = ({ login, isAuthenticated }) => {
   const theme = useTheme();
   const matchDownSM = useMediaQuery(theme.breakpoints.down("md"));
 
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -57,15 +56,11 @@ const Login = ({ login, isAuthenticated }) => {
   const onSubmit = async (e) => {
     e.preventDefault();
     login(email, password);
-    navigate("/dashboard", { replace: true })
   };
 
-  // if (isAuthenticated) {
-  //   alert('ok')
-  //   return navigate("/dashboard", { replace: true });
-  // }
-
- 
+  if (isAuthenticated) {
+    navigate("/dashboard");
+  }
 
   return (
     <AuthWrapper1>
@@ -215,13 +210,13 @@ const Login = ({ login, isAuthenticated }) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  isAuthenticated: state.auth.isAuthenticated,
-});
-
 Login.propTypes = {
   login: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool,
 };
 
-export default connect(null, { login })(Login);
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated,
+});
+
+export default connect(mapStateToProps, { login })(Login);
