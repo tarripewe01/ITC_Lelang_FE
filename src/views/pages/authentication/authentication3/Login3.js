@@ -27,6 +27,7 @@ import AnimateButton from "ui-component/extended/AnimateButton";
 import Logo from "ui-component/Logo";
 import AuthCardWrapper from "../AuthCardWrapper";
 import AuthWrapper1 from "../AuthWrapper1";
+import { useSelector } from 'react-redux';
 
 // assets
 
@@ -37,6 +38,7 @@ const Login = ({ login, isAuthenticated }) => {
   const matchDownSM = useMediaQuery(theme.breakpoints.down("md"));
 
   const navigate = useNavigate();
+  const auth = useSelector((state) => state.auth);
 
   const [formData, setFormData] = useState({
     email: "",
@@ -58,7 +60,7 @@ const Login = ({ login, isAuthenticated }) => {
     login(email, password);
   };
 
-  if (isAuthenticated) {
+  if (isAuthenticated && auth.user.name === "Super Admin" )  {
     navigate("/dashboard");
   }
 
