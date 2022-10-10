@@ -8,8 +8,8 @@ import { Provider } from "react-redux";
 // project imports
 import * as serviceWorker from "serviceWorker";
 import App from "App";
-import {store} from "store";
-// import store from "./redux/store/index";
+import {store} from "./store/index";
+// import store from "./redux/store";
 
 // style + assets
 import "assets/scss/style.scss";

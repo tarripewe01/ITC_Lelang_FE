@@ -1,12 +1,16 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import * as api from "../api/api";
+import * as api from "../api";
 
-export const getUsers = createAsyncThunk(
-  "user/getUsers",
-  async (_, { rejectWithValue }) => {
+// Actions
+export const login = createAsyncThunk(
+  "auth/login",
+  async ({ formValue, navigate }, { rejectWithValue }) => {
     try {
-      const response = await api.getAllUsers();
+      const response = await api.login(formValue);
+      console.log('auth', response.data)
+      navigate("/ITC-Finance");
       return response.data;
+
     } catch (err) {
       return rejectWithValue(err.response.data);
     }
@@ -17,9 +21,10 @@ const authSlice = createSlice({
   name: "auth",
   initialState: {
     user: null,
-    users: [],
+    token:  localStorage.getItem("token"),
     error: "",
-    loading: false,
+    loading: true,
+    isAuthenticated: false,
   },
   reducers: {
     setUser: (state, action) => {
@@ -31,14 +36,15 @@ const authSlice = createSlice({
     },
   },
   extraReducers: {
-    [getUsers.pending]: (state, action) => {
+    [login.pending]: (state, action) => {
       state.loading = true;
     },
-    [getUsers.fulfilled]: (state, action) => {
+    [login.fulfilled]: (state, action) => {
       state.loading = false;
-      state.users = action.payload;
+      localStorage.setItem("profile", JSON.stringify({ ...action.payload }));
+      state.user = action.payload;
     },
-    [getUsers.rejected]: (state, action) => {
+    [login.rejected]: (state, action) => {
       state.loading = false;
       state.error = action.payload.message;
     },

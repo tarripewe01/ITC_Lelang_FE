@@ -2,7 +2,7 @@
     "name": "berry-material-react-free",
     "version": "3.2.0",
     "private": true,
-    "homepage": "https://berrydashboard.io/free",
+    "homepage": "",
     "dependencies": {
         "@date-io/date-fns": "^2.16.0",
         "@emotion/cache": "^11.9.3",
@@ -38,7 +38,13 @@
         "react-router": "6.3.0",
         "react-router-dom": "6.3.0",
         "react-scripts": "^5.0.1",
+        "react-toastify": "^9.0.8",
         "redux": "^4.2.0",
+        "redux-devtools-extension": "^2.13.9",
+        "redux-thunk": "^2.4.1",
+        "util": "^0.12.4",
+        "uuid": "^9.0.0",
+        "uuidv4": "^6.2.13",
         "yup": "^0.32.11"
     },
     "scripts": {

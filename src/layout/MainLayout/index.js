@@ -9,7 +9,7 @@ import { styled, useTheme } from '@mui/material/styles';
 
 // project imports
 import navigation from 'menu-items';
-import { SET_MENU } from 'store/actions';
+import { SET_MENU } from 'store/action/actions';
 import { drawerWidth } from 'store/constant';
 import Breadcrumbs from 'ui-component/extended/Breadcrumbs';
 import Header from './Header';

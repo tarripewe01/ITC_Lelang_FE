@@ -1,33 +1,35 @@
-/* eslint-disable no-unused-vars */
-import { useSelector } from 'react-redux';
+import { useSelector } from "react-redux";
+import { ThemeProvider } from "@mui/material/styles";
+import { CssBaseline, StyledEngineProvider } from "@mui/material";
+import Routes from "routes";
+import themes from "themes";
+import NavigationScroll from "layout/NavigationScroll";
+import setAuthToken from "./views/utilities/setAuthToken";
+import { loadUser } from "./store/action/authAction";
+import { useEffect } from "react";
+import { store } from "./store/index";
 
-import { ThemeProvider } from '@mui/material/styles';
-import { CssBaseline, StyledEngineProvider } from '@mui/material';
-
-// routing
-import Routes from 'routes';
-
-// defaultTheme
-import themes from 'themes';
-
-// project imports
-import NavigationScroll from 'layout/NavigationScroll';
-
-// ==============================|| APP ||============================== //
+if (localStorage.token) {
+  setAuthToken(localStorage.token);
+}
 
 const App = () => {
-    const customization = useSelector((state) => state.customization);
+  const customization = useSelector((state) => state.customization);
 
-    return (
-        <StyledEngineProvider injectFirst>
-            <ThemeProvider theme={themes(customization)}>
-                <CssBaseline />
-                <NavigationScroll>
-                    <Routes />
-                </NavigationScroll>
-            </ThemeProvider>
-        </StyledEngineProvider>
-    );
+  useEffect(() => {
+    store.dispatch(loadUser());
+  }, []);
+
+  return (
+    <StyledEngineProvider injectFirst>
+      <ThemeProvider theme={themes(customization)}>
+        <CssBaseline />
+        <NavigationScroll>
+          <Routes />
+        </NavigationScroll>
+      </ThemeProvider>
+    </StyledEngineProvider>
+  );
 };
 
 export default App;
