@@ -6,6 +6,7 @@ import {
   Box,
   Button,
   FormControl,
+  FormHelperText,
   Grid,
   IconButton,
   InputAdornment,
@@ -15,6 +16,8 @@ import {
   Typography,
   useMediaQuery,
 } from "@mui/material";
+import MuiAlert from "@mui/material/Alert";
+import Snackbar from "@mui/material/Snackbar";
 
 import { useTheme } from "@mui/material/styles";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
@@ -25,12 +28,16 @@ import { setAlert } from "store/action/alertAction";
 import { login } from "store/action/authAction";
 
 import { PropTypes } from "prop-types";
-import { useState } from "react";
+import { useState, forwardRef } from "react";
 import { connect, useSelector } from "react-redux";
 
 import Logo from "ui-component/Logo";
 import AuthCardWrapper from "../AuthCardWrapper";
 import AuthWrapper1 from "../AuthWrapper1";
+
+const Alert = forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 // assets
 
@@ -48,6 +55,8 @@ const Login = ({ login, isAuthenticated, setAlert }) => {
     password: "",
   });
   const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState(false);
+
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
   };
@@ -61,7 +70,8 @@ const Login = ({ login, isAuthenticated, setAlert }) => {
   const onSubmit = async (e) => {
     e.preventDefault();
     if (!email || !password) {
-      alert("Email and password are required");
+      // alert("Email and password are required");
+      setError(true);
     } else {
       login(email, password);
     }
@@ -97,6 +107,7 @@ const Login = ({ login, isAuthenticated, setAlert }) => {
                   <Grid item sx={{ mb: 3 }}>
                     <Logo />
                   </Grid>
+
                   <Grid item xs={12}>
                     <Grid
                       container
@@ -129,7 +140,7 @@ const Login = ({ login, isAuthenticated, setAlert }) => {
                     >
                       <FormControl
                         fullWidth
-                        // error={Boolean(touched.email && errors.email)}
+                        // error={Boolean(auth.user.email && errors.email)}
                         sx={{ ...theme.typography.customInput }}
                       >
                         <InputLabel htmlFor="outlined-adornment-email-login">
@@ -144,11 +155,15 @@ const Login = ({ login, isAuthenticated, setAlert }) => {
                           label="Email Address"
                           inputProps={{}}
                         />
-                        {/* {touched.email && errors.email && (
-                                <FormHelperText error id="standard-weight-helper-text-email-login">
-                                    {errors.email}
-                                </FormHelperText>
-                            )} */}
+
+                        {!email && error && (
+                          <FormHelperText
+                            error
+                            id="standard-weight-helper-text-password-login"
+                          >
+                            Email is required
+                          </FormHelperText>
+                        )}
                       </FormControl>
 
                       <FormControl
@@ -185,11 +200,14 @@ const Login = ({ login, isAuthenticated, setAlert }) => {
                           label="Password"
                           inputProps={{}}
                         />
-                        {/* {touched.password && errors.password && (
-                                <FormHelperText error id="standard-weight-helper-text-password-login">
-                                    {errors.password}
-                                </FormHelperText>
-                            )} */}
+                        {!password && error && (
+                          <FormHelperText
+                            error
+                            id="standard-weight-helper-text-password-login"
+                          >
+                            Password is required
+                          </FormHelperText>
+                        )}
                       </FormControl>
 
                       <Box sx={{ mt: 2 }}>
