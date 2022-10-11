@@ -9,6 +9,7 @@ import { loadUser } from "./store/action/authAction";
 import { useEffect } from "react";
 import { store } from "./store/index";
 
+
 if (localStorage.token) {
   setAuthToken(localStorage.token);
 }
@@ -25,7 +26,9 @@ const App = () => {
       <ThemeProvider theme={themes(customization)}>
         <CssBaseline />
         <NavigationScroll>
-          <Routes />
+          {/* <ToastContainer> */}
+            <Routes />
+          {/* </ToastContainer> */}
         </NavigationScroll>
       </ThemeProvider>
     </StyledEngineProvider>

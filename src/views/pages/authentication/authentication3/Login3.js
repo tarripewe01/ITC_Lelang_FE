@@ -13,27 +13,30 @@ import {
   OutlinedInput,
   Stack,
   Typography,
-  useMediaQuery
+  useMediaQuery,
 } from "@mui/material";
+
 import { useTheme } from "@mui/material/styles";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
+import AnimateButton from "ui-component/extended/AnimateButton";
 
 // project imports
-import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { setAlert } from "store/action/alertAction";
+import { login } from "store/action/authAction";
+
 import { PropTypes } from "prop-types";
 import { useState } from "react";
-import { connect, useDispatch } from "react-redux";
-import { login } from "store/action/authAction";
-import AnimateButton from "ui-component/extended/AnimateButton";
+import { connect, useSelector } from "react-redux";
+
 import Logo from "ui-component/Logo";
 import AuthCardWrapper from "../AuthCardWrapper";
 import AuthWrapper1 from "../AuthWrapper1";
-import { useSelector } from 'react-redux';
 
 // assets
 
 // ================================|| AUTH3 - LOGIN ||================================ //
 
-const Login = ({ login, isAuthenticated }) => {
+const Login = ({ login, isAuthenticated, setAlert }) => {
   const theme = useTheme();
   const matchDownSM = useMediaQuery(theme.breakpoints.down("md"));
 
@@ -57,10 +60,14 @@ const Login = ({ login, isAuthenticated }) => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    login(email, password);
+    if (!email || !password) {
+      alert("Email and password are required");
+    } else {
+      login(email, password);
+    }
   };
 
-  if (isAuthenticated && auth.user.name === "Super Admin" )  {
+  if (isAuthenticated && auth.user.name === "Super Admin") {
     navigate("/dashboard");
   }
 
@@ -215,10 +222,11 @@ const Login = ({ login, isAuthenticated }) => {
 Login.propTypes = {
   login: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool,
+  setAlert: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
 });
 
-export default connect(mapStateToProps, { login })(Login);
+export default connect(mapStateToProps, { login, setAlert })(Login);

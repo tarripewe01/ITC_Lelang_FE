@@ -8,7 +8,7 @@ import { Provider } from "react-redux";
 // project imports
 import * as serviceWorker from "serviceWorker";
 import App from "App";
-import {store} from "./store/index";
+import { store } from "./store/index";
 // import store from "./redux/store";
 
 // style + assets
@@ -22,7 +22,7 @@ const root = createRoot(container); // createRoot(container!) if you use TypeScr
 root.render(
   <Provider store={store}>
     <BrowserRouter basename={config.basename}>
-      <App />
+        <App />
     </BrowserRouter>
   </Provider>
 );
