@@ -17,7 +17,7 @@ const AddProduct = () => {
 
   const handleCancel = (e) => {
     e.preventDefault();
-    navigate("/products");
+    navigate("/dashboard/products");
   };
   return (
     <Paper sx={{ width: "100%", overflow: "hidden" }}>

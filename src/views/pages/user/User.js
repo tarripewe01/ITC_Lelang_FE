@@ -23,10 +23,6 @@ const User = () => {
   const [query, setQuery] = React.useState("");
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
-  console.log(
-    data.filter((user) => user.user.name.toLowerCase().includes("ta"))
-  );
-
   React.useEffect(() => {
     loadData();
   }, []);
@@ -83,29 +79,29 @@ const User = () => {
           <TableBody>
             {data
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .filter((row) => row.user.name.toLowerCase().includes(query))
+              .filter((row) => row.user?.name.toLowerCase().includes(query))
               .map((row, idx) => {
                 return (
-                  <TableRow key={row.user._id}>
+                  <TableRow key={row.user?._id}>
                     <TableCell align="center">{idx + 1}</TableCell>
                     {/* <TableCell align="center">{row.user._id}</TableCell> */}
                     <TableCell
                       align="center"
                       style={{ textTransform: "capitalize" }}
                     >
-                      <Avatar alt={row.user.name} src={row.user.avatar} />
+                      <Avatar alt={row.user?.name} src={row.user?.avatar} />
                     </TableCell>
                     <TableCell
                       align="center"
                       style={{ textTransform: "capitalize" }}
                     >
-                      {row.user.name}
+                      {row.user?.name}
                     </TableCell>
                     <TableCell
                       align="center"
                       style={{ textTransform: "lowercase" }}
                     >
-                      {row.user.email}
+                      {row.user?.email}
                     </TableCell>
                     <TableCell align="center">{row.gender}</TableCell>
                     <TableCell align="center">+62{row.phone}</TableCell>

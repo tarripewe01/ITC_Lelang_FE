@@ -112,7 +112,7 @@ const Product = () => {
             width: 100,
             marginLeft: 20,
           }}
-          onClick={() => navigate("/add_product")}
+          onClick={() => navigate("/dashboard/add_product")}
         >
           Add
         </Button>

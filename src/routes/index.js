@@ -32,11 +32,11 @@ export default function ThemeRoutes() {
             ]
         },
         {
-            path: '/dashboard',
+            path: '/ITC-Finance',
             element: <MainLayout />,
             children: [
                 {
-                    path: '',
+                    path: 'dashboard',
                     element: <DashboardDefault />
                 },
                 {

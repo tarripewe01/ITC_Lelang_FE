@@ -26,9 +26,7 @@ const App = () => {
       <ThemeProvider theme={themes(customization)}>
         <CssBaseline />
         <NavigationScroll>
-          {/* <ToastContainer> */}
             <Routes />
-          {/* </ToastContainer> */}
         </NavigationScroll>
       </ThemeProvider>
     </StyledEngineProvider>

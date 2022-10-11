@@ -78,7 +78,7 @@ const Login = ({ login, isAuthenticated, setAlert }) => {
   };
 
   if (isAuthenticated && auth.user.name === "Super Admin") {
-    navigate("/dashboard");
+    navigate("/ITC-Finance");
   }
 
   return (
