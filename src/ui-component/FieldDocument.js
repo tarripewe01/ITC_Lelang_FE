@@ -1,9 +1,8 @@
-import React from "react";
 import { Grid } from "@mui/material";
 import Field from "./Field";
-import { Document, Status, BPKB } from "./SelectCustom";
+import { BPKB, Document, Status } from "./SelectCustom";
 
-const FieldDocument = ({ label, type, option }) => {
+const FieldDocument = ({ label, type, option, choose }) => {
   return (
     <div style={{ marginLeft: 20 }}>
       <Grid container spacing={1}>
@@ -13,20 +12,28 @@ const FieldDocument = ({ label, type, option }) => {
         <Grid xs={1}>
           <p style={{ fontWeight: "500" }}> :</p>
         </Grid>
-        <Grid xs={8}>
-          {option === "select" ? (
-            <Document />
-          ) : <Field type={type} /> || option === "BPKB" ? (
-            <BPKB />
-          ) : <Field type={type} /> || option === "status" ? (
-            <Status />
-          ) : (
+        {choose === "text" ? (
+          <Grid xs={8}>
             <Field type={type} />
-          )}
-        </Grid>
+          </Grid>
+        ) : (
+          <Grid xs={8}>
+            {option === "Document" ? (
+              <Document />
+            ) : option === "Status" ? (
+              <Status />
+            ) : option === "BPKB" ? (
+              <BPKB />
+            ) : (
+              <Field type={type} />
+            )}
+          </Grid>
+        )}
       </Grid>
     </div>
   );
 };
 
 export default FieldDocument;
+
+

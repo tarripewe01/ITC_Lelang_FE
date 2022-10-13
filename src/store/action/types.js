@@ -9,3 +9,6 @@ export const LOGOUT = 'LOGOUT'
 // User Loaded
 export const USER_LOADED = 'USER_LOADED'
 export const AUTH_ERROR = 'AUTH_ERROR'
+
+// Product
+export const ADD_PRODUCT = 'ADD_PRODUCT'
