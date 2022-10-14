@@ -3,25 +3,21 @@
 import {
   Box,
   Button,
-  FormControl,
-  FormControlLabel,
-  Grid,
-  OutlinedInput,
-  Paper,
-  TextareaAutosize,
-  InputLabel
+  FormControl, Grid, Paper,
+  TextareaAutosize
 } from "@mui/material";
-import { Branch, Category, Document, Rating, BPKB,Status } from "ui-component/SelectCustom";
-import { useNavigate } from "react-router-dom";
-import FieldDocument from "ui-component/FieldDocument";
-import Field from "../../../ui-component/Field";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import { addProduct } from "../../../store/action/productAction";
-import { useState } from "react";
-import { TextField } from "@mui/material";
-import { Link } from "react-router-dom";
 import axios from "axios";
+import { useState } from "react";
+import { connect } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import {
+  BPKB, Branch,
+  Category,
+  Document,
+  Rating, Status
+} from "ui-component/SelectCustom";
+import { addProduct } from "../../../store/action/productAction";
+import Field from "../../../ui-component/Field";
 
 const AddProduct = ({ addProduct }) => {
   const navigate = useNavigate();
@@ -80,7 +76,7 @@ const AddProduct = ({ addProduct }) => {
   const [no_mesin, setNoMesin] = useState("");
   const [kapasitas_mesin, setKapasitasMesin] = useState("");
   const [odometer, setOdometer] = useState("");
-  const [isActive, setIsActive] = useState("");
+  const [isActive, setIsActive] = useState("Aktif");
   const [catatan, setCatatan] = useState("");
   const [no_polisi, setNoPolisi] = useState("");
   const [warna, setWarna] = useState("");
@@ -93,65 +89,66 @@ const AddProduct = ({ addProduct }) => {
   const [sph, setSph] = useState("");
   const [keur, setKeur] = useState("");
   const [bpkb, setBpkb] = useState("");
-  const [tanggal_mulai, setTanggalMulai] = useState("");
-  const [tanggal_selesai, setTanggalSelesai] = useState("");
+  const [mulai, setTanggalMulai] = useState("");
+  const [selesai, setTanggalSelesai] = useState("");
   const [waktu_mulai, setWaktuMulai] = useState("");
   const [waktu_selesai, setWaktuSelesai] = useState("");
   const [status_lelang, setStatusLelang] = useState("");
 
-  console.log(catatan)
-
-
-
+  console.log(catatan);
+  console.log(waktu_mulai)
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    let formData = new FormData()
-    formData .append("cabang", cabang);
-formData .append("nama_produk", nama_produk);
-formData .append("harga", harga);
-formData .append("no_lot", no_lot);
-formData .append("kondisi_mesin", kondisi_mesin);
-formData .append("kondisi_exterior", kondisi_exterior);
-formData .append("kondisi_interior", kondisi_interior);
-formData .append("kategori_produk", kategori_produk);
-formData .append("merk_produk", merk_produk);
-formData .append("model_produk", model_produk);
-formData .append("tahun_produk", tahun_produk);
-formData .append("transmisi", transmisi);
-formData .append("no_rangka", no_rangka);
-formData .append("no_mesin", no_mesin);
-formData .append("kapasitas_mesin", kapasitas_mesin);
-formData .append("odometer", odometer);
-formData .append("isActive", "Aktif");
-formData .append("catatan", catatan);
-formData .append("no_polisi", no_polisi);
-formData .append("warna", warna);
-formData .append("stnk", stnk);
-formData .append("exp_stnk", exp_stnk);
-formData .append("faktur", faktur);
-formData .append("ktp", ktp);
-formData .append("kwitansi", kwitansi);
-formData .append("form_A", formA);
-formData .append("sph", sph);
-formData .append("keur", keur);
-formData .append("bpkb", bpkb);
-formData .append("waktu_mulai", waktu_mulai);
-formData .append("waktu_selesai", waktu_selesai);
-formData .append("status_lelang", status_lelang);
-formData .append("tanggal_selesai", tanggal_selesai);
-formData .append("tanggal_mulai", tanggal_mulai);
-Array.from(file).forEach(item => {
-  formData.append("product_path", item)
-})
-  axios.post('http://localhost:8000/product', formData)
-  .then((res) => {
-    console.log(res)
-  }).catch((err) => {
-    console.log(err)
-  })
+    let formData = new FormData();
+    formData.append("cabang", cabang);
+    formData.append("nama_produk", nama_produk);
+    formData.append("harga", harga);
+    formData.append("no_lot", no_lot);
+    formData.append("kondisi_mesin", kondisi_mesin);
+    formData.append("kondisi_exterior", kondisi_exterior);
+    formData.append("kondisi_interior", kondisi_interior);
+    formData.append("kategori_produk", kategori_produk);
+    formData.append("merk_produk", merk_produk);
+    formData.append("model_produk", model_produk);
+    formData.append("tahun_produk", tahun_produk);
+    formData.append("transmisi", transmisi);
+    formData.append("no_rangka", no_rangka);
+    formData.append("no_mesin", no_mesin);
+    formData.append("kapasitas_mesin", kapasitas_mesin);
+    formData.append("odometer", odometer);
+    formData.append("isActive", isActive);
+    formData.append("catatan", catatan);
+    formData.append("no_polisi", no_polisi);
+    formData.append("warna", warna);
+    formData.append("stnk", stnk);
+    formData.append("exp_stnk", exp_stnk);
+    formData.append("faktur", faktur);
+    formData.append("ktp", ktp);
+    formData.append("kwitansi", kwitansi);
+    formData.append("form_A", formA);
+    formData.append("sph", sph);
+    formData.append("keur", keur);
+    formData.append("bpkb", bpkb);
+    formData.append("waktu_mulai", waktu_mulai);
+    formData.append("waktu_selesai", waktu_selesai);
+    formData.append("status_lelang", status_lelang);
+    formData.append("tanggal_selesai", mulai);
+    formData.append("tanggal_mulai", selesai);
+    Array.from(file).forEach((item) => {
+      formData.append("product_path", item);
+    });
+    axios
+      .post("http://localhost:8000/produk", formData)
+      .then((res) => {
+        console.log(res.data);
+        navigate("/ITC-Finance/products");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
-  
+
   const handleCancel = (e) => {
     e.preventDefault();
   };
@@ -187,9 +184,9 @@ Array.from(file).forEach(item => {
               style={{ marginLeft: 10, marginBottom: 10 }}
             />
             <Field
-              type="text"
+              type="number"
               label="No.LOT"
-              name= "no_lot"
+              name="no_lot"
               onChange={(e) => setNoLot(e.target.value)}
             />
             <Field
@@ -198,19 +195,16 @@ Array.from(file).forEach(item => {
               onChange={(e) => setNamaProduk(e.target.value)}
             />
             <Field
-              type="text"
+              type="number"
               label="Price"
               onChange={(e) => setHarga(e.target.value)}
             />
             <Field
               type="text"
               label="Color"
-
               onChange={(e) => setWarna(e.target.value)}
             />
-            <Category
-              onChange={(e) => setKategoriProduk(e.target.value)}
-            />
+            <Category onChange={(e) => setKategoriProduk(e.target.value)} />
             <FormControl sx={{ m: 1, width: "98%" }}>
               <Grid container spacing={1}>
                 <Grid xs={4}>
@@ -254,7 +248,6 @@ Array.from(file).forEach(item => {
                   <Grid xs={6}>
                     <Field
                       type="time"
-
                       onChange={(e) => setTanggalSelesai(e.target.value)}
                     />
                   </Grid>
@@ -381,18 +374,15 @@ Array.from(file).forEach(item => {
                   label="STNK"
                   onChange={(e) => setStnk(e.target.value)}
                 />
-                  
-                  <p style={{marginLeft: '10px'}} >  Masa Berlaku STNK</p>
+
+                <p style={{ marginLeft: "10px" }}> Masa Berlaku STNK</p>
                 <Field
                   type="date"
                   choose="text"
                   onChange={(e) => setExpStnk(e.target.value)}
                   styele={{}}
                 />
-                <BPKB
-                  label="BPKB"
-                  onChange={(e) => setBpkb(e.target.value)}
-                />
+                <BPKB label="BPKB" onChange={(e) => setBpkb(e.target.value)} />
                 <Document
                   label="Faktur"
                   onChange={(e) => setFaktur(e.target.value)}
@@ -428,7 +418,11 @@ Array.from(file).forEach(item => {
               </div>
               <FormControl sx={{ m: 1, width: "98%" }}>
                 <Status
-                  label="Status"
+                  label="Status Produk"
+                  onChange={(e) => setIsActive(e.target.value)}
+                />
+                <Status
+                  label="Status Lelang"
                   onChange={(e) => setStatusLelang(e.target.value)}
                 />
                 <Grid

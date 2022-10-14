@@ -37,9 +37,11 @@ const Product = () => {
   }, []);
 
   const loadData = async () => {
-    await axios
-      .get("http://localhost:8000/produk")
-      .then((response) => setData(response.data));
+    await axios.get("http://localhost:8000/produk").then((response) => {
+      console.log(response.data);
+      setData(response.data);
+      
+    });
   };
 
   const handleChangePage = (event, newPage) => {
