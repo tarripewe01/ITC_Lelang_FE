@@ -1,3 +1,4 @@
+/* eslint-disable no-mixed-operators */
 /* eslint-disable no-unused-vars */
 import { useNavigate } from "react-router-dom";
 
@@ -5,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import {
   Box,
   Button,
+  CircularProgress,
   FormControl,
   FormHelperText,
   Grid,
@@ -43,7 +45,7 @@ const Alert = forwardRef(function Alert(props, ref) {
 
 // ================================|| AUTH3 - LOGIN ||================================ //
 
-const Login = ({ login, isAuthenticated, setAlert }) => {
+const Login = ({ login, isAuthenticated, loading }) => {
   const theme = useTheme();
   const matchDownSM = useMediaQuery(theme.breakpoints.down("md"));
 
@@ -70,14 +72,16 @@ const Login = ({ login, isAuthenticated, setAlert }) => {
   const onSubmit = async (e) => {
     e.preventDefault();
     if (!email || !password) {
-      // alert("Email and password are required");
       setError(true);
     } else {
       login(email, password);
     }
   };
 
-  if (isAuthenticated && auth.user.name === "Super Admin") {
+  if (
+    (isAuthenticated && auth.result?.name === "Super Admin") ||
+    auth.result?.name === "Admin"
+  ) {
     navigate("/ITC-Finance");
   }
 
@@ -212,6 +216,7 @@ const Login = ({ login, isAuthenticated, setAlert }) => {
 
                       <Box sx={{ mt: 2 }}>
                         <AnimateButton>
+                          {loading && <CircularProgress color="secondary" />}
                           <Button
                             disableElevation
                             // disabled={isSubmitting}
@@ -240,11 +245,13 @@ const Login = ({ login, isAuthenticated, setAlert }) => {
 Login.propTypes = {
   login: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool,
+  loading: PropTypes.bool,
   setAlert: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
+  loading: state.auth.loading,
 });
 
 export default connect(mapStateToProps, { login, setAlert })(Login);

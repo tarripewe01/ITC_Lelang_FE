@@ -2,7 +2,7 @@
 /* eslint-disable no-unused-vars */
 import * as React from "react";
 import axios from "axios";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import {
   Box,
   Button,
@@ -20,10 +20,10 @@ import {
   MenuItem,
   InputLabel,
 } from "@mui/material";
-var currencyFormatter = require('currency-formatter');
+var currencyFormatter = require("currency-formatter");
 
 const Product = () => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const [data, setData] = React.useState([]);
   // filter
@@ -47,7 +47,7 @@ const Product = () => {
   };
 
   const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(+event.target.value);
+    setRowsPerPage(event.target.value);
     setPage(0);
   };
 
@@ -89,8 +89,8 @@ const Product = () => {
             label="Status"
             inputProps={{ "aria-label": "Without label" }}
           >
-            <MenuItem value={10}>Active</MenuItem>
-            <MenuItem value={20}>Inactive</MenuItem>
+            <MenuItem value={10}>Aktif</MenuItem>
+            <MenuItem value={20}>Tidak Aktif</MenuItem>
           </Select>
         </FormControl>
         <Button
@@ -151,7 +151,9 @@ const Product = () => {
                     >
                       {row.nama_produk}
                     </TableCell>
-                    <TableCell align="center">{currencyFormatter.format( row.harga, { code: 'IDR' })}</TableCell>
+                    <TableCell align="center">
+                      {currencyFormatter.format(row.harga, { code: "IDR" })}
+                    </TableCell>
                     <TableCell
                       align="center"
                       style={{
@@ -159,7 +161,7 @@ const Product = () => {
                         fontWeight: "600",
                       }}
                     >
-                      {row.isActive === 1 ? "Inactive" : "Active"}
+                      {row.isActive === 0 ? "Tidak Aktif" : "Aktif"}
                     </TableCell>
                     <TableCell align="center">
                       <div>

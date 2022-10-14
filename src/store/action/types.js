@@ -9,6 +9,8 @@ export const LOGOUT = 'LOGOUT'
 // User Loaded
 export const USER_LOADED = 'USER_LOADED'
 export const AUTH_ERROR = 'AUTH_ERROR'
+export const GET_USERS_SUCCESS = 'GET_USERS_SUCCESS'
+export const GET_USERS_FAIL = 'GET_USERS_FAIL'
 
 // Product
 export const ADD_PRODUCT = 'ADD_PRODUCT'

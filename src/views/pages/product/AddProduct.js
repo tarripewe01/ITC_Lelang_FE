@@ -1,3 +1,4 @@
+/* eslint-disable no-use-before-define */
 /* eslint-disable no-unused-vars */
 import {
   Box,
@@ -22,100 +23,137 @@ import { Link } from "react-router-dom";
 const AddProduct = ({ addProduct }) => {
   const navigate = useNavigate();
 
-  const [image, setImage] = useState(null);
-  const [lot, setLot] = useState("");
-  const [name, setName] = useState("");
-  const [price, setPrice] = useState("");
-  const [color, setColor] = useState("");
-  const [machine, setMachine] = useState(null);
-  const [interior, setInterior] = useState(null);
-  const [exterior, setExterior] = useState(null);
-  const [branch, setBranch] = useState(null);
-  const [category, setCategory] = useState(null);
-  const [startDate, setStartDate] = useState(null);
-  const [endDate, setEndDate] = useState(null);
-  const [startTime, setStartTime] = useState(null);
-  const [endTime, setEndTime] = useState(null);
+  // const [product_path, setProductPath] = useState(null);
+  // const [no_lot, setNoLot] = useState("");
+  // const [nama_produk, setNamaProduk] = useState("");
+  // const [harga, setHarga] = useState("");
+  // const [warna, setWarna] = useState("");
+  // const [kondisi_mesin, setKondisiMesin] = useState(null);
+  // const [kondisi_interior, setKondisiInterior] = useState(null);
+  // const [kondisi_exterior, setKondisiExterior] = useState(null);
+  // const [cabang, setCabang] = useState(null);
+  // const [kategori_produk, setCategory] = useState(null);
+  // const [tanggal_mulai, setTanggalMulai] = useState(Date.now());
+  // const [tanggal_selesai, setTanggalSelesai] = useState(Date.now());
+  // const [waktu_mulai, setWaktuMulai] = useState(null);
+  // const [waktu_selesai, setWaktuSelesai ]= useState(null);
 
-  const [merk, setMerk] = useState("");
-  const [type, setType] = useState("");
-  const [year, setYear] = useState("");
-  const [fuel, setFuel] = useState("");
-  const [transmition, setTransmition] = useState("");
+  // const [merk_produk, setMerk] = useState("");
+  // const [model_produk, setModel] = useState("");
+  // const [tahun_produk, setTahun] = useState("");
+  // const [fuel, setFuel] = useState("");
+  // const [transmisi, setTransmisi] = useState("");
+  // const [odometer, setOdometer] = useState("");
+  // const [kapasitas_mesin, setKapasitasMesin] = useState("");
+  // const [no_rangka, setNoRangka] = useState("");
+  // const [no_mesin, setNoMesin] = useState("");
+  // const [no_polisi, setNoPolisi] = useState("");
+  // const [stnk, setStnk] = useState("");
+  // const [bpkb, setBpkb] = useState("");
+  // const [exp_stnk, setExpStnk] = useState("");
+  // const [faktur, setFaktur] = useState("");
+  // const [ktp, setKtp] = useState("");
+  // const [kwitansi, setKwitansi] = useState("");
+  // const [formA, setFormA] = useState("");
+  // const [sph, setSph] = useState("");
+  // const [keur, setKeur] = useState("");
+  // const [status_lelang, setStatusLelang] = useState(null);
+  // const [catatan, setCatatan] = useState("");
+  // const [isActive, setIsActive] = useState(null);
+  const [file, setFile] = useState("");
+  const [cabang, setCabang] = useState("");
+  const [nama_produk, setNamaProduk] = useState("");
+  const [harga, setHarga] = useState("");
+  const [no_lot, setNoLot] = useState("");
+  const [kondisi_mesin, setKondisiMesin] = useState("");
+  const [kondisi_exterior, setKondisiExterior] = useState("");
+  const [kondisi_interior, setKondisiInterior] = useState("");
+  const [kategori_produk, setKategoriProduk] = useState("");
+  const [merk_produk, setMerkProduk] = useState("");
+  const [model_produk, setModelProduk] = useState("");
+  const [tahun_produk, setTahunProduk] = useState("");
+  const [transmisi, setTransmisi] = useState("");
+  const [no_rangka, setNoRangka] = useState("");
+  const [no_mesin, setNoMesin] = useState("");
+  const [kapasitas_mesin, setKapasitasMesin] = useState("");
   const [odometer, setOdometer] = useState("");
-  const [engineCapacity, setEngineCapacity] = useState("");
-  const [noFrame, setNoFrame] = useState("");
-  const [noMachine, setNoMachine] = useState("");
-  const [noPolisi, setNoPolisi] = useState("");
+  const [isActive, setIsActive] = useState("");
+  const [catatan, setCatatan] = useState("");
+  const [no_polisi, setNoPolisi] = useState("");
+  const [warna, setWarna] = useState("");
   const [stnk, setStnk] = useState("");
-  const [bpkb, setBpkb] = useState("");
-  const [masaberlakuStnk, setMasaBerlakuStnk] = useState("");
+  const [exp_stnk, setExpStnk] = useState("");
   const [faktur, setFaktur] = useState("");
-  const [fcKtp, setFcKtp] = useState("");
+  const [ktp, setKtp] = useState("");
   const [kwitansi, setKwitansi] = useState("");
   const [formA, setFormA] = useState("");
   const [sph, setSph] = useState("");
   const [keur, setKeur] = useState("");
-  const [status, setStatus] = useState("");
-  const [catatan, setCatatan] = useState("");
+  const [bpkb, setBpkb] = useState("");
+  const [tanggal_mulai, setTanggalMulai] = useState("");
+  const [tanggal_selesai, setTanggalSelesai] = useState("");
+  const [waktu_mulai, setWaktuMulai] = useState("");
+  const [waktu_selesai, setWaktuSelesai] = useState("");
+  const [status_lelang, setStatusLelang] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const data = {
-      lot,
-      name,
-      price,
-      color,
-      machine,
-      interior,
-      exterior,
-      branch,
-      category,
-      startDate,
-      endDate,
-      startTime,
-      endTime,
-      merk,
-      type,
-      year,
-    };
-    addProduct(data);
-    clearForm();
-    navigate("/ITC-Finance/product");
-    console.log('klik')
+    const formData = new FormData();
+    formData.append("photo_path", file);
+    console.log(file);
+    // const data = {
+    //   product_path,
+    //   cabang,
+    //   nama_produk,
+    //   harga,
+    //   no_lot,
+    //   kondisi_mesin,
+    //   kondisi_exterior,
+    //   kondisi_interior,
+    //   kategori_produk,
+    //   merk_produk,
+    //   model_produk,
+    //   tahun_produk,
+    //   transmisi,
+    //   no_rangka,
+    //   no_mesin,
+    //   kapasitas_mesin,
+    //   odometer,
+    //   isActive,
+    //   catatan,
+    //   no_polisi,
+    //   warna,
+    //   stnk,
+    //   exp_stnk,
+    //   faktur,
+    //   ktp,
+    //   kwitansi,
+    //   formA,
+    //   sph,
+    //   keur,
+    //   bpkb,
+    //   tanggal_mulai,
+    //   tanggal_selesai,
+    //   waktu_mulai,
+    //   waktu_selesai,
+    //   status_lelang,
+    // };
+    // addProduct(data);
+    // addProduct(data);
+    // clearForm();
+    // navigate("/ITC-Finance/products");
+    console.log("klik");
   };
-
-  const clearForm = () => {
-    setLot("");
-    setName("");
-    setPrice("");
-    setColor("");
-    setMerk("");
-    setType("");
-    setYear("");
-    setFuel("");
-    setTransmition("");
-    setOdometer("");
-    setEngineCapacity("");
-    setNoFrame("");
-    setNoMachine("");
-    setNoPolisi("");
-    setStnk("");
-    setBpkb("");
-    setMasaBerlakuStnk("");
-    setFaktur("");
-    setFcKtp("");
-    setKwitansi("");
-    setFormA("");
-    setSph("");
-    setKeur("");
-    setStatus("");
-    setCatatan("");
-  };
-
+  
   const handleCancel = (e) => {
     e.preventDefault();
     navigate("/ITC-Finance/products");
+  };
+
+  const handleFile = (e) => {
+    let file = e.target.files[0];
+    setFile(file);
+    console.log(file);
   };
   return (
     <Paper sx={{ width: "100%", overflow: "hidden" }}>
@@ -131,7 +169,7 @@ const AddProduct = ({ addProduct }) => {
             "& .MuiTextField-root": { m: 1, width: "98%" },
           }}
           autoComplete="off"
-          onSubmit={()=>console.log('klik')}
+          onSubmit={() => console.log("klik")}
         >
           <div>
             <input
@@ -139,67 +177,66 @@ const AddProduct = ({ addProduct }) => {
               multiple
               type="file"
               id="fullWidth"
-              value={image}
-              onChange={(e) => setImage(e.target.files[0])}
+              onChange={handleFile}
               style={{ marginLeft: 10, marginBottom: 10 }}
             />
             <Field
               type="text"
               label="No.LOT"
-              value={lot}
-              onChange={(e) => setLot(e.target.value)}
+              value={no_lot}
+              onChange={(e) => setNoLot(e.target.value)}
             />
             <Field
               type="text"
               label="Name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              value={nama_produk}
+              onChange={(e) => setNamaProduk(e.target.value)}
             />
             <Field
               type="text"
               label="Price"
-              value={price}
-              onChange={(e) => setPrice(e.target.value)}
+              value={harga}
+              onChange={(e) => setHarga(e.target.value)}
             />
             <Field
               type="text"
               label="Color"
-              value={color}
-              onChange={(e) => setColor(e.target.value)}
+              value={warna}
+              onChange={(e) => setWarna(e.target.value)}
             />
             <Category
-              value={category}
-              onChange={(e) => setCategory(e.target.value)}
+              value={kategori_produk}
+              onChange={(e) => setKategoriProduk(e.target.value)}
             />
             <FormControl sx={{ m: 1, width: "98%" }}>
               <Grid container spacing={1}>
                 <Grid xs={4}>
                   <Rating
                     label="Machine"
-                    value={machine}
-                    onChange={(e) => setMachine(e.target.value)}
+                    value={kondisi_mesin}
+                    onChange={(e) => setKondisiMesin(e.target.value)}
                   />
                 </Grid>
                 <Grid xs={4}>
                   <Rating
                     label="Interior"
-                    value={interior}
-                    onChange={(e) => setInterior(e.target.value)}
+                    value={kondisi_interior}
+                    onChange={(e) => setKondisiInterior(e.target.value)}
                   />
                 </Grid>
                 <Grid xs={4}>
                   <Rating
                     label="Exterior"
-                    value={exterior}
-                    onChange={(e) => setExterior(e.target.value)}
+                    value={kondisi_exterior}
+                    onChange={(e) => setKondisiExterior(e.target.value)}
                   />
                 </Grid>
               </Grid>
             </FormControl>
             <Branch
               label="Branch"
-              value={branch}
-              onChange={(e) => setBranch(e.target.value)}
+              value={cabang}
+              onChange={(e) => setCabang(e.target.value)}
             />
             <FormControl sx={{ m: 1, width: "98%" }}>
               <div>
@@ -208,15 +245,15 @@ const AddProduct = ({ addProduct }) => {
                   <Grid xs={6}>
                     <Field
                       type="date"
-                      value={startDate}
-                      onChange={(e) => setStartDate(e.target.value)}
+                      value={tanggal_mulai}
+                      onChange={(e) => setTanggalMulai(e.target.value)}
                     />
                   </Grid>
                   <Grid xs={6}>
                     <Field
                       type="time"
-                      value={startTime}
-                      onChange={(e) => setStartTime(e.target.value)}
+                      value={tanggal_selesai}
+                      onChange={(e) => setTanggalSelesai(e.target.value)}
                     />
                   </Grid>
                 </Grid>
@@ -225,15 +262,15 @@ const AddProduct = ({ addProduct }) => {
                   <Grid xs={6}>
                     <Field
                       type="date"
-                      value={endDate}
-                      onChange={(e) => setEndDate(e.target.value)}
+                      value={waktu_mulai}
+                      onChange={(e) => setWaktuMulai(e.target.value)}
                     />
                   </Grid>
                   <Grid xs={6}>
                     <Field
                       type="time"
-                      value={endTime}
-                      onChange={(e) => setEndTime(e.target.value)}
+                      value={waktu_selesai}
+                      onChange={(e) => setWaktuSelesai(e.target.value)}
                     />
                   </Grid>
                 </Grid>
@@ -252,24 +289,24 @@ const AddProduct = ({ addProduct }) => {
                       <Field
                         type="text"
                         label="Merk"
-                        value={merk}
-                        onChange={(e) => setMerk(e.target.value)}
+                        value={merk_produk}
+                        onChange={(e) => setMerkProduk(e.target.value)}
                       />
                     </Grid>
                     <Grid xs={4}>
                       <Field
                         type="text"
                         label="Type"
-                        value={type}
-                        onChange={(e) => setType(e.target.value)}
+                        value={model_produk}
+                        onChange={(e) => setModelProduk(e.target.value)}
                       />
                     </Grid>
                     <Grid xs={4}>
                       <Field
-                        type="text"
+                        type="number"
                         label="Year"
-                        value={year}
-                        onChange={(e) => setYear(e.target.value)}
+                        value={tahun_produk}
+                        onChange={(e) => setTahunProduk(e.target.value)}
                       />
                     </Grid>
                   </Grid>
@@ -278,30 +315,30 @@ const AddProduct = ({ addProduct }) => {
               <FormControl sx={{ m: 1, width: "98%" }}>
                 <div>
                   <Grid container spacing={1}>
-                    <Grid xs={4}>
+                    <Grid xs={6}>
                       <Field
-                        type="text"
+                        type="number"
                         label="Odometer (KM)"
                         value={odometer}
                         onChange={(e) => setOdometer(e.target.value)}
                       />
                     </Grid>
-                    <Grid xs={4}>
+                    <Grid xs={6}>
                       <Field
-                        type="text"
+                        type="number"
                         label="Machine Capacity (CC)"
-                        value={engineCapacity}
-                        onChange={(e) => setEngineCapacity(e.target.value)}
+                        value={kapasitas_mesin}
+                        onChange={(e) => setKapasitasMesin(e.target.value)}
                       />
                     </Grid>
-                    <Grid xs={4}>
+                    {/* <Grid xs={4}>
                       <Field
                         type="text"
                         label="Fuel"
                         value={fuel}
-                        onChange={(e) => setFuel(e.target.value)}
+                        onChange={onChange}
                       />
-                    </Grid>
+                    </Grid> */}
                   </Grid>
                 </div>
               </FormControl>
@@ -312,24 +349,24 @@ const AddProduct = ({ addProduct }) => {
                       <Field
                         type="text"
                         label="Transmition"
-                        value={transmition}
-                        onChange={(e) => setTransmition(e.target.value)}
+                        value={transmisi}
+                        onChange={(e) => setTransmisi(e.target.value)}
                       />
                     </Grid>
                     <Grid xs={4}>
                       <Field
                         type="text"
                         label="No. Frame"
-                        value={noFrame}
-                        onChange={(e) => setNoFrame(e.target.value)}
+                        value={no_rangka}
+                        onChange={(e) => setNoRangka(e.target.value)}
                       />
                     </Grid>
                     <Grid xs={4}>
                       <Field
                         type="text"
                         label="No. Machine"
-                        value={noMachine}
-                        onChange={(e) => setNoMachine(e.target.value)}
+                        value={no_mesin}
+                        onChange={(e) => setNoMesin(e.target.value)}
                       />
                     </Grid>
                   </Grid>
@@ -346,7 +383,7 @@ const AddProduct = ({ addProduct }) => {
                 <FieldDocument
                   label="No.Polisi"
                   choose="text"
-                  value={noPolisi}
+                  value={no_polisi}
                   onChange={(e) => setNoPolisi(e.target.value)}
                 />
                 <FieldDocument
@@ -359,8 +396,8 @@ const AddProduct = ({ addProduct }) => {
                   label="Masa Berlaku STNK"
                   type="date"
                   choose="text"
-                  value={masaberlakuStnk}
-                  onChange={(e) => setMasaBerlakuStnk(e.target.value)}
+                  value={exp_stnk}
+                  onChange={(e) => setExpStnk(e.target.value)}
                 />
                 <FieldDocument
                   label="BPKB"
@@ -377,8 +414,8 @@ const AddProduct = ({ addProduct }) => {
                 <FieldDocument
                   label="Fotocopy KTP"
                   option="Document"
-                  value={fcKtp}
-                  onChange={(e) => setFcKtp(e.target.value)}
+                  value={ktp}
+                  onChange={(e) => setKtp(e.target.value)}
                 />
                 <FieldDocument
                   label="Kwitansi Blanko"
@@ -417,8 +454,8 @@ const AddProduct = ({ addProduct }) => {
                 <FieldDocument
                   label="Status"
                   option="Status"
-                  value={status}
-                  onChange={(e) => setStatus(e.target.value)}
+                  value={status_lelang}
+                  onChange={(e) => setStatusLelang(e.target.value)}
                 />
                 <Grid
                   container
@@ -447,7 +484,7 @@ const AddProduct = ({ addProduct }) => {
                   backgroundColor: "#2196f3",
                 }}
                 variant="contained"
-                onSubmit={()=>console.log('klik')}
+                onClick={handleSubmit}
               >
                 Save
               </Button>

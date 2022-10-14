@@ -10,7 +10,7 @@ export const loadUser = () => async (dispatch) => {
   }
 
   try {
-    const res = await axios.get("http://localhost:8000/auth");
+    const res = await axios.get("http://localhost:8000/user");
     dispatch({
       type: USER_LOADED,
       payload: res.data,
@@ -21,6 +21,7 @@ export const loadUser = () => async (dispatch) => {
     });
   }
 };
+
 
 // Login User
 export const login = (email, password) => async (dispatch) => {
@@ -33,13 +34,15 @@ export const login = (email, password) => async (dispatch) => {
   const body = JSON.stringify({ email, password });
 
   try {
-    const res = await axios.post("http://localhost:8000/auth/login", body, config);
+    const res = await axios.post("http://localhost:8000/user/login", body, config);
 
     dispatch({
       type: LOGIN_SUCCESS,
       payload: res.data,
     });
+
     dispatch(loadUser());
+    
   } catch (err) {
     const errors = err.response.data.errors;
 

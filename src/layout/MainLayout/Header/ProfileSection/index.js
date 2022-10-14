@@ -1,14 +1,12 @@
 /* eslint-disable no-unused-vars */
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from "react";
 
-import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 // material-ui
-import {
-    Avatar, Chip, Typography
-} from '@mui/material';
-import { useTheme } from '@mui/material/styles';
+import { Avatar, Chip, Typography } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 
 // third-party
 
@@ -19,98 +17,103 @@ import { useTheme } from '@mui/material/styles';
 // ==============================|| PROFILE MENU ||============================== //
 
 const ProfileSection = () => {
-    const theme = useTheme();
-    const navigate = useNavigate();
+  const theme = useTheme();
+  const navigate = useNavigate();
 
-    const customization = useSelector((state) => state.customization);
-    const auth = useSelector((state) => state.auth);
+  const customization = useSelector((state) => state.customization);
+  const auth = useSelector((state) => state.auth);
 
-    const [selectedIndex, setSelectedIndex] = useState(-1);
-    const [open, setOpen] = useState(false);
-    /**
-     * anchorRef is used on different componets and specifying one type leads to other components throwing an error
-     * */
-    const anchorRef = useRef(null);
-    const handleLogout = async () => {
-        console.log('Logout');
-    };
+  const [selectedIndex, setSelectedIndex] = useState(-1);
+  const [open, setOpen] = useState(false);
+  /**
+   * anchorRef is used on different componets and specifying one type leads to other components throwing an error
+   * */
+  const anchorRef = useRef(null);
+  const handleLogout = async () => {
+    console.log("Logout");
+  };
 
-    const handleClose = (event) => {
-        if (anchorRef.current && anchorRef.current.contains(event.target)) {
-            return;
+  const handleClose = (event) => {
+    if (anchorRef.current && anchorRef.current.contains(event.target)) {
+      return;
+    }
+    setOpen(false);
+  };
+
+  const handleListItemClick = (event, index, route = "") => {
+    setSelectedIndex(index);
+    handleClose(event);
+
+    if (route && route !== "") {
+      navigate(route);
+    }
+  };
+  const handleToggle = () => {
+    setOpen((prevOpen) => !prevOpen);
+  };
+
+  const prevOpen = useRef(open);
+  useEffect(() => {
+    if (prevOpen.current === true && open === false) {
+      anchorRef.current.focus();
+    }
+
+    prevOpen.current = open;
+  }, [open]);
+
+  return (
+    <>
+      <Typography
+        style={{ marginRight: 10 }}
+        component="span"
+        variant="h4"
+        sx={{ fontWeight: 400 }}
+      >
+        {auth.result?.name ? auth.result?.name : "Super Admin"}
+      </Typography>
+      <Chip
+        sx={{
+          height: "48px",
+          alignItems: "center",
+          borderRadius: "27px",
+          transition: "all .2s ease-in-out",
+          borderColor: theme.palette.primary.light,
+          backgroundColor: theme.palette.primary.light,
+          '&[aria-controls="menu-list-grow"], &:hover': {
+            borderColor: theme.palette.primary.main,
+            background: `${theme.palette.primary.main}!important`,
+            color: theme.palette.primary.light,
+            "& svg": {
+              stroke: theme.palette.primary.light,
+            },
+          },
+          "& .MuiChip-label": {
+            lineHeight: 0,
+          },
+        }}
+        icon={
+          <Avatar
+            src={auth.result?.avatar}
+            sx={{
+              ...theme.typography.mediumAvatar,
+              margin: "8px 0 8px 8px !important",
+              cursor: "pointer",
+            }}
+            ref={anchorRef}
+            aria-controls={open ? "menu-list-grow" : undefined}
+            aria-haspopup="true"
+            color="inherit"
+          />
         }
-        setOpen(false);
-    };
-
-    const handleListItemClick = (event, index, route = '') => {
-        setSelectedIndex(index);
-        handleClose(event);
-
-        if (route && route !== '') {
-            navigate(route);
-        }
-    };
-    const handleToggle = () => {
-        setOpen((prevOpen) => !prevOpen);
-    };
-
-    const prevOpen = useRef(open);
-    useEffect(() => {
-        if (prevOpen.current === true && open === false) {
-            anchorRef.current.focus();
-        }
-
-        prevOpen.current = open;
-    }, [open]);
-
-    return (
-        <>
-            <Typography style={{ marginRight: 10 }} component="span" variant="h4" sx={{ fontWeight: 400 }}>
-                {auth.user?.name}
-            </Typography>
-            <Chip
-                sx={{
-                    height: '48px',
-                    alignItems: 'center',
-                    borderRadius: '27px',
-                    transition: 'all .2s ease-in-out',
-                    borderColor: theme.palette.primary.light,
-                    backgroundColor: theme.palette.primary.light,
-                    '&[aria-controls="menu-list-grow"], &:hover': {
-                        borderColor: theme.palette.primary.main,
-                        background: `${theme.palette.primary.main}!important`,
-                        color: theme.palette.primary.light,
-                        '& svg': {
-                            stroke: theme.palette.primary.light
-                        }
-                    },
-                    '& .MuiChip-label': {
-                        lineHeight: 0
-                    }
-                }}
-                icon={
-                    <Avatar
-                        src={auth.user?.avatar}
-                        sx={{
-                            ...theme.typography.mediumAvatar,
-                            margin: '8px 0 8px 8px !important',
-                            cursor: 'pointer'
-                        }}
-                        ref={anchorRef}
-                        aria-controls={open ? 'menu-list-grow' : undefined}
-                        aria-haspopup="true"
-                        color="inherit"
-                    />
-                }
-                // label={<IconSettings stroke={1.5} size="1.5rem" color={theme.palette.primary.main} />}
-                variant="outlined"
-                ref={anchorRef}
-                aria-controls={open ? 'menu-list-grow' : undefined}
-                aria-haspopup="true"
-                // onClick={handleToggle}
-                color="primary"
-            />
-            {/* <Popper
+        // label={<IconSettings stroke={1.5} size="1.5rem" color={theme.palette.primary.main} />}
+        variant="outlined"
+        ref={anchorRef}
+        aria-controls={open ? "menu-list-grow" : undefined}
+        aria-haspopup="true"
+        // onClick={handleToggle}
+        color="primary"
+      />
+      {/* <Popper
                 placement="bottom-end"
                 open={open}
                 anchorEl={anchorRef.current}
@@ -192,8 +195,8 @@ const ProfileSection = () => {
                     </Transitions>
                 )}
             </Popper> */}
-        </>
-    );
+    </>
+  );
 };
 
 export default ProfileSection;

@@ -16,6 +16,7 @@ import {
 } from "@mui/material";
 
 import axios from "axios";
+import { useSelector } from "react-redux";
 
 const User = () => {
   const [data, setData] = React.useState([]);
@@ -23,14 +24,16 @@ const User = () => {
   const [query, setQuery] = React.useState("");
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
+  const auth = useSelector((state) => state.auth);
+
   React.useEffect(() => {
     loadData();
   }, []);
 
   const loadData = async () => {
-    await axios
-      .get("http://localhost:8000/profile")
-      .then((response) => setData(response.data));
+    await axios.get("http://localhost:8000/user").then((response) =>
+      setData(response.data)
+    );
   };
 
   const handleChangePage = (event, newPage) => {
@@ -38,7 +41,7 @@ const User = () => {
   };
 
   const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(+event.target.value);
+    setRowsPerPage(event.target.value);
     setPage(0);
   };
 
@@ -79,29 +82,29 @@ const User = () => {
           <TableBody>
             {data
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .filter((row) => row.user?.name.toLowerCase().includes(query))
+              .filter((row) => row.name.toLowerCase().includes(query))
               .map((row, idx) => {
                 return (
-                  <TableRow key={row.user?._id}>
+                  <TableRow key={row._id}>
                     <TableCell align="center">{idx + 1}</TableCell>
                     {/* <TableCell align="center">{row.user._id}</TableCell> */}
                     <TableCell
                       align="center"
                       style={{ textTransform: "capitalize" }}
                     >
-                      <Avatar alt={row.user?.name} src={row.user?.avatar} />
+                      <Avatar alt={row.name} src={row.user_path} />
                     </TableCell>
                     <TableCell
                       align="center"
                       style={{ textTransform: "capitalize" }}
                     >
-                      {row.user?.name}
+                      {row.name}
                     </TableCell>
                     <TableCell
                       align="center"
                       style={{ textTransform: "lowercase" }}
                     >
-                      {row.user?.email}
+                      {row.email}
                     </TableCell>
                     <TableCell align="center">{row.gender}</TableCell>
                     <TableCell align="center">+62{row.phone}</TableCell>
@@ -117,7 +120,7 @@ const User = () => {
                         >
                           Delete
                         </Button>
-                      </div> */}
+                      </div>  */}
                       {row.address}
                     </TableCell>
                   </TableRow>
