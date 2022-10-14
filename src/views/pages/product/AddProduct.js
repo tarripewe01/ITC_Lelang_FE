@@ -3,18 +3,23 @@
 import {
   Box,
   Button,
-  FormControl, Grid, Paper,
-  TextareaAutosize
+  FormControl,
+  Grid,
+  Paper,
+  TextareaAutosize,
 } from "@mui/material";
 import axios from "axios";
 import { useState } from "react";
 import { connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {
-  BPKB, Branch,
+  BPKB,
+  Branch,
   Category,
   Document,
-  Rating, Status
+  Rating,
+  Status,
+  Transmisi,
 } from "ui-component/SelectCustom";
 import { addProduct } from "../../../store/action/productAction";
 import Field from "../../../ui-component/Field";
@@ -96,7 +101,7 @@ const AddProduct = ({ addProduct }) => {
   const [status_lelang, setStatusLelang] = useState("");
 
   console.log(catatan);
-  console.log(waktu_mulai)
+  console.log(waktu_mulai);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -334,8 +339,7 @@ const AddProduct = ({ addProduct }) => {
                 <div>
                   <Grid container spacing={1}>
                     <Grid xs={4}>
-                      <Field
-                        type="text"
+                      <Transmisi
                         label="Transmition"
                         onChange={(e) => setTransmisi(e.target.value)}
                       />
