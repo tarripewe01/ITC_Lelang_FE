@@ -143,8 +143,8 @@ export const BPKB = ({ value, onChange, label }) => {
 
 export const Status = ({ value, onChange, label }) => {
     const options = [
-      { label: "Aktif", value: 0 },
-      { label: "Tidak Aktif", value: 1 },
+      { label: "Aktif", value: "Aktif" },
+      { label: "Tidak Aktif", value: "Tidak Aktif" },
     ];
   
     return (
