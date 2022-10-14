@@ -1,7 +1,7 @@
 import React from 'react'
 import { Box, TextField } from '@mui/material';
 
-const Field = ({label,type, onChange}) => {
+const Field = ({label,type, onChange, value}) => {
   return (
     <Box
     component="form"
@@ -12,7 +12,7 @@ const Field = ({label,type, onChange}) => {
     autoComplete="off"
   >
     <div>
-      <TextField type={type} fullWidth label={label} onChange={onChange} id="fullWidth" />
+      <TextField value={value} type={type} fullWidth label={label} onChange={onChange} id="fullWidth" />
     </div>
   </Box>
   )

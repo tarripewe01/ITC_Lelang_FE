@@ -2,7 +2,7 @@
 /* eslint-disable no-unused-vars */
 import * as React from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   Box,
   Button,
@@ -37,13 +37,11 @@ const Product = () => {
   }, []);
 
   const loadData = async () => {
-    await axios.get("http://localhost:8000/produk").then((response) => {
-      console.log(response.data);
-      setData(response.data);
-      
-    });
+    await axios
+      .get("http://localhost:8000/product")
+      .then((response) => setData(response.data));
   };
-
+ 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -163,16 +161,19 @@ const Product = () => {
                         fontWeight: "600",
                       }}
                     >
+                      {/* {console.log(row)} */}
                       {row.isActive === 0 ? "Tidak Aktif" : "Aktif"}
                     </TableCell>
                     <TableCell align="center">
                       <div>
+                      <Link to={'/ITC-Finance/add_product?edit=2'} state={row}>
                         <Button
                           variant="contained"
                           style={{ backgroundColor: "#5e35b1", width: 100 }}
                         >
                           Edit
                         </Button>
+                        </Link>
                         <Button
                           variant="contained"
                           style={{ backgroundColor: "#d84315", width: 100 }}
