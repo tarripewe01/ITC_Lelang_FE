@@ -3,35 +3,24 @@
 import {
   Box,
   Button,
-  FormControl,
-  FormControlLabel,
-  Grid,
-  OutlinedInput,
-  Paper,
-  TextareaAutosize,
-  InputLabel,
+  FormControl, Grid, Paper,
+  TextareaAutosize
 } from "@mui/material";
+import axios from "axios";
+import { useState } from "react";
+import { connect } from "react-redux";
+import { useLocation, useNavigate } from "react-router-dom";
 import {
-  Branch,
+  BPKB, Branch,
   Category,
   Document,
-  Rating,
-  BPKB,
-  Status,
-  Transmisi,
+  Rating, Status,
+  Transmisi
 } from "ui-component/SelectCustom";
-import { useLocation, useNavigate } from "react-router-dom";
-import FieldDocument from "ui-component/FieldDocument";
-import Field from "../../../ui-component/Field";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
 import { addProduct } from "../../../store/action/productAction";
-import { useState } from "react";
-import { TextField } from "@mui/material";
-import { Link } from "react-router-dom";
-import axios from "axios";
+import Field from "../../../ui-component/Field";
 
-const AddProduct = ({ addProduct }) => {
+const AddProduct = () => {
   const state = useLocation().state;
   const navigate = useNavigate();
   const [file, setFile] = useState("");
