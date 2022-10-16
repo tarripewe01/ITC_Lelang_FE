@@ -31,9 +31,14 @@ const User = () => {
   }, []);
 
   const loadData = async () => {
-    await axios.get("http://localhost:8000/user").then((response) =>
-      setData(response.data)
-    );
+    await axios
+      .get("http://localhost:8000/user")
+      .then((response) => {
+        setData(response.data);
+      })
+      .then((error) => {
+        console.log(error);
+      });
   };
 
   const handleChangePage = (event, newPage) => {
@@ -67,7 +72,6 @@ const User = () => {
             <TableRow>
               <TableCell align="center">No</TableCell>
               <TableCell align="center">Avatar</TableCell>
-              {/* <TableCell align="center">Id</TableCell> */}
               <TableCell align="center">Name</TableCell>
               <TableCell align="center">Email</TableCell>
               <TableCell align="center">Gender</TableCell>

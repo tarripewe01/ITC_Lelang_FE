@@ -9,9 +9,17 @@ import {
   OutlinedInput,
   Paper,
   TextareaAutosize,
-  InputLabel
+  InputLabel,
 } from "@mui/material";
-import { Branch, Category, Document, Rating, BPKB,Status, Transmisi } from "ui-component/SelectCustom";
+import {
+  Branch,
+  Category,
+  Document,
+  Rating,
+  BPKB,
+  Status,
+  Transmisi,
+} from "ui-component/SelectCustom";
 import { useLocation, useNavigate } from "react-router-dom";
 import FieldDocument from "ui-component/FieldDocument";
 import Field from "../../../ui-component/Field";
@@ -24,26 +32,34 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 
 const AddProduct = ({ addProduct }) => {
-  const state = useLocation().state
+  const state = useLocation().state;
   const navigate = useNavigate();
   const [file, setFile] = useState("");
   const [cabang, setCabang] = useState(state?.cabang || "");
   const [nama_produk, setNamaProduk] = useState(state?.nama_produk || "");
   const [harga, setHarga] = useState(state?.harga || "");
-  const [no_lot, setNoLot] = useState(state?.no_lot ||"");
-  const [kondisi_mesin, setKondisiMesin] = useState(state?.kondisi_mesin ||"");
-  const [kondisi_exterior, setKondisiExterior] = useState(state?.kondisi_exterior || "");
-  const [kondisi_interior, setKondisiInterior] = useState(state?.kondisi_interior || "");
-  const [kategori_produk, setKategoriProduk] = useState(state?.kategori_produk ||  "");
+  const [no_lot, setNoLot] = useState(state?.no_lot || "");
+  const [kondisi_mesin, setKondisiMesin] = useState(state?.kondisi_mesin || "");
+  const [kondisi_exterior, setKondisiExterior] = useState(
+    state?.kondisi_exterior || ""
+  );
+  const [kondisi_interior, setKondisiInterior] = useState(
+    state?.kondisi_interior || ""
+  );
+  const [kategori_produk, setKategoriProduk] = useState(
+    state?.kategori_produk || ""
+  );
   const [merk_produk, setMerkProduk] = useState(state?.merk_produk || "");
   const [model_produk, setModelProduk] = useState(state?.model_produk || "");
   const [tahun_produk, setTahunProduk] = useState(state?.tahun_produk || "");
   const [transmisi, setTransmisi] = useState(state?.transmisi || "");
   const [no_rangka, setNoRangka] = useState(state?.no_rangka || "");
   const [no_mesin, setNoMesin] = useState(state?.no_mesin || "");
-  const [kapasitas_mesin, setKapasitasMesin] = useState(state?.kapasitas_mesin || "");
+  const [kapasitas_mesin, setKapasitasMesin] = useState(
+    state?.kapasitas_mesin || ""
+  );
   const [odometer, setOdometer] = useState(state?.odometer || "");
-  const [isActive, setIsActive] = useState("");
+  const [isActive, setIsActive] = useState(state?.isActive || "");
   const [catatan, setCatatan] = useState(state?.catatan || "");
   const [no_polisi, setNoPolisi] = useState(state?.no_polisi || "");
   const [warna, setWarna] = useState(state?.warna || "");
@@ -57,85 +73,83 @@ const AddProduct = ({ addProduct }) => {
   const [keur, setKeur] = useState(state?.keur || "");
   const [bpkb, setBpkb] = useState(state?.bpkb || "");
   const [tanggal_mulai, setTanggalMulai] = useState(state?.tanggal_mulai || "");
-  const [tanggal_selesai, setTanggalSelesai] = useState(state?.tanggal_selesai || "");
+  const [tanggal_selesai, setTanggalSelesai] = useState(
+    state?.tanggal_selesai || ""
+  );
   const [waktu_mulai, setWaktuMulai] = useState(state?.waktu_mulai || "");
   const [waktu_selesai, setWaktuSelesai] = useState(state?.waktu_selesai || "");
   const [status_lelang, setStatusLelang] = useState(state?.status_lelang || "");
 
-
-
-  const handleSubmit = async(e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    let formData = new FormData()
-    formData .append("cabang", cabang);
-formData.append("nama_produk", nama_produk);
-formData.append("harga", harga);
-formData.append("no_lot", no_lot);
-formData.append("kondisi_mesin", kondisi_mesin);
-formData.append("kondisi_exterior", kondisi_exterior);
-formData.append("kondisi_interior", kondisi_interior);
-formData.append("kategori_produk", kategori_produk);
-formData.append("merk_produk", merk_produk);
-formData.append("model_produk", model_produk);
-formData.append("tahun_produk", tahun_produk);
-formData.append("transmisi", transmisi);
-formData.append("no_rangka", no_rangka);
-formData.append("no_mesin", no_mesin);
-formData.append("kapasitas_mesin", kapasitas_mesin);
-formData.append("odometer", odometer);
-formData.append("isActive", "Aktif");
-formData.append("catatan", catatan);
-formData.append("no_polisi", no_polisi);
-formData.append("warna", warna);
-formData.append("stnk", stnk);
-formData.append("exp_stnk", exp_stnk);
-formData.append("faktur", faktur);
-formData.append("ktp", ktp);
-formData.append("kwitansi", kwitansi);
-formData.append("form_A", formA);
-formData.append("sph", sph);
-formData.append("keur", keur);
-formData.append("bpkb", bpkb);
-formData.append("status_lelang", status_lelang);
-formData.append("waktu_mulai", waktu_mulai);
-formData.append("waktu_selesai", waktu_selesai);
-formData.append("tanggal_selesai", tanggal_selesai);
-formData.append("tanggal_mulai", tanggal_mulai);
-Array.from(file).forEach(item => {
-  formData.append("product_path", item)
-})
-  try {
-    if(state){
-      const res = await axios.put(`http://localhost:8000/product/${state._id}`, formData,{
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      })
-      console.log(res)
-    }else{
-      const res = await axios.post('http://localhost:8000/product', formData)
-      console.log(res)
+    let formData = new FormData();
+    formData.append("cabang", cabang);
+    formData.append("nama_produk", nama_produk);
+    formData.append("harga", harga);
+    formData.append("no_lot", no_lot);
+    formData.append("kondisi_mesin", kondisi_mesin);
+    formData.append("kondisi_exterior", kondisi_exterior);
+    formData.append("kondisi_interior", kondisi_interior);
+    formData.append("kategori_produk", kategori_produk);
+    formData.append("merk_produk", merk_produk);
+    formData.append("model_produk", model_produk);
+    formData.append("tahun_produk", tahun_produk);
+    formData.append("transmisi", transmisi);
+    formData.append("no_rangka", no_rangka);
+    formData.append("no_mesin", no_mesin);
+    formData.append("kapasitas_mesin", kapasitas_mesin);
+    formData.append("odometer", odometer);
+    formData.append("isActive", isActive);
+    formData.append("catatan", catatan);
+    formData.append("no_polisi", no_polisi);
+    formData.append("warna", warna);
+    formData.append("stnk", stnk);
+    formData.append("exp_stnk", exp_stnk);
+    formData.append("faktur", faktur);
+    formData.append("ktp", ktp);
+    formData.append("kwitansi", kwitansi);
+    formData.append("form_A", formA);
+    formData.append("sph", sph);
+    formData.append("keur", keur);
+    formData.append("bpkb", bpkb);
+    // formData.append("status_lelang", status_lelang);
+    formData.append("waktu_mulai", waktu_mulai);
+    formData.append("waktu_selesai", waktu_selesai);
+    formData.append("tanggal_selesai", tanggal_selesai);
+    formData.append("tanggal_mulai", tanggal_mulai);
+    Array.from(file).forEach((item) => {
+      formData.append("product_path", item);
+    });
+    try {
+      if (state) {
+        const res = await axios.put(
+          `http://localhost:8000/product/${state._id}`,
+          formData,
+          {
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          }
+        );
+        console.log(res);
+      } else {
+        const res = await axios.post("http://localhost:8000/product", formData);
+        // console.log(res);
+      }
+    } catch (error) {
+      console.log(error);
     }
-  } catch (error) {
-    console.log(error)
-  }
-  navigate('/ITC-Finance/products')
+    navigate("/ITC-Finance/products");
   };
-  
+
   const handleCancel = (e) => {
     e.preventDefault();
+    navigate("/ITC-Finance/products");
   };
 
-  const handleFile = (e) => {
-    let file = e.target.files[0];
-    setFile(file);
-    console.log(file);
-  };
   return (
     <Paper sx={{ width: "100%", overflow: "hidden" }}>
       <div>
         <div style={{ display: "flex", padding: 20 }}>
-          <Box>
-            { state ? <h1>Edit Product</h1> :<h1>Add Product</h1>}
-          </Box>
+          <Box>{state ? <h1>Edit Product</h1> : <h1>Add Product</h1>}</Box>
         </div>
         <Box
           component="form"
@@ -163,7 +177,7 @@ Array.from(file).forEach(item => {
             <Field
               type="text"
               label="Name"
-              value = {nama_produk}
+              value={nama_produk}
               onChange={(e) => setNamaProduk(e.target.value)}
             />
             <Field
@@ -179,7 +193,7 @@ Array.from(file).forEach(item => {
               onChange={(e) => setWarna(e.target.value)}
             />
             <Category
-            value={kategori_produk}
+              value={kategori_produk}
               onChange={(e) => setKategoriProduk(e.target.value)}
             />
             <FormControl sx={{ m: 1, width: "98%" }}>
@@ -365,8 +379,8 @@ Array.from(file).forEach(item => {
                   value={stnk}
                   onChange={(e) => setStnk(e.target.value)}
                 />
-                  
-                  <p style={{marginLeft: '10px'}} >  Masa Berlaku STNK</p>
+
+                <p style={{ marginLeft: "10px" }}> Masa Berlaku STNK</p>
                 <Field
                   type="date"
                   choose="text"
@@ -419,10 +433,15 @@ Array.from(file).forEach(item => {
               </div>
               <FormControl sx={{ m: 1, width: "98%" }}>
                 <Status
-                  label="Status"
+                  label="Status Product"
+                  value={isActive}
+                  onChange={(e) => setIsActive(e.target.value)}
+                />
+                {/* <Status
+                  label="Status Lelang"
                   value={status_lelang}
                   onChange={(e) => setStatusLelang(e.target.value)}
-                />
+                /> */}
                 <Grid
                   container
                   spacing={1}

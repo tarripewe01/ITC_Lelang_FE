@@ -3,6 +3,7 @@
 import * as React from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+import { Category, Status } from "ui-component/SelectCustom";
 import {
   Box,
   Button,
@@ -28,6 +29,8 @@ const Product = () => {
   const [data, setData] = React.useState([]);
   // filter
   const [query, setQuery] = React.useState("");
+  const [kategori_produk, setKategoriProduk] = React.useState("");
+  const [isActive, setIsActive] = React.useState("");
   //   pagination
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -38,10 +41,37 @@ const Product = () => {
 
   const loadData = async () => {
     await axios
-      .get("http://localhost:8000/product")
-      .then((response) => setData(response.data));
+      .get(`http://localhost:8000/product`)
+      .then((response) => {
+        // console.log(response.data);
+        setData(response.data);
+      })
+      .then((error) => {
+        console.log(error);
+      });
   };
- 
+
+  const handleChangeCategory = async (event) => {
+    const category = event.target.value;
+    await axios
+      .get(`http://localhost:8000/product?kategori_produk=${category}`)
+      .then((response) => {
+        setData(response.data);
+      });
+    setKategoriProduk(category);
+  };
+
+  // const handleChangeStatus = async (event) => {
+  //   const status = event.target.value;
+  //   await axios
+  //     .get(`http://localhost:8000/product?kategori_produk=${status}`)
+  //     .then((response) => {
+  //       setData(response.data);
+  //     });
+  //   setIsActive(status);
+  //   console.log(kategori_produk);
+  // };
+
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -58,6 +88,7 @@ const Product = () => {
           sx={{
             width: 500,
             maxWidth: "100%",
+            marginTop: 1,
           }}
         >
           <TextField
@@ -68,32 +99,23 @@ const Product = () => {
           />
         </Box>
         <FormControl sx={{ minWidth: 120, ml: 2 }}>
-          <InputLabel id="demo-simple-select-label">Category</InputLabel>
-          <Select
-            //   value={Category}
-            //   onChange={handleChange}
-            displayEmpty
-            label="Category"
-            inputProps={{ "aria-label": "Without label" }}
-          >
-            <MenuItem value={10}>Mobil</MenuItem>
-            <MenuItem value={20}>Motor</MenuItem>
-          </Select>
+          <Category
+            directLoad={true}
+            withEmptySelect={true}
+            value={kategori_produk}
+            onChange={handleChangeCategory}
+          />
         </FormControl>
-        <FormControl sx={{ minWidth: 120, ml: 2 }}>
-          <InputLabel id="demo-simple-select-label">Status</InputLabel>
-          <Select
-            //   value={age}
-            //   onChange={handleChange}
-            displayEmpty
+        {/* <FormControl sx={{ minWidth: 120, ml: 2 }}>
+          <Status
             label="Status"
-            inputProps={{ "aria-label": "Without label" }}
-          >
-            <MenuItem value={10}>Aktif</MenuItem>
-            <MenuItem value={20}>Tidak Aktif</MenuItem>
-          </Select>
-        </FormControl>
-        <Button
+            directLoad={true}
+            withEmptySelect={true}
+            value={isActive}
+            onChange={handleChangeStatus}
+          />
+        </FormControl> */}
+        {/* <Button
           variant="contained"
           style={{
             backgroundColor: "#ffc107",
@@ -102,7 +124,7 @@ const Product = () => {
           }}
         >
           Reset
-        </Button>
+        </Button> */}
       </div>
       <div>
         <Button
@@ -157,22 +179,25 @@ const Product = () => {
                     <TableCell
                       align="center"
                       style={{
-                        color: "#00c853",
+                        color:
+                          row?.isActive === "Aktif" ? "#00c853" : "#d84315",
                         fontWeight: "600",
                       }}
                     >
-                      {/* {console.log(row)} */}
-                      {row.isActive === 0 ? "Tidak Aktif" : "Aktif"}
+                      {row?.isActive}
                     </TableCell>
                     <TableCell align="center">
                       <div>
-                      <Link to={'/ITC-Finance/add_product?edit=2'} state={row}>
-                        <Button
-                          variant="contained"
-                          style={{ backgroundColor: "#5e35b1", width: 100 }}
+                        <Link
+                          to={"/ITC-Finance/add_product?edit=2"}
+                          state={row}
                         >
-                          Edit
-                        </Button>
+                          <Button
+                            variant="contained"
+                            style={{ backgroundColor: "#5e35b1", width: 100 }}
+                          >
+                            Edit
+                          </Button>
                         </Link>
                         <Button
                           variant="contained"

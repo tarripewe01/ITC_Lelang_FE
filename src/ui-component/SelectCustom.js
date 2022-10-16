@@ -142,53 +142,53 @@ export const BPKB = ({ value, onChange, label }) => {
 };
 
 export const Status = ({ value, onChange, label }) => {
-    const options = [
-      { label: "Aktif", value: "Aktif" },
-      { label: "Tidak Aktif", value: "Tidak Aktif" },
-    ];
-  
-    return (
-      <>
-        <FormControl sx={{ m: 1, width: "98%" }}>
-          <InputLabel id="demo-simple-select-label">{label}</InputLabel>
-          <Select
-            value={value}
-            onChange={onChange}
-            displayEmpty
-            label={label}
-            inputProps={{ "aria-label": "Without label" }}
-          >
-            {options.map((option) => (
-              <MenuItem value={option.value}>{option.label}</MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-      </>
-    );
-  };
+  const options = [
+    { label: "Aktif", value: "Aktif" },
+    { label: "Tidak Aktif", value: "Tidak Aktif" },
+  ];
+
+  return (
+    <>
+      <FormControl sx={{ m: 1, width: "98%" }}>
+        <InputLabel id="demo-simple-select-label">{label}</InputLabel>
+        <Select
+          value={value}
+          onChange={onChange}
+          displayEmpty
+          label={label}
+          inputProps={{ "aria-label": "Without label" }}
+        >
+          {options.map((option) => (
+            <MenuItem value={option.value}>{option.label}</MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+    </>
+  );
+};
 
 export const Transmisi = ({ value, onChange, label }) => {
-    const options = [
-      { label: "Manual", value: "Manual" },
-      { label: "Otomatis", value: "Otomatis" },
-    ];
-  
-    return (
-      <>
-        <FormControl sx={{ m: 1, width: "98%" }}>
-          <InputLabel id="demo-simple-select-label">{label}</InputLabel>
-          <Select
-            value={value}
-            onChange={onChange}
-            displayEmpty
-            label={label}
-            inputProps={{ "aria-label": "Without label" }}
-          >
-            {options.map((option) => (
-              <MenuItem value={option.value}>{option.label}</MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-      </>
-    );
-  };
+  const options = [
+    { label: "Manual", value: "Manual" },
+    { label: "Otomatis", value: "Otomatis" },
+  ];
+
+  return (
+    <>
+      <FormControl sx={{ m: 1, width: "98%" }}>
+        <InputLabel id="demo-simple-select-label">{label}</InputLabel>
+        <Select
+          value={value}
+          onChange={onChange}
+          displayEmpty
+          label={label}
+          inputProps={{ "aria-label": "Without label" }}
+        >
+          {options.map((option) => (
+            <MenuItem value={option.value}>{option.label}</MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+    </>
+  );
+};
