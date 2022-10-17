@@ -27,9 +27,10 @@ const HistoryDetail = () => {
     if (id) {
       axios.get(`http://localhost:8000/product/${id}`).then((response) => {
         setData(response.data);
+        console.log(response.data)
       });
     }
-  }, []);
+  }, [id]);
 
   //   pagination
   const [page, setPage] = React.useState(0);
@@ -79,16 +80,26 @@ const HistoryDetail = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              <TableRow>
-                <TableCell style={{ textAlign: "center" }}>1</TableCell>
-                <TableCell style={{ textAlign: "center" }}>
-                  iu23y3n383
-                </TableCell>
-                <TableCell style={{ textAlign: "center" }}>Jhonatha</TableCell>
-                <TableCell style={{ textAlign: "center" }}>
-                  Rp 113.000.000
-                </TableCell>
-              </TableRow>
+             {
+              data?.bids?.map((bid,idx)=>{
+                return(
+                  <>
+                  <TableRow key={idx}>
+                    <TableCell style={{ textAlign: "center" }}>1</TableCell>
+                    <TableCell style={{ textAlign: "center" }}>
+                      iu23y3n383
+                    </TableCell>
+                    <TableCell style={{ textAlign: "center" }}>
+                      Jhonatha
+                    </TableCell>
+                    <TableCell style={{ textAlign: "center" }}>
+                      Rp 113.000.000
+                    </TableCell>
+                  </TableRow>
+                </>
+                )
+              })
+             }
             </TableBody>
           </Table>
         </TableContainer>
@@ -102,7 +113,7 @@ const HistoryDetail = () => {
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
-        <div >
+        <div>
           <Button
             variant="contained"
             style={{

@@ -36,6 +36,7 @@ import { connect, useSelector } from "react-redux";
 import Logo from "ui-component/Logo";
 import AuthCardWrapper from "../AuthCardWrapper";
 import AuthWrapper1 from "../AuthWrapper1";
+import { toast } from "react-toastify";
 
 const Alert = forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -69,10 +70,21 @@ const Login = ({ login, isAuthenticated, loading }) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const onSubmit = async (e) => {
+  const HandleSubmit = async (e) => {
     e.preventDefault();
+
     if (!email || !password) {
       setError(true);
+      toast.error("Email & Password is Required", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
     } else {
       login(email, password);
     }
@@ -83,6 +95,17 @@ const Login = ({ login, isAuthenticated, loading }) => {
     auth.result?.name === "Admin"
   ) {
     navigate("/ITC-Finance");
+  } else {
+    toast.error("User doesn't exist", {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+    });
   }
 
   return (
@@ -139,7 +162,7 @@ const Login = ({ login, isAuthenticated, loading }) => {
                   <Grid item xs={12}>
                     <form
                       noValidate
-                      onSubmit={(e) => onSubmit(e)}
+                      onSubmit={HandleSubmit}
                       // {...others}
                     >
                       <FormControl

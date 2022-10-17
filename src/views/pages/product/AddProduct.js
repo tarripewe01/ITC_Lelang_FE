@@ -19,6 +19,7 @@ import {
 } from "ui-component/SelectCustom";
 import { addProduct } from "../../../store/action/productAction";
 import Field from "../../../ui-component/Field";
+import { toast } from 'react-toastify';
 
 const AddProduct = () => {
   const state = useLocation().state;
@@ -118,10 +119,29 @@ const AddProduct = () => {
             headers: { "Content-Type": "application/x-www-form-urlencoded" },
           }
         );
-        console.log(res);
+        toast.info("Sukses Mengubah Produk", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+        // console.log(res);
       } else {
         const res = await axios.post("http://localhost:8000/product", formData);
-        // console.log(res);
+        toast.success("Sukses Menambah Produk Baru", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
       }
     } catch (error) {
       console.log(error);
@@ -158,26 +178,26 @@ const AddProduct = () => {
               style={{ marginLeft: 10, marginBottom: 10 }}
             />
             <Field
-              type="text"
+              type="number"
               label="No.LOT"
               value={no_lot}
               onChange={(e) => setNoLot(e.target.value)}
             />
             <Field
               type="text"
-              label="Name"
+              label="Nama"
               value={nama_produk}
               onChange={(e) => setNamaProduk(e.target.value)}
             />
             <Field
-              type="text"
-              label="Price"
+              type="number"
+              label="Harga"
               value={harga}
               onChange={(e) => setHarga(e.target.value)}
             />
             <Field
               type="text"
-              label="Color"
+              label="Warna"
               value={warna}
               onChange={(e) => setWarna(e.target.value)}
             />
@@ -189,21 +209,21 @@ const AddProduct = () => {
               <Grid container spacing={1}>
                 <Grid xs={4}>
                   <Rating
-                    label="Machine"
+                    label="Kondisi Mesin"
                     value={kondisi_mesin}
                     onChange={(e) => setKondisiMesin(e.target.value)}
                   />
                 </Grid>
                 <Grid xs={4}>
                   <Rating
-                    label="Interior"
+                    label="Kondisi Interior"
                     value={kondisi_interior}
                     onChange={(e) => setKondisiInterior(e.target.value)}
                   />
                 </Grid>
                 <Grid xs={4}>
                   <Rating
-                    label="Exterior"
+                    label="Kondisi Exterior"
                     value={kondisi_exterior}
                     onChange={(e) => setKondisiExterior(e.target.value)}
                   />
@@ -211,13 +231,13 @@ const AddProduct = () => {
               </Grid>
             </FormControl>
             <Branch
-              label="Branch"
+              label="Cabang"
               value={cabang}
               onChange={(e) => setCabang(e.target.value)}
             />
             <FormControl sx={{ m: 1, width: "98%" }}>
               <div>
-                <p>Start Auction</p>
+                <p>Mulai Lelang</p>
                 <Grid container spacing={1}>
                   <Grid xs={6}>
                     <Field
@@ -234,7 +254,7 @@ const AddProduct = () => {
                     />
                   </Grid>
                 </Grid>
-                <p>End Auction</p>
+                <p>Berakhir Lelang</p>
                 <Grid container spacing={1}>
                   <Grid xs={6}>
                     <Field
@@ -281,7 +301,7 @@ const AddProduct = () => {
                     <Grid xs={4}>
                       <Field
                         type="number"
-                        label="Year"
+                        label="Tahun"
                         value={tahun_produk}
                         onChange={(e) => setTahunProduk(e.target.value)}
                       />
@@ -303,7 +323,7 @@ const AddProduct = () => {
                     <Grid xs={6}>
                       <Field
                         type="number"
-                        label="Machine Capacity (CC)"
+                        label="Kapasitas Mesin (CC)"
                         value={kapasitas_mesin}
                         onChange={(e) => setKapasitasMesin(e.target.value)}
                       />
@@ -325,7 +345,7 @@ const AddProduct = () => {
                     <Grid xs={4}>
                       <Transmisi
                         type="text"
-                        label="Transmition"
+                        label="Transmisi"
                         value={transmisi}
                         onChange={(e) => setTransmisi(e.target.value)}
                       />
@@ -333,7 +353,7 @@ const AddProduct = () => {
                     <Grid xs={4}>
                       <Field
                         type="text"
-                        label="No. Frame"
+                        label="No. Rangka"
                         value={no_rangka}
                         onChange={(e) => setNoRangka(e.target.value)}
                       />
@@ -341,7 +361,7 @@ const AddProduct = () => {
                     <Grid xs={4}>
                       <Field
                         type="text"
-                        label="No. Machine"
+                        label="No. Mesin"
                         value={no_mesin}
                         onChange={(e) => setNoMesin(e.target.value)}
                       />

@@ -174,7 +174,7 @@ const Product = () => {
                       {row.nama_produk}
                     </TableCell>
                     <TableCell align="center">
-                      {currencyFormatter.format(row.harga, { code: "IDR" })}
+                      {currencyFormatter.format( row.harga, { code: "IDR" })}
                     </TableCell>
                     <TableCell
                       align="center"

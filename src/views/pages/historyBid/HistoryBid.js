@@ -1,11 +1,27 @@
-import { Box, Button, FormControl, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, TextField } from "@mui/material";
+import {
+  Box,
+  Button,
+  FormControl,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TablePagination,
+  TableRow,
+  TextField,
+} from "@mui/material";
 import axios from "axios";
+import moment from "moment";
+import "moment/min/locales";
 import React from "react";
 import { Link } from "react-router-dom";
 import { Category } from "ui-component/SelectCustom";
 var currencyFormatter = require("currency-formatter");
 
 const HistoryBid = () => {
+  moment.locale("id");
 
   const [data, setData] = React.useState([]);
 
@@ -22,12 +38,9 @@ const HistoryBid = () => {
   }, []);
 
   const loadData = async () => {
-    await axios
-      .get(`http://localhost:8000/product`)
-      .then((response) => {
-        
-        setData(response.data);
-      })
+    await axios.get(`http://localhost:8000/product`).then((response) => {
+      setData(response.data);
+    });
     //   .then((error) => {
     //     console.log(error);
     //   });
@@ -96,19 +109,7 @@ const HistoryBid = () => {
         Reset
       </Button> */}
       </div>
-      <div>
-        <Button
-          variant="contained"
-          style={{
-            backgroundColor: "#2196f3",
-            width: 100,
-            marginLeft: 20,
-          }}
-          // onClick={() => navigate("/ITC-Finance/add_product")}
-        >
-          Add
-        </Button>
-      </div>
+
       <TableContainer sx={{ maxHeight: 440 }}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
@@ -118,8 +119,8 @@ const HistoryBid = () => {
               <TableCell align="center">Category</TableCell>
               <TableCell align="center">Name</TableCell>
               <TableCell align="center">Price</TableCell>
-              <TableCell align="center">Tanggal Mulai Lelang</TableCell>
-              <TableCell align="center">Tanggal Berakhir Lelang</TableCell>
+              <TableCell align="center">Mulai Lelang</TableCell>
+              <TableCell align="center">Berakhir Lelang</TableCell>
               <TableCell align="center">Status Lelang</TableCell>
               <TableCell align="center">Action</TableCell>
             </TableRow>
@@ -129,7 +130,7 @@ const HistoryBid = () => {
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .filter((row) => row.nama_produk.toLowerCase().includes(query))
               .map((row, idx) => {
-                console.log('history',row);
+                console.log("history", row);
                 return (
                   <TableRow key={row._id}>
                     <TableCell align="center">{idx + 1}</TableCell>
@@ -149,15 +150,23 @@ const HistoryBid = () => {
                     <TableCell align="center">
                       {currencyFormatter.format(row.harga, { code: "IDR" })}
                     </TableCell>
-                    <TableCell align="center">{row.tanggal_mulai}</TableCell>
-                    <TableCell align="center">{row.tanggal_selesai}</TableCell>
+                    <TableCell align="center">
+                      {moment().format("LL", row.tanggal_mulai)}
+                      {" ||  "}
+                      {row.waktu_mulai}{" "}
+                    </TableCell>
+                    <TableCell align="center">
+                      {moment().format("LL", row.tanggal_selesai)}
+                      {" ||  "}
+                      {row.waktu_selesai}
+                    </TableCell>
                     <TableCell
                       align="center"
                       style={{
                         color:
-                          row?.status_lelang === "Aktif"
-                            ? "#00c853"
-                            : "#d84315",
+                          row?.status_lelang === "Tidak Aktif"
+                            ? "#d84315"
+                            : "#00c853",
                         fontWeight: "600",
                       }}
                     >
