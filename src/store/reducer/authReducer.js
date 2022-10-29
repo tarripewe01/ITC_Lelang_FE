@@ -12,7 +12,7 @@ const initialState = {
   isAuthenticated: null,
   loading: true,
   user: null,
-  error: false
+  error: false,
 };
 
 const auth = (state = initialState, action) => {
@@ -25,7 +25,7 @@ const auth = (state = initialState, action) => {
         isAuthenticated: true,
         loading: false,
         user: payload,
-        error: false
+        error: false,
       };
     case LOGIN_SUCCESS:
       localStorage.setItem("token", payload.token);
@@ -34,10 +34,10 @@ const auth = (state = initialState, action) => {
         ...payload,
         isAuthenticated: true,
         loading: false,
-        error: false
+        error: false,
       };
-    case LOGIN_FAIL:
     case AUTH_ERROR:
+    case LOGIN_FAIL:
     case LOGOUT:
       localStorage.removeItem("token");
       return {
@@ -45,7 +45,7 @@ const auth = (state = initialState, action) => {
         token: null,
         isAuthenticated: false,
         loading: false,
-        error: true
+        error: true,
       };
     default:
       return state;

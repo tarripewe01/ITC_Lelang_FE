@@ -10,7 +10,7 @@ import {
   TableHead,
   TablePagination,
   TableRow,
-  TextField,
+  TextField
 } from "@mui/material";
 import axios from "axios";
 import moment from "moment";
@@ -38,8 +38,9 @@ const HistoryBid = () => {
   }, []);
 
   const loadData = async () => {
-    await axios.get(`http://localhost:8000/product`).then((response) => {
+    await axios.get(`http://localhost:9000/api/product`).then((response) => {
       setData(response.data);
+      // console.log(response.data);
     });
     //   .then((error) => {
     //     console.log(error);
@@ -64,6 +65,7 @@ const HistoryBid = () => {
     setRowsPerPage(event.target.value);
     setPage(0);
   };
+
   return (
     <Paper sx={{ width: "100%", overflow: "hidden" }}>
       <div style={{ display: "flex", padding: 20 }}>
@@ -89,15 +91,6 @@ const HistoryBid = () => {
             onChange={handleChangeCategory}
           />
         </FormControl>
-        {/* <FormControl sx={{ minWidth: 120, ml: 2 }}>
-        <Status
-          label="Status"
-          directLoad={true}
-          withEmptySelect={true}
-          value={isActive}
-          onChange={handleChangeStatus}
-        />
-      </FormControl> */}
         {/* <Button
         variant="contained"
         style={{
@@ -151,12 +144,12 @@ const HistoryBid = () => {
                       {currencyFormatter.format(row.harga, { code: "IDR" })}
                     </TableCell>
                     <TableCell align="center">
-                      {moment().format("LL", row.tanggal_mulai)}
+                      {moment(row?.tanggal_mulai).format("LL")}
                       {" ||  "}
                       {row.waktu_mulai}{" "}
                     </TableCell>
                     <TableCell align="center">
-                      {moment().format("LL", row.tanggal_selesai)}
+                      {moment(row?.tanggal_selesai).format("LL")}
                       {" ||  "}
                       {row.waktu_selesai}
                     </TableCell>

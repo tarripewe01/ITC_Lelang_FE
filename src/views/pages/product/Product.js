@@ -1,26 +1,20 @@
 /* eslint-disable no-unused-expressions */
 /* eslint-disable no-unused-vars */
-import * as React from "react";
-import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
-import { Category, Status } from "ui-component/SelectCustom";
 import {
   Box,
-  Button,
-  TextField,
-  Paper,
+  Button, FormControl, Paper,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
   TablePagination,
-  TableRow,
-  Select,
-  FormControl,
-  MenuItem,
-  InputLabel,
+  TableRow, TextField
 } from "@mui/material";
+import axios from "axios";
+import * as React from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { Category } from "ui-component/SelectCustom";
 var currencyFormatter = require("currency-formatter");
 
 const Product = () => {
@@ -41,7 +35,7 @@ const Product = () => {
 
   const loadData = async () => {
     await axios
-      .get(`http://localhost:8000/product`)
+      .get(`http://localhost:9000/api/product`)
       .then((response) => {
         // console.log(response.data);
         setData(response.data);
@@ -112,7 +106,7 @@ const Product = () => {
             directLoad={true}
             withEmptySelect={true}
             value={isActive}
-            onChange={handleChangeStatus}
+            onChange={handleChangeCategory}
           />
         </FormControl> */}
         {/* <Button
@@ -201,7 +195,7 @@ const Product = () => {
                         </Link>
                         <Button
                           variant="contained"
-                          style={{ backgroundColor: "#d84315", width: 100 }}
+                          style={{ backgroundColor: "#d84315", width: 100, marginLeft: 10 }}
                         >
                           Delete
                         </Button>

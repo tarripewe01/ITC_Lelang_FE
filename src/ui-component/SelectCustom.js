@@ -192,3 +192,30 @@ export const Transmisi = ({ value, onChange, label }) => {
     </>
   );
 };
+
+export const Sort = ({ value, onChange }) => {
+  const options = [
+    { label: "Semua", value: "Semua" },
+    { label: "Terbaru", value: "Terbaru" },
+    { label: "Terlama", value: "Terlama" },
+  ];
+
+  return (
+    <>
+      <FormControl sx={{ m: 1, width: "98%" }}>
+        <InputLabel id="demo-simple-select-label">Tanggal</InputLabel>
+        <Select
+          value={value}
+          onChange={onChange}
+          displayEmpty
+          label="Category"
+          inputProps={{ "aria-label": "Without label" }}
+        >
+          {options.map((option) => (
+            <MenuItem value={option.value}>{option.label}</MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+    </>
+  );
+};

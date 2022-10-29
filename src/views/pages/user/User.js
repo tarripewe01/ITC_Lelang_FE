@@ -32,8 +32,9 @@ const User = () => {
 
   const loadData = async () => {
     await axios
-      .get("http://localhost:8000/user")
+      .get("http://localhost:9000/api/profile")
       .then((response) => {
+        // console.log(response.data)
         setData(response.data);
       })
       .then((error) => {
@@ -86,7 +87,7 @@ const User = () => {
           <TableBody>
             {data
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .filter((row) => row.name.toLowerCase().includes(query))
+              .filter((row) => row.user?.name.toLowerCase().includes(query))
               .map((row, idx) => {
                 return (
                   <TableRow key={row._id}>
@@ -96,26 +97,28 @@ const User = () => {
                       align="center"
                       style={{ textTransform: "capitalize" }}
                     >
-                      <Avatar alt={row.name} src={row.user_path} />
+                      <Avatar alt={row.user?.name} src={row.user?.avatar} />
                     </TableCell>
                     <TableCell
                       align="center"
                       style={{ textTransform: "capitalize" }}
                     >
-                      {row.name}
+                      {row.user?.name}
                     </TableCell>
                     <TableCell
                       align="center"
                       style={{ textTransform: "lowercase" }}
                     >
-                      {row.email}
+                      {row.user?.email}
                     </TableCell>
-                    <TableCell align="center">{row.gender}</TableCell>
+                    <TableCell align="center">{row.user?.gender}</TableCell>
                     <TableCell align="center">+62{row.phone}</TableCell>
-                    <TableCell align="center">{row.no_ktp}</TableCell>
-                    <TableCell align="center">{row.no_npwp}</TableCell>
+                    <TableCell align="center">{row.ktp}</TableCell>
+                    <TableCell align="center">
+                      {row.npwp ? row.npwp : "-"}
+                    </TableCell>
                     <TableCell align="center">{row.bank}</TableCell>
-                    <TableCell align="center">{row.no_rekening}</TableCell>
+                    <TableCell align="center">{row.bank_account}</TableCell>
                     <TableCell align="center">
                       {/* <div>
                         <Button

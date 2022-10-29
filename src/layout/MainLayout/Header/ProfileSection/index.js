@@ -23,6 +23,8 @@ const ProfileSection = () => {
   const customization = useSelector((state) => state.customization);
   const auth = useSelector((state) => state.auth);
 
+  // console.log(auth);
+
   const [selectedIndex, setSelectedIndex] = useState(-1);
   const [open, setOpen] = useState(false);
   /**
@@ -69,7 +71,7 @@ const ProfileSection = () => {
         variant="h4"
         sx={{ fontWeight: 400 }}
       >
-        {auth.result?.name ? auth.result?.name : "Super Admin"}
+        {auth.user?.role}, {auth.user?.name} 
       </Typography>
       <Chip
         sx={{
@@ -93,7 +95,7 @@ const ProfileSection = () => {
         }}
         icon={
           <Avatar
-            src={auth.result?.avatar}
+            src={auth.user?.avatar}
             sx={{
               ...theme.typography.mediumAvatar,
               margin: "8px 0 8px 8px !important",

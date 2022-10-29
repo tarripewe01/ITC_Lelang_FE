@@ -1,6 +1,12 @@
 import axios from "axios";
 import { setAlert } from "./alertAction";
-import { LOGIN_SUCCESS, LOGIN_FAIL, USER_LOADED, AUTH_ERROR, LOGOUT } from "./types";
+import {
+  LOGIN_SUCCESS,
+  LOGIN_FAIL,
+  USER_LOADED,
+  AUTH_ERROR,
+  LOGOUT,
+} from "./types";
 import setAuthToken from "../../views/utilities/setAuthToken";
 
 // Load User
@@ -10,7 +16,7 @@ export const loadUser = () => async (dispatch) => {
   }
 
   try {
-    const res = await axios.get("http://localhost:8000/user");
+    const res = await axios.get("http://localhost:9000/api/auth");
     dispatch({
       type: USER_LOADED,
       payload: res.data,
@@ -21,7 +27,6 @@ export const loadUser = () => async (dispatch) => {
     });
   }
 };
-
 
 // Login User
 export const login = (email, password) => async (dispatch) => {
@@ -34,15 +39,17 @@ export const login = (email, password) => async (dispatch) => {
   const body = JSON.stringify({ email, password });
 
   try {
-    const res = await axios.post("http://localhost:8000/user/login", body, config);
-
+    const res = await axios.post(
+      "http://localhost:9000/api/auth",
+      body,
+      config
+    );
     dispatch({
       type: LOGIN_SUCCESS,
       payload: res.data,
     });
 
     dispatch(loadUser());
-    
   } catch (err) {
     const errors = err.response.data.errors;
 
@@ -58,4 +65,4 @@ export const login = (email, password) => async (dispatch) => {
 // Logout / Clear Profile
 export const logout = () => (dispatch) => {
   dispatch({ type: LOGOUT });
-}
+};

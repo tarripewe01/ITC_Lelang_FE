@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {
+  Button,
   Grid,
   Paper,
   Table,
@@ -11,23 +12,26 @@ import {
   TableRow,
 } from "@mui/material";
 import axios from "axios";
+import moment from "moment";
+import "moment/min/locales";
 import React, { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Button } from "@mui/material";
 var currencyFormatter = require("currency-formatter");
+
+moment.locale("id");
 
 const HistoryDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
   const [data, setData] = React.useState([]);
-  console.log(data);
+  // console.log(data);
 
   useEffect(() => {
     if (id) {
-      axios.get(`http://localhost:8000/product/${id}`).then((response) => {
+      axios.get(`http://localhost:9000/api/product/${id}`).then((response) => {
         setData(response.data);
-        console.log(response.data)
+        // console.log(response.data);
       });
     }
   }, [id]);
@@ -76,30 +80,34 @@ const HistoryDetail = () => {
                 <TableCell style={{ textAlign: "center" }}>No</TableCell>
                 <TableCell style={{ textAlign: "center" }}>Id</TableCell>
                 <TableCell style={{ textAlign: "center" }}>Nama</TableCell>
+                <TableCell style={{ textAlign: "center" }}>Tanggal</TableCell>
                 <TableCell style={{ textAlign: "center" }}>Bid </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-             {
-              data?.bids?.map((bid,idx)=>{
-                return(
-                  <>
+              {data?.bids?.map((bid, idx) => {
+                return (
                   <TableRow key={idx}>
-                    <TableCell style={{ textAlign: "center" }}>1</TableCell>
                     <TableCell style={{ textAlign: "center" }}>
-                      iu23y3n383
+                      {idx + 1}
+                    </TableCell>
+                    <TableCell style={{ textAlign: "center" }}>
+                      {bid.user}
                     </TableCell>
                     <TableCell style={{ textAlign: "center" }}>
                       Jhonatha
                     </TableCell>
                     <TableCell style={{ textAlign: "center" }}>
-                      Rp 113.000.000
+                      {moment(bid.tanggal_bid).format("LL")}
+                    </TableCell>
+                    <TableCell style={{ textAlign: "center" }}>
+                      {currencyFormatter.format(bid.nominal_bid, {
+                        code: "IDR",
+                      })}
                     </TableCell>
                   </TableRow>
-                </>
-                )
-              })
-             }
+                );
+              })}
             </TableBody>
           </Table>
         </TableContainer>
@@ -107,7 +115,7 @@ const HistoryDetail = () => {
         <TablePagination
           rowsPerPageOptions={[10, 25, 100]}
           component="div"
-          count={data.length}
+          count={data.bids?.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}

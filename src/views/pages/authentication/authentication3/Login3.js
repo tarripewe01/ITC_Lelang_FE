@@ -1,3 +1,4 @@
+/* eslint-disable eqeqeq */
 /* eslint-disable no-mixed-operators */
 /* eslint-disable no-unused-vars */
 import { useNavigate } from "react-router-dom";
@@ -19,7 +20,6 @@ import {
   useMediaQuery,
 } from "@mui/material";
 import MuiAlert from "@mui/material/Alert";
-import Snackbar from "@mui/material/Snackbar";
 
 import { useTheme } from "@mui/material/styles";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
@@ -72,7 +72,7 @@ const Login = ({ login, isAuthenticated, loading }) => {
 
   const HandleSubmit = async (e) => {
     e.preventDefault();
-
+    // login(email, password);
     if (!email || !password) {
       setError(true);
       toast.error("Email & Password is Required", {
@@ -88,25 +88,22 @@ const Login = ({ login, isAuthenticated, loading }) => {
     } else {
       login(email, password);
     }
-  };
 
-  if (
-    (isAuthenticated && auth.result?.name === "Super Admin") ||
-    auth.result?.name === "Admin"
-  ) {
-    navigate("/ITC-Finance");
-  } else {
-    toast.error("User doesn't exist", {
-      position: "top-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "colored",
-    });
-  }
+    if (isAuthenticated && auth.user?.role === "Admin") {
+      navigate("/ITC-Finance");
+    } else {
+      toast.error("Account does not have permission", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+    }
+  };
 
   return (
     <AuthWrapper1>
