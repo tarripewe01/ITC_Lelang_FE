@@ -1,25 +1,32 @@
+/* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable no-use-before-define */
 /* eslint-disable no-unused-vars */
 import {
   Box,
   Button,
-  FormControl, Grid, Paper,
+  FormControl,
+  Grid,
+  Paper,
   TextareaAutosize
 } from "@mui/material";
 import axios from "axios";
 import { useState } from "react";
 import { connect } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
+import { Slide } from "react-slideshow-image";
+import 'react-slideshow-image/dist/styles.css';
+import { toast } from "react-toastify";
 import {
-  BPKB, Branch,
+  BPKB,
+  Branch,
   Category,
   Document,
-  Rating, Status,
+  Rating,
+  Status,
   Transmisi
 } from "ui-component/SelectCustom";
 import { addProduct } from "../../../store/action/productAction";
 import Field from "../../../ui-component/Field";
-import { toast } from 'react-toastify';
 
 const AddProduct = () => {
   const state = useLocation().state;
@@ -36,9 +43,7 @@ const AddProduct = () => {
   const [kondisi_interior, setKondisiInterior] = useState(
     state?.kondisi_interior || ""
   );
-  const [kategori_produk, setKategoriProduk] = useState(
-    state?.kategori_produk || ""
-  );
+  const [kategori_produk, setKategoriProduk] = useState(state?.kategori || "");
   const [merk_produk, setMerkProduk] = useState(state?.merk_produk || "");
   const [model_produk, setModelProduk] = useState(state?.model_produk || "");
   const [tahun_produk, setTahunProduk] = useState(state?.tahun_produk || "");
@@ -49,7 +54,7 @@ const AddProduct = () => {
     state?.kapasitas_mesin || ""
   );
   const [odometer, setOdometer] = useState(state?.odometer || "");
-  const [isActive, setIsActive] = useState(state?.isActive || "");
+  const [isActive, setIsActive] = useState(state?.status_produk || "");
   const [catatan, setCatatan] = useState(state?.catatan || "");
   const [no_polisi, setNoPolisi] = useState(state?.no_polisi || "");
   const [warna, setWarna] = useState(state?.warna || "");
@@ -68,7 +73,22 @@ const AddProduct = () => {
   );
   const [waktu_mulai, setWaktuMulai] = useState(state?.waktu_mulai || "");
   const [waktu_selesai, setWaktuSelesai] = useState(state?.waktu_selesai || "");
-  const [status_lelang, setStatusLelang] = useState(state?.status_lelang || "");
+  const [selectedImage, setSelectedImage] = useState();
+  
+  const slideImages = [
+    {
+      url: "https://picsum.photos/700",
+      caption: "Slide 1",
+    },
+    {
+      url: "https://picsum.photos/700",
+      caption: "Slide 2",
+    },
+    {
+      url: "https://picsum.photos/700",
+      caption: "Slide 3",
+    },
+  ];
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -113,7 +133,7 @@ const AddProduct = () => {
     try {
       if (state) {
         const res = await axios.put(
-          `http://localhost:8000/product/${state._id}`,
+          `http://localhost:9000/api/product/${state._id}`,
           formData,
           {
             headers: { "Content-Type": "application/x-www-form-urlencoded" },
@@ -131,7 +151,10 @@ const AddProduct = () => {
         });
         // console.log(res);
       } else {
-        const res = await axios.post("http://localhost:8000/product", formData);
+        const res = await axios.post(
+          "http://localhost:9000/api/product/",
+          formData
+        );
         toast.success("Sukses Menambah Produk Baru", {
           position: "top-right",
           autoClose: 5000,
@@ -154,19 +177,27 @@ const AddProduct = () => {
     navigate("/ITC-Finance/products");
   };
 
+  console.log(file);
+
   return (
     <Paper sx={{ width: "100%", overflow: "hidden" }}>
       <div>
         <div style={{ display: "flex", padding: 20 }}>
-          <Box>{state ? <h1>Edit Product</h1> : <h1>Add Product</h1>}</Box>
+          <Box>{state ? <h1>Ubah Produk</h1> : <h1>Tambah Produk</h1>}</Box>
         </div>
+        <Slide slidesToScroll={2} slidesToShow={2} indicators={true} style={{width: 300}}>
+          {slideImages.map((slideImage, index) => (
+            <div style={{height: 500}} className="each-slide" key={index}>
+              <img src={file} />
+            </div>
+          ))}
+        </Slide>
         <Box
           component="form"
           sx={{
             "& .MuiTextField-root": { m: 1, width: "98%" },
           }}
           autoComplete="off"
-          onSubmit={() => console.log("klik")}
         >
           <div>
             <input
@@ -179,7 +210,7 @@ const AddProduct = () => {
             />
             <Field
               type="number"
-              label="No.LOT"
+              label="LOT"
               value={no_lot}
               onChange={(e) => setNoLot(e.target.value)}
             />
@@ -276,7 +307,7 @@ const AddProduct = () => {
             <div>
               <div style={{ display: "flex", padding: 20 }}>
                 <Box>
-                  <h3>Spesification</h3>
+                  <h3>Spesifikasi</h3>
                 </Box>
               </div>
               <FormControl sx={{ m: 1, width: "98%" }}>
@@ -328,14 +359,6 @@ const AddProduct = () => {
                         onChange={(e) => setKapasitasMesin(e.target.value)}
                       />
                     </Grid>
-                    {/* <Grid xs={4}>
-                      <Field
-                        type="text"
-                        label="Fuel"
-                        value={fuel}
-                        onChange={onChange}
-                      />
-                    </Grid> */}
                   </Grid>
                 </div>
               </FormControl>
@@ -437,20 +460,15 @@ const AddProduct = () => {
             <div>
               <div style={{ display: "flex", padding: 20 }}>
                 <Box>
-                  <h3>Additional</h3>
+                  <h3>Tambahan</h3>
                 </Box>
               </div>
               <FormControl sx={{ m: 1, width: "98%" }}>
                 <Status
-                  label="Status Product"
+                  label="Status"
                   value={isActive}
                   onChange={(e) => setIsActive(e.target.value)}
                 />
-                {/* <Status
-                  label="Status Lelang"
-                  value={status_lelang}
-                  onChange={(e) => setStatusLelang(e.target.value)}
-                /> */}
                 <Grid
                   container
                   spacing={1}

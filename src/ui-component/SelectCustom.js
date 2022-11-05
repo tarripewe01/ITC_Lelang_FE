@@ -9,12 +9,12 @@ export const Category = ({ value, onChange }) => {
   return (
     <>
       <FormControl sx={{ m: 1, width: "98%" }}>
-        <InputLabel id="demo-simple-select-label">Category</InputLabel>
+        <InputLabel id="demo-simple-select-label">Kategori</InputLabel>
         <Select
           value={value}
           onChange={onChange}
           displayEmpty
-          label="Category"
+          label="Kategori"
           inputProps={{ "aria-label": "Without label" }}
         >
           {options.map((option) => (
@@ -116,6 +116,7 @@ export const Document = ({ value, onChange, label }) => {
 export const BPKB = ({ value, onChange, label }) => {
   const options = [
     { label: "Ready", value: "Ready" },
+    { label: "Tidak Tersedia", value: "Tidak Tersedia" },
     { label: "7 Hari Kerja", value: "7 Hari Kerja" },
     { label: "14 Hari Kerja", value: "14 Hari Kerja" },
     { label: "30 Hari Kerja", value: "30 Hari Kerja" },
@@ -169,8 +170,8 @@ export const Status = ({ value, onChange, label }) => {
 
 export const Transmisi = ({ value, onChange, label }) => {
   const options = [
-    { label: "Manual", value: "Manual" },
-    { label: "Otomatis", value: "Otomatis" },
+    { label: "MT", value: "MT" },
+    { label: "AT", value: "AT" },
   ];
 
   return (

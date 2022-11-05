@@ -100,7 +100,7 @@ const Product = () => {
         >
           <TextField
             fullWidth
-            label="Search ..."
+            label="Cari Nama Mobil atau Motor ...."
             id="fullWidth"
             onChange={(e) => setQuery(e.target.value)}
           />
@@ -146,7 +146,7 @@ const Product = () => {
           }}
           onClick={() => navigate("/ITC-Finance/add_product")}
         >
-          Add
+          Tambah
         </Button>
       </div>
       <TableContainer sx={{ maxHeight: 440 }}>
@@ -155,11 +155,11 @@ const Product = () => {
             <TableRow>
               <TableCell align="center">No</TableCell>
               {/* <TableCell align="center">Id</TableCell> */}
-              <TableCell align="center">Category</TableCell>
-              <TableCell align="center">Name</TableCell>
-              <TableCell align="center">Price</TableCell>
+              <TableCell align="center">Kategori</TableCell>
+              <TableCell align="center">Nama Produk</TableCell>
+              <TableCell align="center">Harga Limit</TableCell>
               <TableCell align="center">Status</TableCell>
-              <TableCell align="center">Action</TableCell>
+              <TableCell align="center">Aksi</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -208,7 +208,7 @@ const Product = () => {
                             variant="contained"
                             style={{ backgroundColor: "#5e35b1", width: 100 }}
                           >
-                            Edit
+                            Ubah
                           </Button>
                         </Link>
                         <Button
@@ -219,7 +219,7 @@ const Product = () => {
                             marginLeft: 10,
                           }}
                         >
-                          Delete
+                          Hapus
                         </Button>
                       </div>
                     </TableCell>
