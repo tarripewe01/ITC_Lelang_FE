@@ -133,7 +133,7 @@ const AddProduct = () => {
     try {
       if (state) {
         const res = await axios.put(
-          `http://localhost:9000/api/product/${state._id}`,
+          `https://itc-finance.herokuapp.com/api/product/${state._id}`,
           formData,
           {
             headers: { "Content-Type": "application/x-www-form-urlencoded" },
@@ -152,7 +152,7 @@ const AddProduct = () => {
         // console.log(res);
       } else {
         const res = await axios.post(
-          "http://localhost:9000/api/product/",
+          "https://itc-finance.herokuapp.com/api/product/",
           formData
         );
         toast.success("Sukses Menambah Produk Baru", {
