@@ -2,19 +2,22 @@
 /* eslint-disable no-unused-vars */
 import {
   Box,
-  Button, FormControl, Paper,
+  Button,
+  FormControl,
+  Paper,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
   TablePagination,
-  TableRow, TextField
+  TableRow,
+  TextField,
 } from "@mui/material";
 import axios from "axios";
 import * as React from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Category } from "ui-component/SelectCustom";
+import { Category, Status } from "ui-component/SelectCustom";
 var currencyFormatter = require("currency-formatter");
 
 const Product = () => {
@@ -35,7 +38,7 @@ const Product = () => {
 
   const loadData = async () => {
     await axios
-      .get(`http://localhost:9000/api/product`)
+      .get(`https://itc-finance.herokuapp.com/api/product`)
       .then((response) => {
         // console.log(response.data);
         setData(response.data);
@@ -48,23 +51,33 @@ const Product = () => {
   const handleChangeCategory = async (event) => {
     const category = event.target.value;
     await axios
-      .get(`http://localhost:8000/product?kategori_produk=${category}`)
+      .get(
+        `https://itc-finance.herokuapp.com/api/product/filter?kategori=${category}`
+      )
       .then((response) => {
         setData(response.data);
       });
     setKategoriProduk(category);
   };
 
-  // const handleChangeStatus = async (event) => {
-  //   const status = event.target.value;
-  //   await axios
-  //     .get(`http://localhost:8000/product?kategori_produk=${status}`)
-  //     .then((response) => {
-  //       setData(response.data);
-  //     });
-  //   setIsActive(status);
-  //   console.log(kategori_produk);
-  // };
+  const handleChangeStatus = async (event) => {
+    const status = event.target.value;
+    await axios
+      .get(
+        `https://itc-finance.herokuapp.com/api/product/filter?status=${status}`
+      )
+      .then((response) => {
+        setData(response.data);
+      });
+    setIsActive(status);
+    console.log(kategori_produk);
+  };
+
+  const handleReset = () => {
+    loadData();
+    setKategoriProduk("");
+    setIsActive("");
+  };
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -100,25 +113,28 @@ const Product = () => {
             onChange={handleChangeCategory}
           />
         </FormControl>
-        {/* <FormControl sx={{ minWidth: 120, ml: 2 }}>
+        <FormControl sx={{ minWidth: 120, ml: 2 }}>
           <Status
             label="Status"
             directLoad={true}
             withEmptySelect={true}
             value={isActive}
-            onChange={handleChangeCategory}
+            onChange={handleChangeStatus}
           />
-        </FormControl> */}
-        {/* <Button
+        </FormControl>
+        <Button
+          onClick={handleReset}
           variant="contained"
           style={{
             backgroundColor: "#ffc107",
             width: 100,
             marginLeft: 20,
+            height: 50,
+            marginTop: 8,
           }}
         >
           Reset
-        </Button> */}
+        </Button>
       </div>
       <div>
         <Button
@@ -159,7 +175,7 @@ const Product = () => {
                       align="center"
                       style={{ textTransform: "capitalize" }}
                     >
-                      {row.kategori_produk}
+                      {row.kategori}
                     </TableCell>
                     <TableCell
                       align="center"
@@ -168,17 +184,19 @@ const Product = () => {
                       {row.nama_produk}
                     </TableCell>
                     <TableCell align="center">
-                      {currencyFormatter.format( row.harga, { code: "IDR" })}
+                      {currencyFormatter.format(row.harga, { code: "IDR" })}
                     </TableCell>
                     <TableCell
                       align="center"
                       style={{
                         color:
-                          row?.isActive === "Aktif" ? "#00c853" : "#d84315",
+                          row?.status_produk === "Aktif"
+                            ? "#00c853"
+                            : "#d84315",
                         fontWeight: "600",
                       }}
                     >
-                      {row?.isActive}
+                      {row?.status_produk}
                     </TableCell>
                     <TableCell align="center">
                       <div>
@@ -195,7 +213,11 @@ const Product = () => {
                         </Link>
                         <Button
                           variant="contained"
-                          style={{ backgroundColor: "#d84315", width: 100, marginLeft: 10 }}
+                          style={{
+                            backgroundColor: "#d84315",
+                            width: 100,
+                            marginLeft: 10,
+                          }}
                         >
                           Delete
                         </Button>

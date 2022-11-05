@@ -10,14 +10,14 @@ import {
   TableHead,
   TablePagination,
   TableRow,
-  TextField
+  TextField,
 } from "@mui/material";
 import axios from "axios";
 import moment from "moment";
 import "moment/min/locales";
 import React from "react";
 import { Link } from "react-router-dom";
-import { Category } from "ui-component/SelectCustom";
+import { Category, Status } from "ui-component/SelectCustom";
 var currencyFormatter = require("currency-formatter");
 
 const HistoryBid = () => {
@@ -28,6 +28,7 @@ const HistoryBid = () => {
   // filter
   const [query, setQuery] = React.useState("");
   const [kategori_produk, setKategoriProduk] = React.useState("");
+  const [isActive, setIsActive] = React.useState("");
 
   //   pagination
   const [page, setPage] = React.useState(0);
@@ -38,10 +39,12 @@ const HistoryBid = () => {
   }, []);
 
   const loadData = async () => {
-    await axios.get(`http://localhost:9000/api/product`).then((response) => {
-      setData(response.data);
-      // console.log(response.data);
-    });
+    await axios
+      .get(`https://itc-finance.herokuapp.com/api/product`)
+      .then((response) => {
+        setData(response.data);
+        // console.log(response.data);
+      });
     //   .then((error) => {
     //     console.log(error);
     //   });
@@ -50,11 +53,31 @@ const HistoryBid = () => {
   const handleChangeCategory = async (event) => {
     const category = event.target.value;
     await axios
-      .get(`http://localhost:8000/product?kategori_produk=${category}`)
+      .get(
+        `https://itc-finance.herokuapp.com/api/product/filter?kategori=${category}`
+      )
       .then((response) => {
         setData(response.data);
       });
     setKategoriProduk(category);
+  };
+
+  const handleChangeStatus = async (event) => {
+    const status = event.target.value;
+    await axios
+      .get(
+        `https://itc-finance.herokuapp.com/api/product/filter?status=${status}`
+      )
+      .then((response) => {
+        setData(response.data);
+      });
+    setIsActive(status);
+  };
+
+  const handleReset = () => {
+    loadData();
+    setKategoriProduk("");
+    setIsActive("");
   };
 
   const handleChangePage = (event, newPage) => {
@@ -91,16 +114,28 @@ const HistoryBid = () => {
             onChange={handleChangeCategory}
           />
         </FormControl>
-        {/* <Button
-        variant="contained"
-        style={{
-          backgroundColor: "#ffc107",
-          width: 100,
-          marginLeft: 20,
-        }}
-      >
-        Reset
-      </Button> */}
+        <FormControl sx={{ minWidth: 120, ml: 2 }}>
+          <Status
+            label="Status"
+            directLoad={true}
+            withEmptySelect={true}
+            value={isActive}
+            onChange={handleChangeStatus}
+          />
+        </FormControl>
+        <Button
+          onClick={handleReset}
+          variant="contained"
+          style={{
+            backgroundColor: "#ffc107",
+            width: 100,
+            marginLeft: 20,
+            height: 50,
+            marginTop: 8,
+          }}
+        >
+          Reset
+        </Button>
       </div>
 
       <TableContainer sx={{ maxHeight: 440 }}>
@@ -132,7 +167,7 @@ const HistoryBid = () => {
                       align="center"
                       style={{ textTransform: "capitalize" }}
                     >
-                      {row.kategori_produk}
+                      {row.kategori}
                     </TableCell>
                     <TableCell
                       align="center"
@@ -157,15 +192,15 @@ const HistoryBid = () => {
                       align="center"
                       style={{
                         color:
-                          row?.status_lelang === "Tidak Aktif"
-                            ? "#d84315"
-                            : "#00c853",
+                          row?.status_lelang === "Aktif"
+                            ? "#00c853"
+                            : "#d84315",
                         fontWeight: "600",
                       }}
                     >
-                      {row?.status_lelang === "Tidak Aktif"
-                        ? "Lelang Belum Dimulai"
-                        : "Lelang Sedang Berlangsung"}
+                      {row?.status_lelang === "Aktif"
+                        ? "Lelang Sedang Berlangsung"
+                        : "Lelang Belum Dimulai"}
                     </TableCell>
                     <TableCell align="center">
                       <Link to={`/ITC-Finance/history-detail/${row._id}`}>

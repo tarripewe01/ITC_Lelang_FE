@@ -16,7 +16,7 @@ export const loadUser = () => async (dispatch) => {
   }
 
   try {
-    const res = await axios.get("http://localhost:9000/api/auth");
+    const res = await axios.get("https://itc-finance.herokuapp.com/api/auth");
     dispatch({
       type: USER_LOADED,
       payload: res.data,
@@ -40,7 +40,7 @@ export const login = (email, password) => async (dispatch) => {
 
   try {
     const res = await axios.post(
-      "http://localhost:9000/api/auth",
+      "https://itc-finance.herokuapp.com/api/auth",
       body,
       config
     );
