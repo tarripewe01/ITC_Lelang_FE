@@ -158,7 +158,6 @@ const HistoryBid = () => {
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .filter((row) => row.nama_produk.toLowerCase().includes(query))
               .map((row, idx) => {
-                console.log("history", row);
                 return (
                   <TableRow key={row._id}>
                     <TableCell align="center">{idx + 1}</TableCell>

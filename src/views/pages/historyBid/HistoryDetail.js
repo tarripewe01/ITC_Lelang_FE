@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return */
 /* eslint-disable react-hooks/exhaustive-deps */
 import {
   Button,
@@ -25,16 +26,44 @@ const HistoryDetail = () => {
   const navigate = useNavigate();
 
   const [data, setData] = React.useState([]);
-  // console.log(data);
+  const [bidderName, setBidderName] = React.useState(null);
+  const [bidder, setBidder] = React.useState(null);
 
   useEffect(() => {
+    loadData();
+    profile();
+  }, [id, bidder, bidderName]);
+
+  const loadData = () => {
     if (id) {
-      axios.get(`http://localhost:9000/api/product/${id}`).then((response) => {
-        setData(response.data);
-        // console.log(response.data);
-      });
+      axios
+        .get(`https://itc-finance.herokuapp.com/api/product/${id}`)
+        .then((response) => {
+          let bidder = response.data.bids;
+          bidder.map((item) => {
+            setBidderName(item.user);
+          });
+          setData(response.data);
+        });
     }
-  }, [id]);
+  };
+
+  const profile = () => {
+    axios
+      .get(`https://itc-finance.herokuapp.com/api/profile`)
+      .then((response) => {
+        let dataProfile = response.data;
+        dataProfile.map((item) => {
+          if (
+            item.user._id === bidderName &&
+            bidderName !== null &&
+            bidder === null
+          ) {
+            setBidder(item.user.name);
+          }
+        });
+      });
+  };
 
   //   pagination
   const [page, setPage] = React.useState(0);
@@ -95,7 +124,7 @@ const HistoryDetail = () => {
                       {bid.user}
                     </TableCell>
                     <TableCell style={{ textAlign: "center" }}>
-                      Jhonatha
+                      {bidder}
                     </TableCell>
                     <TableCell style={{ textAlign: "center" }}>
                       {moment(bid.tanggal_bid).format("LL")}
