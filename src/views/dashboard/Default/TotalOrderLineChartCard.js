@@ -1,9 +1,10 @@
+/* eslint-disable no-unused-vars */
 import PropTypes from "prop-types";
 import { useState } from "react";
 
 // material-ui
-import { useTheme, styled } from "@mui/material/styles";
-import { Avatar, Box, Button, Grid, Typography } from "@mui/material";
+import { Avatar, Box, Grid, Typography } from "@mui/material";
+import { styled, useTheme } from "@mui/material/styles";
 
 // third-party
 import Chart from "react-apexcharts";
@@ -16,9 +17,9 @@ import ChartDataMonth from "./chart-data/total-order-month-line-chart";
 import ChartDataYear from "./chart-data/total-order-year-line-chart";
 
 // assets
-import LocalMallOutlinedIcon from "@mui/icons-material/LocalMallOutlined";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
-import  axios  from "axios";
+import LocalMallOutlinedIcon from "@mui/icons-material/LocalMallOutlined";
+import axios from "axios";
 import { useEffect } from "react";
 
 const CardWrapper = styled(MainCard)(({ theme }) => ({
@@ -70,9 +71,6 @@ const TotalOrderLineChartCard = ({ isLoading }) => {
 
   const [timeValue, setTimeValue] = useState(false);
   const [data, setData] = useState([]);
-  const handleChangeTime = (event, newValue) => {
-    setTimeValue(newValue);
-  };
 
   useEffect(() => {
     loadData();
