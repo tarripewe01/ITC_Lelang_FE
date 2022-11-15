@@ -78,7 +78,7 @@ const TotalOrderLineChartCard = ({ isLoading }) => {
 
   const loadData = async () => {
     await axios
-      .get("http://localhost:8000/product")
+      .get("https://itc-finance.herokuapp.com/api/product")
       .then((response) => setData(response.data));
   };
 
@@ -124,21 +124,6 @@ const TotalOrderLineChartCard = ({ isLoading }) => {
                         >
                           {data?.length}
                         </Typography>
-                      </Grid>
-                      <Grid item>
-                        <Avatar
-                          sx={{
-                            ...theme.typography.smallAvatar,
-                            cursor: "pointer",
-                            backgroundColor: theme.palette.primary[200],
-                            color: theme.palette.primary.dark,
-                          }}
-                        >
-                          <ArrowDownwardIcon
-                            fontSize="inherit"
-                            sx={{ transform: "rotate3d(1, 1, 1, 45deg)" }}
-                          />
-                        </Avatar>
                       </Grid>
                       <Grid item xs={12}>
                         <Typography

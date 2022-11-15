@@ -70,8 +70,9 @@ const EarningCard = ({ isLoading }) => {
 
   const loadDataUser = async () => {
     await axios
-      .get("http://localhost:9000/api/profile")
+      .get("https://itc-finance.herokuapp.com/api/profile")
       .then((response) => {
+        console.log(response)
         setDataUser(response.data);
       })
       .then((error) => {
@@ -172,21 +173,6 @@ const EarningCard = ({ isLoading }) => {
                     >
                       {dataUser?.length}
                     </Typography>
-                  </Grid>
-                  <Grid item>
-                    <Avatar
-                      sx={{
-                        cursor: "pointer",
-                        ...theme.typography.smallAvatar,
-                        backgroundColor: theme.palette.secondary[200],
-                        color: theme.palette.secondary.dark,
-                      }}
-                    >
-                      <ArrowUpwardIcon
-                        fontSize="inherit"
-                        sx={{ transform: "rotate3d(1, 1, 1, 45deg)" }}
-                      />
-                    </Avatar>
                   </Grid>
                 </Grid>
               </Grid>

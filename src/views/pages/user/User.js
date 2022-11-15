@@ -32,7 +32,7 @@ const User = () => {
 
   const loadData = async () => {
     await axios
-      .get("http://localhost:9000/api/profile")
+      .get("https://itc-finance.herokuapp.com/api/profile")
       .then((response) => {
         // console.log(response.data)
         setData(response.data);

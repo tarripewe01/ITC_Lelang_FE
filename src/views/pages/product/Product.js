@@ -41,7 +41,7 @@ const Product = () => {
       .get(`https://itc-finance.herokuapp.com/api/product`)
       .then((response) => {
         // console.log(response.data);
-        setData(response.data);
+        setData(response.data.reverse());
       })
       .then((error) => {
         console.log(error);

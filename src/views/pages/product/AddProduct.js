@@ -185,13 +185,7 @@ const AddProduct = () => {
         <div style={{ display: "flex", padding: 20 }}>
           <Box>{state ? <h1>Ubah Produk</h1> : <h1>Tambah Produk</h1>}</Box>
         </div>
-        <Slide slidesToScroll={2} slidesToShow={2} indicators={true} style={{width: 300}}>
-          {slideImages.map((slideImage, index) => (
-            <div style={{height: 500}} className="each-slide" key={index}>
-              <img src={file} />
-            </div>
-          ))}
-        </Slide>
+        
         <Box
           component="form"
           sx={{

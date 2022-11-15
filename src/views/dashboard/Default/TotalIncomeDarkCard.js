@@ -1,99 +1,137 @@
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
 // material-ui
-import { styled, useTheme } from '@mui/material/styles';
-import { Avatar, Box, List, ListItem, ListItemAvatar, ListItemText, Typography } from '@mui/material';
+import {
+    Avatar,
+    Box,
+    Grid, Typography
+} from "@mui/material";
+import { styled, useTheme } from "@mui/material/styles";
 
 // project imports
-import MainCard from 'ui-component/cards/MainCard';
-import TotalIncomeCard from 'ui-component/cards/Skeleton/TotalIncomeCard';
+import MainCard from "ui-component/cards/MainCard";
+import TotalIncomeCard from "ui-component/cards/Skeleton/TotalIncomeCard";
+
+import ChartDataMonth from "./chart-data/total-order-month-line-chart";
+import ChartDataYear from "./chart-data/total-order-year-line-chart";
+
+import Chart from "react-apexcharts";
 
 // assets
-import TableChartOutlinedIcon from '@mui/icons-material/TableChartOutlined';
+import PaymentsIcon from "@mui/icons-material/Payments";
+import { useState } from "react";
 
 // styles
 const CardWrapper = styled(MainCard)(({ theme }) => ({
-    backgroundColor: theme.palette.primary.dark,
-    color: theme.palette.primary.light,
-    overflow: 'hidden',
-    position: 'relative',
-    '&:after': {
-        content: '""',
-        position: 'absolute',
-        width: 210,
-        height: 210,
-        background: `linear-gradient(210.04deg, ${theme.palette.primary[200]} -50.94%, rgba(144, 202, 249, 0) 83.49%)`,
-        borderRadius: '50%',
-        top: -30,
-        right: -180
-    },
-    '&:before': {
-        content: '""',
-        position: 'absolute',
-        width: 210,
-        height: 210,
-        background: `linear-gradient(140.9deg, ${theme.palette.primary[200]} -14.02%, rgba(144, 202, 249, 0) 77.58%)`,
-        borderRadius: '50%',
-        top: -160,
-        right: -130
-    }
+  backgroundColor: theme.palette.primary.dark,
+  color: theme.palette.primary.light,
+  overflow: "hidden",
+  position: "relative",
+  "&:after": {
+    content: '""',
+    position: "absolute",
+    width: 210,
+    height: 210,
+    background: `linear-gradient(210.04deg, ${theme.palette.primary[200]} -50.94%, rgba(144, 202, 249, 0) 83.49%)`,
+    borderRadius: "50%",
+    top: -30,
+    right: -180,
+  },
+  "&:before": {
+    content: '""',
+    position: "absolute",
+    width: 210,
+    height: 210,
+    background: `linear-gradient(140.9deg, ${theme.palette.primary[200]} -14.02%, rgba(144, 202, 249, 0) 77.58%)`,
+    borderRadius: "50%",
+    top: -160,
+    right: -130,
+  },
 }));
 
 // ==============================|| DASHBOARD - TOTAL INCOME DARK CARD ||============================== //
 
 const TotalIncomeDarkCard = ({ isLoading }) => {
-    const theme = useTheme();
+  const theme = useTheme();
 
-    return (
-        <>
-            {isLoading ? (
-                <TotalIncomeCard />
-            ) : (
-                <CardWrapper border={false} content={false}>
-                    <Box sx={{ p: 2 }}>
-                        <List sx={{ py: 0 }}>
-                            <ListItem alignItems="center" disableGutters sx={{ py: 0 }}>
-                                <ListItemAvatar>
-                                    <Avatar
-                                        variant="rounded"
-                                        sx={{
-                                            ...theme.typography.commonAvatar,
-                                            ...theme.typography.largeAvatar,
-                                            backgroundColor: theme.palette.primary[800],
-                                            color: '#fff'
-                                        }}
-                                    >
-                                        <TableChartOutlinedIcon fontSize="inherit" />
-                                    </Avatar>
-                                </ListItemAvatar>
-                                <ListItemText
-                                    sx={{
-                                        py: 0,
-                                        mt: 0.45,
-                                        mb: 0.45
-                                    }}
-                                    primary={
-                                        <Typography variant="h4" sx={{ color: '#fff' }}>
-                                            $203k
-                                        </Typography>
-                                    }
-                                    secondary={
-                                        <Typography variant="subtitle2" sx={{ color: 'primary.light', mt: 0.25 }}>
-                                            Total Income
-                                        </Typography>
-                                    }
-                                />
-                            </ListItem>
-                        </List>
-                    </Box>
-                </CardWrapper>
-            )}
-        </>
-    );
+  const [timeValue, setTimeValue] = useState(false);
+
+  return (
+    <>
+      {isLoading ? (
+        <TotalIncomeCard />
+      ) : (
+        <CardWrapper border={false} content={false}>
+          <Box sx={{ p: 2.25 }}>
+            <Grid container direction="column">
+              <Grid item>
+                <Grid container justifyContent="space-between">
+                  <Grid item>
+                    <Avatar
+                      variant="rounded"
+                      sx={{
+                        ...theme.typography.commonAvatar,
+                        ...theme.typography.largeAvatar,
+                        backgroundColor: theme.palette.primary[800],
+                        color: "#fff",
+                        mt: 1,
+                      }}
+                    >
+                      <PaymentsIcon fontSize="inherit" />
+                    </Avatar>
+                  </Grid>
+                </Grid>
+              </Grid>
+              <Grid item sx={{ mb: 0.75 }}>
+                <Grid container alignItems="center">
+                  <Grid item xs={6}>
+                    <Grid container alignItems="center">
+                      <Grid item>
+                        <Typography
+                          sx={{
+                            fontSize: "2.125rem",
+                            fontWeight: 500,
+                            mr: 1,
+                            mt: 1.75,
+                            mb: 0.75,
+                          }}
+                        >
+                          200
+                        </Typography>
+                      </Grid>
+
+                      <Grid item xs={12}>
+                        <Typography
+                          sx={{
+                            fontSize: "1rem",
+                            fontWeight: 500,
+                            color: theme.palette.primary[200],
+                          }}
+                        >
+                          Total Revenue
+                        </Typography>
+                      </Grid>
+                    </Grid>
+                  </Grid>
+                  <Grid item xs={6}>
+                    {timeValue ? (
+                      <Chart {...ChartDataMonth} />
+                    ) : (
+                      <Chart {...ChartDataYear} />
+                    )}
+                  </Grid>
+                </Grid>
+              </Grid>
+            </Grid>
+          </Box>
+        </CardWrapper>
+      )}
+    </>
+  );
 };
 
 TotalIncomeDarkCard.propTypes = {
-    isLoading: PropTypes.bool
+  isLoading: PropTypes.bool,
 };
 
 export default TotalIncomeDarkCard;

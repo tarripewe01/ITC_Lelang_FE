@@ -42,7 +42,8 @@ const HistoryBid = () => {
     await axios
       .get(`https://itc-finance.herokuapp.com/api/product`)
       .then((response) => {
-        setData(response.data);
+        const data = response.data;
+        setData(data.reverse());
         // console.log(response.data);
       });
     //   .then((error) => {
