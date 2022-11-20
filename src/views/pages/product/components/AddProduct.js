@@ -6,7 +6,7 @@ import {
   Paper,
   TextareaAutosize,
 } from "@mui/material";
-import { FileUploader } from "react-drag-drop-files";
+
 import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router";
@@ -21,7 +21,7 @@ import {
   Rating,
   Transmisi,
 } from "../../../../ui-component/SelectCustom";
-
+import { FileUploader } from "react-drag-drop-files";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 
 const AddProduct = () => {

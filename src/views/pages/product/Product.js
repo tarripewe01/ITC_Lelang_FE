@@ -38,7 +38,7 @@ const Product = () => {
 
   const loadData = async () => {
     await axios
-      .get(`http://192.168.1.3:9000/api/product`)
+      .get(`https://itc-finance.herokuapp.com/api/product`)
       .then((response) => {
         // console.log(response.data);
         setData(response.data);
@@ -141,7 +141,8 @@ const Product = () => {
             width: 100,
             marginLeft: 20,
           }}
-          onClick={() => navigate("/ITC-Finance/add-product")}
+          onClick={() => navigate("/ITC-Finance/add_product")}
+          // onClick={() => navigate("/ITC-Finance/test")}
         >
           Tambah
         </Button>

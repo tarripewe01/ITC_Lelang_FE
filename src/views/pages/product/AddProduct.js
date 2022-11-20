@@ -28,10 +28,13 @@ import {
 import { addProduct } from "../../../store/action/productAction";
 import Field from "../../../ui-component/Field";
 
+import { FileUploader } from "react-drag-drop-files";
+import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+
 const AddProduct = () => {
   const state = useLocation().state;
   const navigate = useNavigate();
-  const [file, setFile] = useState("");
+  const [avatar, setAvatar] = useState("");
   const [cabang, setCabang] = useState(state?.cabang || "");
   const [nama_produk, setNamaProduk] = useState(state?.nama_produk || "");
   const [harga, setHarga] = useState(state?.harga || "");
@@ -73,22 +76,9 @@ const AddProduct = () => {
   );
   const [waktu_mulai, setWaktuMulai] = useState(state?.waktu_mulai || "");
   const [waktu_selesai, setWaktuSelesai] = useState(state?.waktu_selesai || "");
-  const [selectedImage, setSelectedImage] = useState();
+  const [imagePreview, setImagePreview] = useState(null);
 
-  const slideImages = [
-    {
-      url: "https://picsum.photos/700",
-      caption: "Slide 1",
-    },
-    {
-      url: "https://picsum.photos/700",
-      caption: "Slide 2",
-    },
-    {
-      url: "https://picsum.photos/700",
-      caption: "Slide 3",
-    },
-  ];
+  console.log(imagePreview);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -122,19 +112,18 @@ const AddProduct = () => {
     formData.append("sph", sph);
     formData.append("keur", keur);
     formData.append("bpkb", bpkb);
-    // formData.append("status_lelang", status_lelang);
     formData.append("waktu_mulai", waktu_mulai);
     formData.append("waktu_selesai", waktu_selesai);
     formData.append("tanggal_selesai", tanggal_selesai);
     formData.append("tanggal_mulai", tanggal_mulai);
-    Array.from(file).forEach((item) => {
-      formData.append("product_path", item);
-    });
+    formData.append("avatar", avatar);
+
     try {
-      const res = await axios.post(
-        "https://itc-finance.herokuapp.com/api/product/",
-        formData
-      );
+      await axios.post("http://192.168.1.3:9000/api/product", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
       toast.success("Sukses Menambah Produk Baru", {
         position: "top-right",
         autoClose: 5000,
@@ -145,10 +134,10 @@ const AddProduct = () => {
         progress: undefined,
         theme: "colored",
       });
+      navigate("/ITC-Finance/products");
     } catch (error) {
       console.log(error);
     }
-    navigate("/ITC-Finance/products");
   };
 
   const handleCancel = (e) => {
@@ -156,7 +145,12 @@ const AddProduct = () => {
     navigate("/ITC-Finance/products");
   };
 
-  console.log(file);
+  const handleChange = (e) => {
+    let file = e.target.files[0];
+
+    setAvatar(file);
+    setImagePreview(URL.createObjectURL(file));
+  };
 
   return (
     <Paper sx={{ width: "100%", overflow: "hidden" }}>
@@ -164,6 +158,44 @@ const AddProduct = () => {
         <div style={{ display: "flex", padding: 20 }}>
           <Box>{state ? <h1>Ubah Produk</h1> : <h1>Tambah Produk</h1>}</Box>
         </div>
+
+        <Box
+          sx={{
+            "& .MuiTextField-root": { m: 1, width: "98%" },
+          }}
+          style={{
+            justifyContent: "center",
+            alignItems: "center",
+            alignSelf: "center",
+          }}
+        >
+          <FileUploader type="file" name="file" onChange={handleChange}>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+                alignSelf: "center",
+                width: 350,
+                height: 410,
+                border: "2px dashed #34aadc",
+                marginLeft: 300,
+                marginBottom: 20,
+                // backgroundColor: "#34aadc"
+              }}
+            >
+              {imagePreview ? (
+                <img src={imagePreview} style={{ width: 340, height: 400 }} />
+              ) : (
+                <>
+                  {/* <CloudUploadIcon fontSize="large" color="secondary" />
+                  <p>Drop your file here !</p> */}
+                </>
+              )}
+            </div>
+          </FileUploader>
+        </Box>
 
         <Box
           component="form"
@@ -175,12 +207,13 @@ const AddProduct = () => {
           <div>
             <input
               accept="image/*"
-              multiple
               type="file"
+              name="avatar"
               id="fullWidth"
-              onChange={(e) => setFile(e.target.files)}
+              onChange={handleChange}
               style={{ marginLeft: 10, marginBottom: 10 }}
             />
+            {/* <img src={imagePreview} style={{ width: 300, height: 300 }} /> */}
             <Field
               type="number"
               label="LOT"

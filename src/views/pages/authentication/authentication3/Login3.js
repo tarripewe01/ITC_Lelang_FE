@@ -89,7 +89,7 @@ const Login = ({ login, isAuthenticated, loading }) => {
       login(email, password);
     }
 
-    if (isAuthenticated && auth.user?.role === "Admin") {
+    if (isAuthenticated && auth.user?.role == "admin") {
       navigate("/ITC-Finance");
     } else {
       toast.error("Account does not have permission", {
