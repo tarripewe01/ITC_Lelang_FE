@@ -4,7 +4,6 @@
 import {
   Box,
   Button,
-  CircularProgress,
   FormControl,
   Grid,
   Paper,
@@ -30,7 +29,7 @@ import Field from "../../../ui-component/Field";
 
 import { FileUploader } from "react-drag-drop-files";
 
-const AddProduct = () => {
+const EditProduct = () => {
   const state = useLocation().state;
   const navigate = useNavigate();
   const [avatar, setAvatar] = useState(state?.avatar?.url);
@@ -76,7 +75,8 @@ const AddProduct = () => {
   const [waktu_mulai, setWaktuMulai] = useState(state?.waktu_mulai || "");
   const [waktu_selesai, setWaktuSelesai] = useState(state?.waktu_selesai || "");
   const [imagePreview, setImagePreview] = useState(state?.avatar?.url);
-  const [loading, setLoading] = useState(false);
+
+  console.log(imagePreview);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -116,38 +116,27 @@ const AddProduct = () => {
     formData.append("tanggal_mulai", tanggal_mulai);
     formData.append("avatar", avatar);
 
-    try {
-      setLoading(true);
-      await axios.post("http://192.168.1.3:9000/api/product", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-      toast.success("Sukses Menambah Produk Baru", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-      });
-      setLoading(false);
-      navigate("/ITC-Finance/products");
-    } catch (error) {
-      console.log(error);
-      toast.danger("Field harus diisi semua", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-      });
-      setLoading(false);
+    if (state) {
+      try {
+        await axios.post("http://192.168.1.3:9000/api/product", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
+        toast.success("Sukses Menambah Produk Baru", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+        navigate("/ITC-Finance/products");
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 
@@ -188,20 +177,20 @@ const AddProduct = () => {
                 justifyContent: "center",
                 alignItems: "center",
                 alignSelf: "center",
-                width: 560,
+                width: 350,
                 height: 410,
                 border: "2px dashed #34aadc",
-                marginLeft: 200,
+                marginLeft: 300,
                 marginBottom: 20,
                 // backgroundColor: "#34aadc"
               }}
             >
               {imagePreview ? (
-                <img src={imagePreview} style={{ width: 550, height: 400 }} />
+                <img src={imagePreview} style={{ width: 340, height: 400 }} />
               ) : (
                 <>
                   {/* <CloudUploadIcon fontSize="large" color="secondary" />
-                  <p>Drop your file here !</p> */}
+                    <p>Drop your file here !</p> */}
                 </>
               )}
             </div>
@@ -515,7 +504,7 @@ const AddProduct = () => {
                 variant="contained"
                 onClick={handleSubmit}
               >
-                {loading ? <CircularProgress color="white" /> : "Save"}
+                Update
               </Button>
               <Button
                 style={{
@@ -536,4 +525,4 @@ const AddProduct = () => {
   );
 };
 
-export default connect(null, { addProduct })(AddProduct);
+export default EditProduct;

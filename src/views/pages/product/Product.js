@@ -16,7 +16,8 @@ import {
 } from "@mui/material";
 import axios from "axios";
 import * as React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import { Category, Status } from "ui-component/SelectCustom";
 var currencyFormatter = require("currency-formatter");
 
@@ -36,39 +37,54 @@ const Product = () => {
     loadData();
   }, []);
 
-  const loadData = async () => {
+  const loadData = async (e) => {
     await axios
       .get(`https://itc-finance.herokuapp.com/api/product`)
       .then((response) => {
         // console.log(response.data);
         setData(response.data);
-      })
+      });
   };
 
-  // const handleChangeCategory = async (event) => {
-  //   const category = event.target.value;
-  //   await axios
-  //     .get(
-  //       `https://itc-finance.herokuapp.com/api/product/filter?kategori=${category}`
-  //     )
-  //     .then((response) => {
-  //       setData(response.data);
-  //     });
-  //   setKategoriProduk(category);
-  // };
+  const handleChangeCategory = async (event) => {
+    const category = event.target.value;
+    await axios
+      .get(`http://192.168.1.3:9000/api/product/filter?kategori=${category}`)
+      .then((response) => {
+        setData(response.data);
+      });
+    setKategoriProduk(category);
+  };
 
-  // const handleChangeStatus = async (event) => {
-  //   const status = event.target.value;
-  //   await axios
-  //     .get(
-  //       `https://itc-finance.herokuapp.com/api/product/filter?status=${status}`
-  //     )
-  //     .then((response) => {
-  //       setData(response.data);
-  //     });
-  //   setIsActive(status);
-  //   console.log(kategori_produk);
-  // };
+  const handleChangeStatus = async (event) => {
+    const status = event.target.value;
+    await axios
+      .get(`http://192.168.1.3:9000/api/product/filter?status=${status}`)
+      .then((response) => {
+        setData(response.data);
+      });
+    setIsActive(status);
+    console.log(kategori_produk);
+  };
+
+  const handleDelete = async (_id, e) => {
+    try {
+      await axios.delete(`http://192.168.1.3:9000/api/product/${_id}`);
+      toast.danger("Sukses Menghapus Produk", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+      navigate("/ITC-Finance/products");
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const handleReset = () => {
     loadData();
@@ -107,7 +123,7 @@ const Product = () => {
             directLoad={true}
             withEmptySelect={true}
             value={kategori_produk}
-            // onChange={handleChangeCategory}
+            onChange={handleChangeCategory}
           />
         </FormControl>
         <FormControl sx={{ minWidth: 120, ml: 2 }}>
@@ -116,7 +132,7 @@ const Product = () => {
             directLoad={true}
             withEmptySelect={true}
             value={isActive}
-            // onChange={handleChangeStatus}
+            onChange={handleChangeStatus}
           />
         </FormControl>
         <Button
@@ -142,89 +158,102 @@ const Product = () => {
             marginLeft: 20,
           }}
           onClick={() => navigate("/ITC-Finance/add_product")}
-          // onClick={() => navigate("/ITC-Finance/test")}
         >
           Tambah
         </Button>
       </div>
-      <TableContainer sx={{ maxHeight: 440 }}>
+      <TableContainer sx={{ maxHeight: "100%" }}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>
               <TableCell align="center">No</TableCell>
               {/* <TableCell align="center">Id</TableCell> */}
               <TableCell align="center">Kategori</TableCell>
+              <TableCell align="center">Cabang</TableCell>
               <TableCell align="center">Nama Produk</TableCell>
               <TableCell align="center">Harga Limit</TableCell>
               <TableCell align="center">Status</TableCell>
               <TableCell align="center">Aksi</TableCell>
             </TableRow>
           </TableHead>
-          <TableBody>
-            {data
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .filter((row) => row.nama_produk.toLowerCase().includes(query))
-              .map((row, idx) => {
-                return (
-                  <TableRow key={row._id}>
-                    <TableCell align="center">{idx + 1}</TableCell>
-                    {/* <TableCell align="center">{row.user._id}</TableCell> */}
-                    <TableCell
-                      align="center"
-                      style={{ textTransform: "capitalize" }}
-                    >
-                      {row.kategori}
-                    </TableCell>
-                    <TableCell
-                      align="center"
-                      style={{ textTransform: "capitalize" }}
-                    >
-                      {row.nama_produk}
-                    </TableCell>
-                    <TableCell align="center">
-                      {currencyFormatter.format(row.harga, { code: "IDR" })}
-                    </TableCell>
-                    <TableCell
-                      align="center"
-                      style={{
-                        color:
-                          row?.status_produk === "Aktif"
-                            ? "#00c853"
-                            : "#d84315",
-                        fontWeight: "600",
-                      }}
-                    >
-                      {row?.status_produk}
-                    </TableCell>
-                    <TableCell align="center">
-                      <div>
-                        <Link
-                          to={"/ITC-Finance/add_product?edit=2"}
-                          state={row}
-                        >
+          {data ? (
+            <TableBody>
+              {data
+                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                .filter((row) => row.nama_produk.toLowerCase().includes(query))
+                .map((row, idx) => {
+                  return (
+                    <TableRow key={row._id}>
+                      <TableCell align="center">{idx + 1}</TableCell>
+                      {/* <TableCell align="center">{row.user._id}</TableCell> */}
+                      <TableCell
+                        align="center"
+                        style={{ textTransform: "capitalize" }}
+                      >
+                        {row.kategori}
+                      </TableCell>
+                      <TableCell
+                        align="center"
+                        style={{ textTransform: "capitalize" }}
+                      >
+                        {row.cabang}
+                      </TableCell>
+                      <TableCell
+                        align="center"
+                        style={{ textTransform: "capitalize" }}
+                      >
+                        {row.nama_produk}
+                      </TableCell>
+                      <TableCell align="center">
+                        {currencyFormatter.format(row.harga, { code: "IDR" })}
+                      </TableCell>
+                      <TableCell
+                        align="center"
+                        style={{
+                          color:
+                            row?.status_produk === "Aktif"
+                              ? "#00c853"
+                              : "#d84315",
+                          fontWeight: "600",
+                        }}
+                      >
+                        {row?.status_produk}
+                      </TableCell>
+                      <TableCell align="center">
+                        <div>
                           <Button
                             variant="contained"
                             style={{ backgroundColor: "#5e35b1", width: 100 }}
+                            onClick={() =>
+                              navigate(`/ITC-Finance/edit_product/${row._id}`)
+                            }
                           >
                             Ubah
                           </Button>
-                        </Link>
-                        <Button
-                          variant="contained"
-                          style={{
-                            backgroundColor: "#d84315",
-                            width: 100,
-                            marginLeft: 10,
-                          }}
-                        >
-                          Hapus
-                        </Button>
-                      </div>
-                    </TableCell>
-                  </TableRow>
-                );
-              })}
-          </TableBody>
+
+                          <Button
+                            variant="contained"
+                            style={{
+                              backgroundColor: "#d84315",
+                              width: 100,
+                              marginLeft: 10,
+                            }}
+                            onClick={(e) => {
+                              handleDelete(row._id);
+                              e.preventDefault();
+                            }}
+                          >
+                            Hapus
+                          </Button>
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
+            </TableBody>
+          ) : (
+            "Tidak Ada Data"
+          )}
         </Table>
       </TableContainer>
       <TablePagination

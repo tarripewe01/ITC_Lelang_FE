@@ -4,6 +4,7 @@ import { lazy } from "react";
 // project imports
 import MainLayout from "layout/MainLayout";
 import Loadable from "ui-component/Loadable";
+import EditProduct from "views/pages/product/EditProduct";
 
 // dashboard routing
 const DashboardDefault = Loadable(
@@ -18,7 +19,6 @@ const AddProducts = Loadable(
   lazy(() => import("views/pages/product/AddProduct"))
 );
 
-
 // ==============================|| MAIN ROUTING ||============================== //
 
 const MainRoutes = {
@@ -26,30 +26,34 @@ const MainRoutes = {
   element: <MainLayout />,
   children: [
     {
-        path: '/',
-        element: <DashboardDefault />
+      path: "/",
+      element: <DashboardDefault />,
     },
     {
-        path: 'dashboard',
-        element: <DashboardDefault />
+      path: "dashboard",
+      element: <DashboardDefault />,
     },
     {
-        path: 'users',
-        element: <Users />
+      path: "users",
+      element: <Users />,
     },
     {
-        path: 'products',
-        element: <Products />
+      path: "products",
+      element: <Products />,
     },
     {
-        path: 'add_product',
-        element: <AddProducts />
+      path: "add_product",
+      element: <AddProducts />,
     },
     {
-        path: 'history',
-        element: <HistoryBid />
-    }
-]
+      path: "edit_product/:id",
+      element: <EditProduct />,
+    },
+    {
+      path: "history",
+      element: <HistoryBid />,
+    },
+  ],
 };
 
 export default MainRoutes;
