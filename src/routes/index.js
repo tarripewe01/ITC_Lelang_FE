@@ -4,6 +4,7 @@ import { lazy } from "react";
 import { useRoutes } from "react-router-dom";
 import Loadable from "ui-component/Loadable";
 import Login3 from "views/pages/authentication/authentication3/Login3";
+import AddProduct from "views/pages/product/components/AddProduct";
 const DashboardDefault = Loadable(
   lazy(() => import("views/dashboard/Default"))
 );
@@ -57,6 +58,10 @@ export default function ThemeRoutes() {
         {
           path: "add_product",
           element: <AddProducts />,
+        },
+        {
+          path: "add-product",
+          element: <AddProduct />,
         },
         {
           path: "history",

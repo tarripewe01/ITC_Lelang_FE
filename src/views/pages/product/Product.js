@@ -38,40 +38,37 @@ const Product = () => {
 
   const loadData = async () => {
     await axios
-      .get(`https://itc-finance.herokuapp.com/api/product`)
+      .get(`http://192.168.1.3:9000/api/product`)
       .then((response) => {
         // console.log(response.data);
-        setData(response.data.reverse());
+        setData(response.data);
       })
-      .then((error) => {
-        console.log(error);
-      });
   };
 
-  const handleChangeCategory = async (event) => {
-    const category = event.target.value;
-    await axios
-      .get(
-        `https://itc-finance.herokuapp.com/api/product/filter?kategori=${category}`
-      )
-      .then((response) => {
-        setData(response.data);
-      });
-    setKategoriProduk(category);
-  };
+  // const handleChangeCategory = async (event) => {
+  //   const category = event.target.value;
+  //   await axios
+  //     .get(
+  //       `https://itc-finance.herokuapp.com/api/product/filter?kategori=${category}`
+  //     )
+  //     .then((response) => {
+  //       setData(response.data);
+  //     });
+  //   setKategoriProduk(category);
+  // };
 
-  const handleChangeStatus = async (event) => {
-    const status = event.target.value;
-    await axios
-      .get(
-        `https://itc-finance.herokuapp.com/api/product/filter?status=${status}`
-      )
-      .then((response) => {
-        setData(response.data);
-      });
-    setIsActive(status);
-    console.log(kategori_produk);
-  };
+  // const handleChangeStatus = async (event) => {
+  //   const status = event.target.value;
+  //   await axios
+  //     .get(
+  //       `https://itc-finance.herokuapp.com/api/product/filter?status=${status}`
+  //     )
+  //     .then((response) => {
+  //       setData(response.data);
+  //     });
+  //   setIsActive(status);
+  //   console.log(kategori_produk);
+  // };
 
   const handleReset = () => {
     loadData();
@@ -110,7 +107,7 @@ const Product = () => {
             directLoad={true}
             withEmptySelect={true}
             value={kategori_produk}
-            onChange={handleChangeCategory}
+            // onChange={handleChangeCategory}
           />
         </FormControl>
         <FormControl sx={{ minWidth: 120, ml: 2 }}>
@@ -119,7 +116,7 @@ const Product = () => {
             directLoad={true}
             withEmptySelect={true}
             value={isActive}
-            onChange={handleChangeStatus}
+            // onChange={handleChangeStatus}
           />
         </FormControl>
         <Button
@@ -144,7 +141,7 @@ const Product = () => {
             width: 100,
             marginLeft: 20,
           }}
-          onClick={() => navigate("/ITC-Finance/add_product")}
+          onClick={() => navigate("/ITC-Finance/add-product")}
         >
           Tambah
         </Button>

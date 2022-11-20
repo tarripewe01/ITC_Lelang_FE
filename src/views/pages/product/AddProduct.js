@@ -7,14 +7,14 @@ import {
   FormControl,
   Grid,
   Paper,
-  TextareaAutosize
+  TextareaAutosize,
 } from "@mui/material";
 import axios from "axios";
 import { useState } from "react";
 import { connect } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Slide } from "react-slideshow-image";
-import 'react-slideshow-image/dist/styles.css';
+import "react-slideshow-image/dist/styles.css";
 import { toast } from "react-toastify";
 import {
   BPKB,
@@ -23,7 +23,7 @@ import {
   Document,
   Rating,
   Status,
-  Transmisi
+  Transmisi,
 } from "ui-component/SelectCustom";
 import { addProduct } from "../../../store/action/productAction";
 import Field from "../../../ui-component/Field";
@@ -43,7 +43,7 @@ const AddProduct = () => {
   const [kondisi_interior, setKondisiInterior] = useState(
     state?.kondisi_interior || ""
   );
-  const [kategori_produk, setKategoriProduk] = useState(state?.kategori || "");
+  const [kategori, setKategoriProduk] = useState(state?.kategori || "");
   const [merk_produk, setMerkProduk] = useState(state?.merk_produk || "");
   const [model_produk, setModelProduk] = useState(state?.model_produk || "");
   const [tahun_produk, setTahunProduk] = useState(state?.tahun_produk || "");
@@ -74,7 +74,7 @@ const AddProduct = () => {
   const [waktu_mulai, setWaktuMulai] = useState(state?.waktu_mulai || "");
   const [waktu_selesai, setWaktuSelesai] = useState(state?.waktu_selesai || "");
   const [selectedImage, setSelectedImage] = useState();
-  
+
   const slideImages = [
     {
       url: "https://picsum.photos/700",
@@ -100,7 +100,7 @@ const AddProduct = () => {
     formData.append("kondisi_mesin", kondisi_mesin);
     formData.append("kondisi_exterior", kondisi_exterior);
     formData.append("kondisi_interior", kondisi_interior);
-    formData.append("kategori_produk", kategori_produk);
+    formData.append("kategori", kategori);
     formData.append("merk_produk", merk_produk);
     formData.append("model_produk", model_produk);
     formData.append("tahun_produk", tahun_produk);
@@ -131,41 +131,20 @@ const AddProduct = () => {
       formData.append("product_path", item);
     });
     try {
-      if (state) {
-        const res = await axios.put(
-          `https://itc-finance.herokuapp.com/api/product/${state._id}`,
-          formData,
-          {
-            headers: { "Content-Type": "application/x-www-form-urlencoded" },
-          }
-        );
-        toast.info("Sukses Mengubah Produk", {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-        });
-        // console.log(res);
-      } else {
-        const res = await axios.post(
-          "https://itc-finance.herokuapp.com/api/product/",
-          formData
-        );
-        toast.success("Sukses Menambah Produk Baru", {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-        });
-      }
+      const res = await axios.post(
+        "https://itc-finance.herokuapp.com/api/product/",
+        formData
+      );
+      toast.success("Sukses Menambah Produk Baru", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
     } catch (error) {
       console.log(error);
     }
@@ -185,7 +164,7 @@ const AddProduct = () => {
         <div style={{ display: "flex", padding: 20 }}>
           <Box>{state ? <h1>Ubah Produk</h1> : <h1>Tambah Produk</h1>}</Box>
         </div>
-        
+
         <Box
           component="form"
           sx={{
@@ -227,7 +206,7 @@ const AddProduct = () => {
               onChange={(e) => setWarna(e.target.value)}
             />
             <Category
-              value={kategori_produk}
+              value={kategori}
               onChange={(e) => setKategoriProduk(e.target.value)}
             />
             <FormControl sx={{ m: 1, width: "98%" }}>
