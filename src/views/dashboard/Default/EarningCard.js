@@ -70,7 +70,7 @@ const EarningCard = ({ isLoading }) => {
 
   const loadDataUser = async () => {
     await axios
-      .get("http://192.168.1.3:9000/api/profile")
+      .get("http://192.168.1.5:9000/api/profile")
       .then((response) => {
         console.log(response)
         setDataUser(response.data);

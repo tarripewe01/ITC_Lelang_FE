@@ -39,13 +39,11 @@ const HistoryBid = () => {
   }, []);
 
   const loadData = async () => {
-    await axios
-      .get(`http://192.168.1.3:9000/api/product`)
-      .then((response) => {
-        const data = response.data;
-        setData(data.reverse());
-        // console.log(response.data);
-      });
+    await axios.get(`http://192.168.1.5:9000/api/product`).then((response) => {
+      const data = response.data;
+      setData(data.reverse());
+      // console.log(response.data);
+    });
     //   .then((error) => {
     //     console.log(error);
     //   });
@@ -139,7 +137,7 @@ const HistoryBid = () => {
         </Button>
       </div>
 
-      <TableContainer sx={{ maxHeight: 440 }}>
+      <TableContainer sx={{ maxHeight: "100%" }}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>
@@ -200,7 +198,10 @@ const HistoryBid = () => {
                     >
                       {row?.status_lelang === "Aktif"
                         ? "Lelang Sedang Berlangsung"
-                        : "Lelang Belum Dimulai"}
+                        : "Lelang Sudah Selesai" ||
+                          row.status_lelang === "Tidak Aktif"
+                        ? "Lelang Belum Dimulai"
+                        : ""}
                     </TableCell>
                     <TableCell align="center">
                       <Link to={`/ITC-Finance/history-detail/${row._id}`}>

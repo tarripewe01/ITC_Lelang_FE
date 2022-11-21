@@ -49,7 +49,7 @@ const Product = () => {
   const handleChangeCategory = async (event) => {
     const category = event.target.value;
     await axios
-      .get(`http://192.168.1.3:9000/api/product/filter?kategori=${category}`)
+      .get(`http://192.168.1.5:9000/api/product/filter?kategori=${category}`)
       .then((response) => {
         setData(response.data);
       });
@@ -59,7 +59,7 @@ const Product = () => {
   const handleChangeStatus = async (event) => {
     const status = event.target.value;
     await axios
-      .get(`http://192.168.1.3:9000/api/product/filter?status=${status}`)
+      .get(`http://192.168.1.5:9000/api/product/filter?status=${status}`)
       .then((response) => {
         setData(response.data);
       });
@@ -69,7 +69,7 @@ const Product = () => {
 
   const handleDelete = async (_id, e) => {
     try {
-      await axios.delete(`http://192.168.1.3:9000/api/product/${_id}`);
+      await axios.delete(`http://192.168.1.5:9000/api/product/${_id}`);
       toast.danger("Sukses Menghapus Produk", {
         position: "top-right",
         autoClose: 5000,

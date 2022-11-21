@@ -29,6 +29,9 @@ const HistoryDetail = () => {
   const [bidderName, setBidderName] = React.useState(null);
   const [bidder, setBidder] = React.useState(null);
 
+  // console.log("bidderName", bidderName);
+  // console.log("bidder", bidder);
+
   useEffect(() => {
     loadData();
     profile();
@@ -41,6 +44,7 @@ const HistoryDetail = () => {
         .then((response) => {
           let bidder = response.data.bids;
           bidder.map((item) => {
+            // console.log("DATA", item.user);
             setBidderName(item.user);
           });
           setData(response.data);
@@ -54,13 +58,10 @@ const HistoryDetail = () => {
       .then((response) => {
         let dataProfile = response.data;
         dataProfile.map((item) => {
-          if (
-            item.user._id === bidderName &&
-            bidderName !== null &&
-            bidder === null
-          ) {
-            setBidder(item.user.name);
-          }
+          // console.log(item);
+          setBidder(item.user?._id);
+          if (bidderName !== item.user?._id) return setBidder(item.user?.name);
+          // if (bidderName !== item.user?._id) return;
         });
       });
   };
@@ -102,7 +103,7 @@ const HistoryDetail = () => {
         <div style={{ display: "flex", padding: 20 }}>
           <h3>Daftar Peserta Lelang</h3>
         </div>
-        <TableContainer>
+        <TableContainer sx={{ maxHeight: "100%" }}>
           <Table>
             <TableHead>
               <TableRow>

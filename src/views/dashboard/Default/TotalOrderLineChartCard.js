@@ -78,7 +78,7 @@ const TotalOrderLineChartCard = ({ isLoading }) => {
 
   const loadData = async () => {
     await axios
-      .get("http://192.168.1.3:9000/api/product")
+      .get("http://192.168.1.5:9000/api/product")
       .then((response) => setData(response.data));
   };
 
