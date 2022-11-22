@@ -16,7 +16,7 @@ export const loadUser = () => async (dispatch) => {
   }
 
   try {
-    const res = await axios.get("http://192.168.1.5:9000/api/auth");
+    const res = await axios.get("http://192.168.1.4:9000/api/auth");
     dispatch({
       type: USER_LOADED,
       payload: res.data,
@@ -40,7 +40,7 @@ export const login = (email, password) => async (dispatch) => {
 
   try {
     const res = await axios.post(
-      "http://192.168.1.5:9000/api/auth",
+      "http://192.168.1.4:9000/api/auth",
       body,
       config
     );
