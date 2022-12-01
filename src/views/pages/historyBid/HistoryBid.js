@@ -87,6 +87,18 @@ const HistoryBid = () => {
     setPage(0);
   };
 
+  const statuslelang = (row) => {
+    if (row.status_lelang === "Aktif") {
+      return "Lelang Sedang Berlangsung";
+    } else if (row.status_lelang === "Tidak Aktif") {
+      return "Lelang Belum Dimulai";
+    } else if (row.status_lelang === "Selesai") {
+      return "Selesai";
+    } else if (row.status_lelang === "") {
+      return "Lelang Belum Dimulai";
+    }
+  };
+
   return (
     <Paper sx={{ width: "100%", overflow: "hidden" }}>
       <div style={{ display: "flex", padding: 20 }}>
@@ -194,13 +206,13 @@ const HistoryBid = () => {
                         color:
                           row?.status_lelang === "Aktif"
                             ? "#00c853"
+                            : "#d84315" && row.status_lelang === "Tidak Aktif"
+                            ? "orange"
                             : "#d84315",
                         fontWeight: "600",
                       }}
                     >
-                      {row?.status_lelang === "Aktif"
-                        ? "Lelang Sedang Berlangsung"
-                        : "Selesai"}
+                      {statuslelang(row)}
                     </TableCell>
                     <TableCell align="center">
                       <Link to={`/ITC-Finance/history-detail/${row._id}`}>

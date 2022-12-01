@@ -62,11 +62,11 @@ const HistoryDetail = () => {
       .then((response) => {
         let dataProfile = response.data;
         // console.log('DATA PROFILE', dataProfile)
-   dataProfile.map((item) => {
+        dataProfile.map((item) => {
           const id = item.user?._id;
           const user = item.user?.name;
-          console.log(id, "-", user);
-          setBidder(id)
+          // console.log(id, "-", user);
+          setBidder(id);
         });
       });
   };
