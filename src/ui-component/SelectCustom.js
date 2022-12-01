@@ -17,8 +17,8 @@ export const Category = ({ value, onChange }) => {
           label="Kategori"
           inputProps={{ "aria-label": "Without label" }}
         >
-          {options.map((option) => (
-            <MenuItem value={option.value}>{option.label}</MenuItem>
+          {options.map((option, idx) => (
+            <MenuItem key={idx} value={option.value}>{option.label}</MenuItem>
           ))}
         </Select>
       </FormControl>
@@ -159,8 +159,8 @@ export const Status = ({ value, onChange, label }) => {
           label={label}
           inputProps={{ "aria-label": "Without label" }}
         >
-          {options.map((option) => (
-            <MenuItem value={option.value}>{option.label}</MenuItem>
+          {options.map((option, idx) => (
+            <MenuItem key={idx} value={option.value}>{option.label}</MenuItem>
           ))}
         </Select>
       </FormControl>

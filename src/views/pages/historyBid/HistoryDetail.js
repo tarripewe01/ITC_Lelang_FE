@@ -26,42 +26,47 @@ const HistoryDetail = () => {
   const navigate = useNavigate();
 
   const [data, setData] = React.useState([]);
-  const [bidderName, setBidderName] = React.useState(null);
-  const [bidder, setBidder] = React.useState(null);
+  const [bidderName, setBidderName] = React.useState([]);
+  const [bidder, setBidder] = React.useState([]);
 
-  // console.log("bidderName", bidderName);
-  // console.log("bidder", bidder);
+  console.log("bidderName", bidderName);
+  console.log("bidder", bidder);
+  // console.log("data", data);
 
   useEffect(() => {
     loadData();
     profile();
-  }, [id, bidder, bidderName]);
+  }, []);
 
   const loadData = () => {
     if (id) {
       axios
-        .get(`https://itc-finance.herokuapp.com/api/product/${id}`)
+        .get(`https://itcfinanceapi.vercel.app/api/product/${id}`)
         .then((response) => {
           let bidder = response.data.bids;
-          bidder.map((item) => {
-            // console.log("DATA", item.user);
-            setBidderName(item.user);
-          });
+          // bidder.map((item) => {
+          //   // console.log("DATA", item.user);
+          //   const data = item.user;
+          //   // console.log('bidder', data)
+          //   setBidderName(item);
+          // });
           setData(response.data);
+          setBidderName(bidder);
         });
     }
   };
 
   const profile = () => {
     axios
-      .get(`https://itc-finance.herokuapp.com/api/profile`)
+      .get(`https://itcfinanceapi.vercel.app/api/profile`)
       .then((response) => {
         let dataProfile = response.data;
-        dataProfile.map((item) => {
-          // console.log(item);
-          setBidder(item.user?._id);
-          if (bidderName !== item.user?._id) return setBidder(item.user?.name);
-          // if (bidderName !== item.user?._id) return;
+        // console.log('DATA PROFILE', dataProfile)
+   dataProfile.map((item) => {
+          const id = item.user?._id;
+          const user = item.user?.name;
+          console.log(id, "-", user);
+          setBidder(id)
         });
       });
   };
@@ -109,7 +114,7 @@ const HistoryDetail = () => {
               <TableRow>
                 <TableCell style={{ textAlign: "center" }}>No</TableCell>
                 <TableCell style={{ textAlign: "center" }}>Id</TableCell>
-                <TableCell style={{ textAlign: "center" }}>Nama</TableCell>
+                {/* <TableCell style={{ textAlign: "center" }}>Nama</TableCell> */}
                 <TableCell style={{ textAlign: "center" }}>Tanggal</TableCell>
                 <TableCell style={{ textAlign: "center" }}>Bid </TableCell>
               </TableRow>
@@ -124,9 +129,9 @@ const HistoryDetail = () => {
                     <TableCell style={{ textAlign: "center" }}>
                       {bid.user}
                     </TableCell>
-                    <TableCell style={{ textAlign: "center" }}>
+                    {/* <TableCell style={{ textAlign: "center" }}>
                       {bidder}
-                    </TableCell>
+                    </TableCell> */}
                     <TableCell style={{ textAlign: "center" }}>
                       {moment(bid.tanggal_bid).format("LL")}
                     </TableCell>

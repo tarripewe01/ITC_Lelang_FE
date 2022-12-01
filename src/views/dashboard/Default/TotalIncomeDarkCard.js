@@ -1,11 +1,7 @@
 import PropTypes from "prop-types";
 
 // material-ui
-import {
-    Avatar,
-    Box,
-    Grid, Typography
-} from "@mui/material";
+import { Avatar, Box, Grid, Typography } from "@mui/material";
 import { styled, useTheme } from "@mui/material/styles";
 
 // project imports
@@ -19,7 +15,8 @@ import Chart from "react-apexcharts";
 
 // assets
 import PaymentsIcon from "@mui/icons-material/Payments";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 // styles
 const CardWrapper = styled(MainCard)(({ theme }) => ({
@@ -55,6 +52,29 @@ const TotalIncomeDarkCard = ({ isLoading }) => {
   const theme = useTheme();
 
   const [timeValue, setTimeValue] = useState(false);
+
+  const [data, setData] = useState([]);
+  console.log("DATA", data);
+
+  useEffect(() => {
+    // loadData();
+  }, []);
+
+  const loadData = async () => {
+    await axios
+      .get("https://itcfinanceapi.vercel.app/api/product")
+      .then((response) => {
+        const data = response.data;
+        // console.log("DATA", data);
+        data.map((item) => {
+          const bid = item.bids[0]?.nominal_bid;
+          // if (item.bids?.length > 0) {
+          console.log("ITEM", bid);
+          //   setData(bid);
+          // }
+        });
+      });
+  };
 
   return (
     <>

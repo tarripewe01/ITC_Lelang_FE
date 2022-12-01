@@ -11,7 +11,6 @@ import SkeletonEarningCard from "ui-component/cards/Skeleton/EarningCard";
 
 // assets
 import ArchiveTwoToneIcon from "@mui/icons-material/ArchiveOutlined";
-import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import FileCopyTwoToneIcon from "@mui/icons-material/FileCopyOutlined";
 import GetAppTwoToneIcon from "@mui/icons-material/GetAppOutlined";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
@@ -70,9 +69,8 @@ const EarningCard = ({ isLoading }) => {
 
   const loadDataUser = async () => {
     await axios
-      .get("http://192.168.1.4:9000/api/profile")
+      .get("https://itcfinanceapi.vercel.app/api/profile")
       .then((response) => {
-        console.log(response)
         setDataUser(response.data);
       })
       .then((error) => {

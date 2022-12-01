@@ -1,45 +1,49 @@
+/* eslint-disable array-callback-return */
 import PropTypes from "prop-types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 // material-ui
-import { useTheme } from "@mui/material/styles";
 import {
-  Avatar,
   Button,
   CardActions,
   CardContent,
   Divider,
   Grid,
-  Menu,
-  MenuItem,
   Typography,
 } from "@mui/material";
 
 // project imports
-import BajajAreaChartCard from "./BajajAreaChartCard";
+import { gridSpacing } from "store/constant";
 import MainCard from "ui-component/cards/MainCard";
 import SkeletonPopularCard from "ui-component/cards/Skeleton/PopularCard";
-import { gridSpacing } from "store/constant";
 
 // assets
 import ChevronRightOutlinedIcon from "@mui/icons-material/ChevronRightOutlined";
-import MoreHorizOutlinedIcon from "@mui/icons-material/MoreHorizOutlined";
-import KeyboardArrowUpOutlinedIcon from "@mui/icons-material/KeyboardArrowUpOutlined";
-import KeyboardArrowDownOutlinedIcon from "@mui/icons-material/KeyboardArrowDownOutlined";
+import axios from "axios";
 
 // ==============================|| DASHBOARD DEFAULT - POPULAR CARD ||============================== //
 
 const PopularCard = ({ isLoading }) => {
-  const theme = useTheme();
+  const [data, setData] = useState([]);
+  // console.log("DATA", data);
 
-  const [anchorEl, setAnchorEl] = useState(null);
+  useEffect(() => {
+    loadData();
+  }, []);
 
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
+  const loadData = async () => {
+    await axios
+      .get("https://itcfinanceapi.vercel.app/api/product")
+      .then((response) => {
+        const data = response.data;
+        // console.log("DATA", data);
+        data.map((item) => {
+          // console.log("ITEM", item);
+          if (item.favorites.length > 0) {
+            setData(item);
+          }
+        });
+      });
   };
 
   return (
@@ -71,7 +75,7 @@ const PopularCard = ({ isLoading }) => {
                     >
                       <Grid item>
                         <Typography variant="subtitle1" color="inherit">
-                          Bajaj Finery
+                          {data?.nama_produk}
                         </Typography>
                       </Grid>
                       <Grid item>
@@ -82,7 +86,7 @@ const PopularCard = ({ isLoading }) => {
                         >
                           <Grid item>
                             <Typography variant="subtitle1" color="inherit">
-                              $1839.00
+                              ITC {data?.cabang}
                             </Typography>
                           </Grid>
                         </Grid>
@@ -94,7 +98,7 @@ const PopularCard = ({ isLoading }) => {
                       variant="subtitle2"
                       sx={{ color: "success.dark" }}
                     >
-                      10% Profit
+                      {data?.favorites?.length} likes
                     </Typography>
                   </Grid>
                 </Grid>

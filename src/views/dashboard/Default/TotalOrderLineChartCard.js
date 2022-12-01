@@ -17,7 +17,6 @@ import ChartDataMonth from "./chart-data/total-order-month-line-chart";
 import ChartDataYear from "./chart-data/total-order-year-line-chart";
 
 // assets
-import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import LocalMallOutlinedIcon from "@mui/icons-material/LocalMallOutlined";
 import axios from "axios";
 import { useEffect } from "react";
@@ -78,7 +77,7 @@ const TotalOrderLineChartCard = ({ isLoading }) => {
 
   const loadData = async () => {
     await axios
-      .get("http://192.168.1.4:9000/api/product")
+      .get("https://itcfinanceapi.vercel.app/api/product")
       .then((response) => setData(response.data));
   };
 

@@ -39,21 +39,20 @@ const HistoryBid = () => {
   }, []);
 
   const loadData = async () => {
-    await axios.get(`http://192.168.1.4:9000/api/product`).then((response) => {
-      const data = response.data;
-      setData(data.reverse());
-      // console.log(response.data);
-    });
-    //   .then((error) => {
-    //     console.log(error);
-    //   });
+    await axios
+      .get(`https://itcfinanceapi.vercel.app/api/product`)
+      .then((response) => {
+        const data = response.data;
+        setData(data);
+        // console.log(response.data);
+      });
   };
 
   const handleChangeCategory = async (event) => {
     const category = event.target.value;
     await axios
       .get(
-        `https://itc-finance.herokuapp.com/api/product/filter?kategori=${category}`
+        `https://itcfinanceapi.vercel.app/api/product/filter?kategori=${category}`
       )
       .then((response) => {
         setData(response.data);
@@ -65,7 +64,7 @@ const HistoryBid = () => {
     const status = event.target.value;
     await axios
       .get(
-        `https://itc-finance.herokuapp.com/api/product/filter?status=${status}`
+        `https://itcfinanceapi.vercel.app/api/product/filter?status=${status}`
       )
       .then((response) => {
         setData(response.data);
@@ -158,7 +157,7 @@ const HistoryBid = () => {
               .filter((row) => row.nama_produk.toLowerCase().includes(query))
               .map((row, idx) => {
                 return (
-                  <TableRow key={row._id}>
+                  <TableRow key={idx}>
                     <TableCell align="center">{idx + 1}</TableCell>
                     {/* <TableCell align="center">{row.user._id}</TableCell> */}
                     <TableCell
@@ -173,7 +172,10 @@ const HistoryBid = () => {
                     >
                       {row.nama_produk}
                     </TableCell>
-                    <TableCell align="center">
+                    <TableCell
+                      align="center"
+                      style={{ fontWeight: "bold", color: "#d84315" }}
+                    >
                       {currencyFormatter.format(row.harga, { code: "IDR" })}
                     </TableCell>
                     <TableCell align="center">
@@ -198,10 +200,7 @@ const HistoryBid = () => {
                     >
                       {row?.status_lelang === "Aktif"
                         ? "Lelang Sedang Berlangsung"
-                        : "Lelang Sudah Selesai" ||
-                          row.status_lelang === "Tidak Aktif"
-                        ? "Lelang Belum Dimulai"
-                        : ""}
+                        : "Selesai"}
                     </TableCell>
                     <TableCell align="center">
                       <Link to={`/ITC-Finance/history-detail/${row._id}`}>

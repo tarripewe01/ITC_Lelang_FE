@@ -52,7 +52,7 @@ const User = () => {
 
   const loadDataUser = async () => {
     await axios
-      .get("https://itc-finance.herokuapp.com/api/auth/all")
+      .get("https://itcfinanceapi.vercel.app/api/auth/all")
       .then((response) => {
         setDataUser(response.data);
       });
@@ -61,12 +61,12 @@ const User = () => {
   const loadDataProfile = async () => {
     setLoading(true);
     await axios
-      .get("https://itc-finance.herokuapp.com/api/profile")
+      .get("https://itcfinanceapi.vercel.app/api/profile")
       .then((response) => {
         const data = response.data;
         // console.log("RESPONSE", data);
         data.map((item) => {
-          console.log("ITEM", item);
+          // console.log("ITEM", item);
           if (item.user._id === idUser._id) {
             setDataProfile(item);
             setLoading(false);
