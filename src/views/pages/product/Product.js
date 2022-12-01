@@ -39,7 +39,7 @@ const Product = () => {
 
   const loadData = async (e) => {
     await axios
-      .get(`https://itc-finance.herokuapp.com/api/product`)
+      .get(`https://itcfinanceapi.vercel.app/api/product`)
       .then((response) => {
         // console.log(response.data);
         setData(response.data);
@@ -49,7 +49,9 @@ const Product = () => {
   const handleChangeCategory = async (event) => {
     const category = event.target.value;
     await axios
-      .get(`http://192.168.1.5:9000/api/product/filter?kategori=${category}`)
+      .get(
+        `https://itcfinanceapi.vercel.app/api/product/filter?kategori=${category}`
+      )
       .then((response) => {
         setData(response.data);
       });
@@ -59,7 +61,9 @@ const Product = () => {
   const handleChangeStatus = async (event) => {
     const status = event.target.value;
     await axios
-      .get(`http://192.168.1.5:9000/api/product/filter?status=${status}`)
+      .get(
+        `https://itcfinanceapi.vercel.app/api/product/filter?status=${status}`
+      )
       .then((response) => {
         setData(response.data);
       });
@@ -69,7 +73,7 @@ const Product = () => {
 
   const handleDelete = async (_id, e) => {
     try {
-      await axios.delete(`http://192.168.1.5:9000/api/product/${_id}`);
+      await axios.delete(`https://itcfinanceapi.vercel.app/api/product/${_id}`);
       toast.danger("Sukses Menghapus Produk", {
         position: "top-right",
         autoClose: 5000,
@@ -126,7 +130,7 @@ const Product = () => {
             onChange={handleChangeCategory}
           />
         </FormControl>
-        <FormControl sx={{ minWidth: 120, ml: 2 }}>
+        {/* <FormControl sx={{ minWidth: 120, ml: 2 }}>
           <Status
             label="Status"
             directLoad={true}
@@ -134,7 +138,7 @@ const Product = () => {
             value={isActive}
             onChange={handleChangeStatus}
           />
-        </FormControl>
+        </FormControl> */}
         <Button
           onClick={handleReset}
           variant="contained"
@@ -172,7 +176,7 @@ const Product = () => {
               <TableCell align="center">Cabang</TableCell>
               <TableCell align="center">Nama Produk</TableCell>
               <TableCell align="center">Harga Limit</TableCell>
-              <TableCell align="center">Status</TableCell>
+              {/* <TableCell align="center">Status</TableCell> */}
               <TableCell align="center">Aksi</TableCell>
             </TableRow>
           </TableHead>
@@ -207,7 +211,7 @@ const Product = () => {
                       <TableCell align="center">
                         {currencyFormatter.format(row.harga, { code: "IDR" })}
                       </TableCell>
-                      <TableCell
+                      {/* <TableCell
                         align="center"
                         style={{
                           color:
@@ -218,7 +222,7 @@ const Product = () => {
                         }}
                       >
                         {row?.status_produk}
-                      </TableCell>
+                      </TableCell> */}
                       <TableCell align="center">
                         <div>
                           <Button
