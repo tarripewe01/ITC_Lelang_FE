@@ -16,7 +16,7 @@ import {
 } from "@mui/material";
 import axios from "axios";
 import * as React from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Category, Status } from "ui-component/SelectCustom";
 import Swal from "sweetalert2";
@@ -234,16 +234,17 @@ const Product = () => {
                       </TableCell> */}
                       <TableCell align="center">
                         <div>
-                          <Button
-                            variant="contained"
-                            style={{ backgroundColor: "#5e35b1", width: 100 }}
-                            onClick={
-                              () => alert(row._id)
-                              // navigate(`/ITC-Finance/edit_product/${row._id}`)
-                            }
+                          <Link
+                            to={"/ITC-Finance/add_product?edit=2"}
+                            state={row}
                           >
-                            Ubah
-                          </Button>
+                            <Button
+                              variant="contained"
+                              style={{ backgroundColor: "#5e35b1", width: 100 }}
+                            >
+                              Ubah
+                            </Button>
+                          </Link>
 
                           <Button
                             variant="contained"

@@ -30,7 +30,7 @@ import Field from "../../../ui-component/Field";
 
 import { FileUploader } from "react-drag-drop-files";
 
-const AddProduct = () => {
+const AddProduct = ({ addProduct }) => {
   const state = useLocation().state;
   const navigate = useNavigate();
   const [avatar, setAvatar] = useState(state?.avatar?.url);
@@ -118,23 +118,49 @@ const AddProduct = () => {
 
     try {
       setLoading(true);
-      await axios.post("http://192.168.1.5:9000/api/product", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-      toast.success("Sukses Menambah Produk Baru", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-      });
-      setLoading(false);
-      navigate("/ITC-Finance/products");
+      if (state) {
+        await axios.put(
+          `https://itcfinanceapi.vercel.app/api/product/${state._id}`,
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+        toast.success("Sukses Mengubah Produk", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+        setLoading(false);
+        navigate("/ITC-Finance/products");
+      } else {
+        await axios.post(
+          "https://itcfinanceapi.vercel.app/api/product",
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+        toast.success("Sukses Menambah Produk Baru", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+      }
     } catch (error) {
       console.log(error);
       toast.danger("Field harus diisi semua", {
@@ -148,6 +174,7 @@ const AddProduct = () => {
         theme: "colored",
       });
       setLoading(false);
+      navigate("/ITC-Finance/products");
     }
   };
 
@@ -191,7 +218,7 @@ const AddProduct = () => {
                 width: 560,
                 height: 410,
                 border: "2px dashed #34aadc",
-                marginLeft: 200,
+                marginLeft: 20,
                 marginBottom: 20,
                 // backgroundColor: "#34aadc"
               }}

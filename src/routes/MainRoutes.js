@@ -46,7 +46,7 @@ const MainRoutes = {
       element: <AddProducts />,
     },
     {
-      path: "edit_product/:id",
+      path: "edit_product",
       element: <EditProduct />,
     },
     {
