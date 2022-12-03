@@ -17,7 +17,8 @@ import moment from "moment";
 import "moment/min/locales";
 import React from "react";
 import { Link } from "react-router-dom";
-import { Category, Status } from "ui-component/SelectCustom";
+import { Category } from "ui-component/SelectCustom";
+import { StatusBid } from "../../../ui-component/SelectCustom";
 var currencyFormatter = require("currency-formatter");
 
 const HistoryBid = () => {
@@ -28,8 +29,8 @@ const HistoryBid = () => {
   // filter
   const [query, setQuery] = React.useState("");
   const [kategori_produk, setKategoriProduk] = React.useState("");
-  const [isActive, setIsActive] = React.useState("");
-
+  const [isActive, setIsActive] = React.useState([]);
+  console.log(isActive);
   //   pagination
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -44,7 +45,6 @@ const HistoryBid = () => {
       .then((response) => {
         const data = response.data;
         setData(data);
-        // console.log(response.data);
       });
   };
 
@@ -61,15 +61,18 @@ const HistoryBid = () => {
   };
 
   const handleChangeStatus = async (event) => {
-    const status = event.target.value;
+    const status_lelang = event.target.value;
     await axios
       .get(
-        `https://itcfinanceapi.vercel.app/api/product/filter?status=${status}`
+        `https://itcfinanceapi.vercel.app/api/product/filter/lelang?status_lelang=${status_lelang}`
       )
       .then((response) => {
-        setData(response.data);
+        console.log(response.data);
+        if (response.status === 200) {
+          setData(response.data);
+          setIsActive(status_lelang);
+        }
       });
-    setIsActive(status);
   };
 
   const handleReset = () => {
@@ -125,7 +128,7 @@ const HistoryBid = () => {
           />
         </FormControl>
         <FormControl sx={{ minWidth: 120, ml: 2 }}>
-          <Status
+          <StatusBid
             label="Status"
             directLoad={true}
             withEmptySelect={true}

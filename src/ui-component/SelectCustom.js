@@ -18,7 +18,9 @@ export const Category = ({ value, onChange }) => {
           inputProps={{ "aria-label": "Without label" }}
         >
           {options.map((option, idx) => (
-            <MenuItem key={idx} value={option.value}>{option.label}</MenuItem>
+            <MenuItem key={idx} value={option.value}>
+              {option.label}
+            </MenuItem>
           ))}
         </Select>
       </FormControl>
@@ -49,7 +51,9 @@ export const Rating = ({ value, onChange, label }) => {
           inputProps={{ "aria-label": "Without label" }}
         >
           {options.map((option, idx) => (
-            <MenuItem key={idx} value={option.value}>{option.label}</MenuItem>
+            <MenuItem key={idx} value={option.value}>
+              {option.label}
+            </MenuItem>
           ))}
         </Select>
       </FormControl>
@@ -79,7 +83,9 @@ export const Branch = ({ value, onChange, label }) => {
           inputProps={{ "aria-label": "Without label" }}
         >
           {options.map((option, idx) => (
-            <MenuItem key={idx} value={option.value}>{option.label}</MenuItem>
+            <MenuItem key={idx} value={option.value}>
+              {option.label}
+            </MenuItem>
           ))}
         </Select>
       </FormControl>
@@ -105,7 +111,9 @@ export const Document = ({ value, onChange, label }) => {
           inputProps={{ "aria-label": "Without label" }}
         >
           {options.map((option, idx) => (
-            <MenuItem key={idx} value={option.value}>{option.label}</MenuItem>
+            <MenuItem key={idx} value={option.value}>
+              {option.label}
+            </MenuItem>
           ))}
         </Select>
       </FormControl>
@@ -134,7 +142,9 @@ export const BPKB = ({ value, onChange, label }) => {
           inputProps={{ "aria-label": "Without label" }}
         >
           {options.map((option, idx) => (
-            <MenuItem key={idx} value={option.value}>{option.label}</MenuItem>
+            <MenuItem key={idx} value={option.value}>
+              {option.label}
+            </MenuItem>
           ))}
         </Select>
       </FormControl>
@@ -160,7 +170,38 @@ export const Status = ({ value, onChange, label }) => {
           inputProps={{ "aria-label": "Without label" }}
         >
           {options.map((option, idx) => (
-            <MenuItem key={idx} value={option.value}>{option.label}</MenuItem>
+            <MenuItem key={idx} value={option.value}>
+              {option.label}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+    </>
+  );
+};
+
+export const StatusBid = ({ value, onChange, label }) => {
+  const options = [
+    { label: "Belum Dimulai", value: "Tidak Aktif" },
+    { label: "Sedang Berlangsung", value: "Aktif" },
+    { label: "Selesai", value: "Selesai" },
+  ];
+
+  return (
+    <>
+      <FormControl sx={{ m: 1, width: "98%" }}>
+        <InputLabel id="demo-simple-select-label">{label}</InputLabel>
+        <Select
+          value={value}
+          onChange={onChange}
+          displayEmpty
+          label={label}
+          inputProps={{ "aria-label": "Without label" }}
+        >
+          {options.map((option, idx) => (
+            <MenuItem key={idx} value={option.value}>
+              {option.label}
+            </MenuItem>
           ))}
         </Select>
       </FormControl>
@@ -186,7 +227,9 @@ export const Transmisi = ({ value, onChange, label }) => {
           inputProps={{ "aria-label": "Without label" }}
         >
           {options.map((option, idx) => (
-            <MenuItem key={idx} value={option.value}>{option.label}</MenuItem>
+            <MenuItem key={idx} value={option.value}>
+              {option.label}
+            </MenuItem>
           ))}
         </Select>
       </FormControl>
