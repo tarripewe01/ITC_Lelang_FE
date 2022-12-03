@@ -45,6 +45,7 @@
         "redux": "^4.2.0",
         "redux-devtools-extension": "^2.13.9",
         "redux-thunk": "^2.4.1",
+        "sweetalert2": "^11.6.15",
         "util": "^0.12.4",
         "uuid": "^9.0.0",
         "uuidv4": "^6.2.13",

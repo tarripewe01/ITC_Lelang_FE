@@ -19,12 +19,14 @@ import * as React from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Category, Status } from "ui-component/SelectCustom";
+import Swal from "sweetalert2";
 var currencyFormatter = require("currency-formatter");
 
 const Product = () => {
   const navigate = useNavigate();
 
   const [data, setData] = React.useState([]);
+  const [isLoading, setIsLoading] = React.useState(false);
   // filter
   const [query, setQuery] = React.useState("");
   const [kategori_produk, setKategoriProduk] = React.useState("");
@@ -38,11 +40,13 @@ const Product = () => {
   }, []);
 
   const loadData = async (e) => {
+    setIsLoading(true);
     await axios
       .get(`https://itcfinanceapi.vercel.app/api/product`)
       .then((response) => {
         // console.log(response.data);
         setData(response.data);
+        setIsLoading(false);
       });
   };
 
@@ -71,23 +75,28 @@ const Product = () => {
     console.log(kategori_produk);
   };
 
-  const handleDelete = async (_id, e) => {
-    try {
-      await axios.delete(`https://itcfinanceapi.vercel.app/api/product/${_id}`);
-      toast.danger("Sukses Menghapus Produk", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-      });
-      navigate("/ITC-Finance/products");
-    } catch (error) {
-      console.log(error);
-    }
+  const handleDelete = async (id) => {
+    Swal.fire({
+      title: "Hapus data",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: `Ya, Hapus`,
+      cancelButtonText: `Batal`,
+      html: "Yakin ingin menghapus data ini?",
+    }).then((result) => {
+      // console.log(result);
+      if (result.isConfirmed) {
+        axios
+          .delete(`https://itcfinanceapi.vercel.app/api/product/${id}`)
+          .then((result) => {
+            // console.log(result);
+            if (result.status === 200) {
+              loadData();
+              Swal.fire("Sukses menghapus data", "", "success");
+            } else Swal.fire(result.message, "", "error");
+          });
+      }
+    });
   };
 
   const handleReset = () => {
@@ -228,8 +237,9 @@ const Product = () => {
                           <Button
                             variant="contained"
                             style={{ backgroundColor: "#5e35b1", width: 100 }}
-                            onClick={() =>
-                              navigate(`/ITC-Finance/edit_product/${row._id}`)
+                            onClick={
+                              () => alert(row._id)
+                              // navigate(`/ITC-Finance/edit_product/${row._id}`)
                             }
                           >
                             Ubah
@@ -244,7 +254,6 @@ const Product = () => {
                             }}
                             onClick={(e) => {
                               handleDelete(row._id);
-                              e.preventDefault();
                             }}
                           >
                             Hapus
