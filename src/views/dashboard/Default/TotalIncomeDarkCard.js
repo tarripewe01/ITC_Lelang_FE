@@ -15,8 +15,7 @@ import Chart from "react-apexcharts";
 
 // assets
 import PaymentsIcon from "@mui/icons-material/Payments";
-import { useEffect, useState } from "react";
-import axios from "axios";
+import { useState } from "react";
 
 // styles
 const CardWrapper = styled(MainCard)(({ theme }) => ({
