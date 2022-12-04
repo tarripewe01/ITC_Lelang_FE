@@ -118,7 +118,27 @@ const AddProduct = ({ addProduct }) => {
 
     try {
       setLoading(true);
-      if (state) {
+      if (!state) {
+        await axios.post(
+          "https://itcfinanceapi.vercel.app/api/product",
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+        toast.success("Sukses Menambah Produk Baru", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+      } else {
         await axios.put(
           `https://itcfinanceapi.vercel.app/api/product/${state._id}`,
           formData,
@@ -140,26 +160,6 @@ const AddProduct = ({ addProduct }) => {
         });
         setLoading(false);
         navigate("/ITC-Finance/products");
-      } else {
-        await axios.post(
-          "https://itcfinanceapi.vercel.app/api/product",
-          formData,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          }
-        );
-        toast.success("Sukses Menambah Produk Baru", {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-        });
       }
     } catch (error) {
       console.log(error);
