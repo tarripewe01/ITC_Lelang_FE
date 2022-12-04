@@ -51,30 +51,30 @@ const CardWrapper = styled(MainCard)(({ theme }) => ({
 const TotalIncomeDarkCard = ({ isLoading }) => {
   const theme = useTheme();
 
-  const [timeValue, setTimeValue] = useState(false);
+  const [timeValue] = useState(false);
 
-  const [data, setData] = useState([]);
-  console.log("DATA", data);
+  // const [data, setData] = useState([]);
+  // console.log("DATA", data);
 
-  useEffect(() => {
-    // loadData();
-  }, []);
+  // useEffect(() => {
+  //   // loadData();
+  // }, []);
 
-  const loadData = async () => {
-    await axios
-      .get("https://itcfinanceapi.vercel.app/api/product")
-      .then((response) => {
-        const data = response.data;
-        // console.log("DATA", data);
-        data.map((item) => {
-          const bid = item.bids[0]?.nominal_bid;
-          // if (item.bids?.length > 0) {
-          console.log("ITEM", bid);
-          //   setData(bid);
-          // }
-        });
-      });
-  };
+  // const loadData = async () => {
+  //   await axios
+  //     .get("https://itcfinanceapi.vercel.app/api/product")
+  //     .then((response) => {
+  //       const data = response.data;
+  //       // console.log("DATA", data);
+  //       data.map((item) => {
+  //         const bid = item.bids[0]?.nominal_bid;
+  //         // if (item.bids?.length > 0) {
+  //         console.log("ITEM", bid);
+  //         //   setData(bid);
+  //         // }
+  //       });
+  //     });
+  // };
 
   return (
     <>
