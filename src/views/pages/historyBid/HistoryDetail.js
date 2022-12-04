@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable array-callback-return */
 /* eslint-disable react-hooks/exhaustive-deps */
 import {
@@ -29,14 +30,14 @@ const HistoryDetail = () => {
   const [bidderName, setBidderName] = React.useState([]);
   const [bidder, setBidder] = React.useState([]);
 
-  console.log("bidderName", bidderName);
-  console.log("bidder", bidder);
+  // console.log("bidderName", bidderName);
+  // console.log("bidder", bidder);
   // console.log("data", data);
 
   useEffect(() => {
     loadData();
     profile();
-  }, []);
+  }, [bidder, bidderName, id]);
 
   const loadData = () => {
     if (id) {
@@ -44,14 +45,14 @@ const HistoryDetail = () => {
         .get(`https://itcfinanceapi.vercel.app/api/product/${id}`)
         .then((response) => {
           let bidder = response.data.bids;
-          // bidder.map((item) => {
-          //   // console.log("DATA", item.user);
-          //   const data = item.user;
-          //   // console.log('bidder', data)
-          //   setBidderName(item);
-          // });
+          bidder.map((item) => {
+            // console.log("DATA", item.user);
+            const data = item.user;
+            // console.log('bidder', data)
+            setBidderName(data);
+          });
           setData(response.data);
-          setBidderName(bidder);
+          // setBidderName(bidder);
         });
     }
   };
@@ -66,7 +67,10 @@ const HistoryDetail = () => {
           const id = item.user?._id;
           const user = item.user?.name;
           // console.log(id, "-", user);
-          setBidder(id);
+          if(bidderName === id){
+            // console.log('match')
+            setBidder(user)
+          }
         });
       });
   };
@@ -114,13 +118,14 @@ const HistoryDetail = () => {
               <TableRow>
                 <TableCell style={{ textAlign: "center" }}>No</TableCell>
                 <TableCell style={{ textAlign: "center" }}>Id</TableCell>
-                {/* <TableCell style={{ textAlign: "center" }}>Nama</TableCell> */}
+                <TableCell style={{ textAlign: "center" }}>Nama</TableCell>
                 <TableCell style={{ textAlign: "center" }}>Tanggal</TableCell>
                 <TableCell style={{ textAlign: "center" }}>Bid </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {data?.bids?.map((bid, idx) => {
+                // console.log(bid)
                 return (
                   <TableRow key={idx}>
                     <TableCell style={{ textAlign: "center" }}>
@@ -129,11 +134,11 @@ const HistoryDetail = () => {
                     <TableCell style={{ textAlign: "center" }}>
                       {bid.user}
                     </TableCell>
-                    {/* <TableCell style={{ textAlign: "center" }}>
-                      {bidder}
-                    </TableCell> */}
                     <TableCell style={{ textAlign: "center" }}>
-                      {moment(bid.tanggal_bid).format("LL")}
+                      {bidder??"admin"}
+                    </TableCell>
+                    <TableCell style={{ textAlign: "center" }}>
+                      {moment(bid.CreatedAt).format("LL")}
                     </TableCell>
                     <TableCell style={{ textAlign: "center" }}>
                       {currencyFormatter.format(bid.nominal_bid, {
